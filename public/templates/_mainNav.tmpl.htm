@@ -1,0 +1,355 @@
+<!-- MAIN NAV -->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <img alt="logo" data-bind="attr:{src:navBar.getImage},visible:sysSettings.logoFile"/>
+            <a class="navbar-brand" href="#/">Mojo</a>
+        </div>
+        
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/menuItems" class="menuHighlight">Menu Items</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/menuItemOptions" class="menuHighlight">Modifier Groups</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/menu" class="menuHighlight">Menus</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/discounts">Discounts</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/trucks">Trucks & Locations</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/inventory">Inventory</a></li>
+              <!-- <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/discounts">Discounts</a></li> -->
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/social">Social</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/staff">Team</a></li>
+              <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/schedule">Schedule</a></li>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=salesSum">Sales Summary</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=salesBreakdown">Sales Breakdown</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=top5">Menu Item Performance</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=topModifiers">Modifier Performance</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=discountUsage">Discount Usage</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/reports?id=transHist">Transaction History</a></li>
+                    </ul>
+              </li>
+              <li class="dropdown">
+                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/settings">General</a></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/taxes">Taxes</a></li>
+                        <!-- <li><a href="#/socialconnect">Social Connections</a></li> -->
+                    </ul>
+              </li>
+                <li class="dropdown">
+                    <a href="#" id="linkUserInfo" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span data-bind="text:userInfo.userName"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/profile">Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#" data-bind="click:navBar.signOut">Sign Out</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+<!--<ul class="nav navbar-nav navbar-right">
+
+            </ul>-->
+            
+
+        </div><!--/.nav-collapse -->
+
+    </div><!--/.container-fluid -->
+</nav>
+
+ <div id="appHelp" class="help-show" style="display:none">
+    <button id="btnDismissHelp" class="btn btn-info" data-bind="click:navBar.hideHelp"><i class="fa fa-times"></i></button>
+    <div class="help-content"></div>
+</div>
+
+<!-- /MAIN NAV -->
+
+<div id="g-windowSocial" class="modal-window" style="display:none;padding-bottom:50px;">
+    <div class="container-fluid">
+        
+        <form role="form" id="g-frmSocial">
+    
+            <!-- connection status -->
+            <div class="form-group" style="margin-bottom:-1px">
+                
+                <div class="well well-sm" style="margin-bottom:-1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;">
+                    <span class="badge alert-success" data-bind="visible:socialWindow.facebookConnected">Facebook Connected</span>
+                    <input  class="k-input-sm kendo-form-control inline bg-info" data-role="dropdownlist" id="g-lstFacebookPages" name="g-lstFacebookPages" style="width:200px"
+                            data-text-field="name"
+                            data-value-field="id"
+                            data-bind="source: socialWindow.facebookPages,events:{change:socialWindow.setFacebookPage},visible: socialWindow.facebookConnected"
+                            data-option-label="Select Facebook page..."
+                            data-value-primitive="true">
+
+                    <span class="badge alert-success" data-bind="visible:socialWindow.twitterConnected">Twitter Connected to <span data-bind="text:socialWindow.twitterName"></span></span>
+
+                    <label class="checkbox-inline" data-bind="visible: socialWindow.twitterConnected">
+                        <input type="checkbox" data-bind="click: socialWindow.setTwitterTextAreaVisibility,checked: socialWindow.showTwitterTextArea"> Show Twitter Post
+                    </label>
+
+                    <button type="button" class="btn btn-default btn-xs pull-right" style="margin-right:5px" data-bind="click: socialWindow.connectFacebook"><i class="fa fa-facebook"></i> Connect</button>
+
+                    <button type="button" class="btn btn-default btn-xs pull-right" style="margin-right:5px" data-bind="click: socialWindow.connectTwitter"><i class="fa fa-twitter"></i> Connect</button>
+
+                    
+                    </input><div class="clearfix"></div>
+
+                </div>
+
+            </div>
+            <!-- /connection status -->
+
+            <!-- Facebook & Twitter posts -->
+            <div class="row">
+                <div class="col-md-12" id="g-facebookPostArea">
+
+                    <div class="form-group" style="margin-bottom:-1px">
+                        <textarea rows="10" autofocus class="form-control input-lg" name="g-txtSocialPost" id="g-txtSocialPost" placeholder="Enter the social network update here" style="margin-bottom:-1px;border-radius: 0;resize:none"
+                        data-bind="value:socialWindow.socialPost,events:{change:socialWindow.copyFacebookTextToTwitter}" data-value-update="keyup"/>
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="g-twitterPostArea" style="padding-left:0px;display:none">
+                    <div class="form-group" style="margin-bottom:-1px">
+                        <textarea rows="10"  style="margin-bottom:-1px;border-radius: 0;resize:none;background-color: Beige;" maxlength="140" class="form-control input-lg" name="g-txtTwitterMessage" id="g-txtTwitterMessage" placeholder="Enter Twitter status update here..."
+                        data-bind="value:socialWindow.twitterPost" data-value-update="keyup" />
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- /Facebook & Twitter posts -->
+
+            <div class="form-group">
+                <input class="form-control input-sm" placeholder="enter URL to associate with post" name="g-txtFacebookPostURL" id="g-txtFacebookPostURL" 
+                        style="border-top-right-radius: 0;border-top-left-radius: 0;"
+                        data-bind="value:socialWindow.socialPostURL"  />
+            </div>
+
+            
+            <!-- geo location -->
+            <input name="g-kendoDtpPostDate" id="g-kendoDtpPostDate" class="k-input-sm kendo-form-control inline" style="width:250px;" placeholder="specify a future date &amp; time" data-role="datetimepicker" data-bind="value:socialWindow.postDateTime,invisible:socialWindow.isEvent"/>
+
+            <button type="button" class="btn btn-default btn-sm" id="g-btnShowMap" data-bind="click: socialWindow.showMap"><i class="fa fa-map-marker"></i> Geo Location</button>
+
+            <span class="badge alert-info" data-bind="visible:socialWindow.mapInfo.selectedFacebookPlace.id">
+                Facebook Place: 
+                <span data-bind="html:socialWindow.mapInfo.selectedFacebookPlace.name"></span>&nbsp;
+                <a href="#" data-bind="click: socialWindow.clearFacebookPlace"><i class="fa fa-trash-o"></i></a>
+            </span>
+
+            <span class="badge alert-info" data-bind="visible:socialWindow.mapInfo.selectedTwitterPlace.id">
+                Twitter Place: 
+                <span data-bind="html:socialWindow.mapInfo.selectedTwitterPlace.name"></span>&nbsp;
+                <a href="#" data-bind="click: socialWindow.clearTwitterPlace"><i class="fa fa-trash-o"></i></a>
+            </span>
+            <!-- / geo location -->
+
+            <!-- post master info -->
+            <div class="panel panel-default" style="font-size:90%;margin-top:20px"  data-bind="visible:socialWindow.parentColl">
+              <div class="panel-heading">
+                <h4 class="panel-title">Additional details</h4>
+              </div>
+              <div class="panel-body">
+                <img data-bind="attr:{src:socialWindow.imgURL},visible:socialWindow.imgURL" style="width:50px;height:50px;vertical-align:top"/>
+                <span data-bind="text:socialWindow.parentColl.description"></span>
+                <span data-bind="visible:socialWindow.isEvent"> on <span data-bind="text:socialWindow.eventDate"></span></span>
+                <input class="k-input-sm kendo-form-control" style="width:250px" placeholder="select lead time of post" data-role="dropdownlist"
+                   data-text-field="text"
+                   data-value-field="value"
+                   data-bind="source: socialWindow.postOffsetList,value:socialWindow.postOffset,visible:socialWindow.isEvent"
+                   data-value-primitive="true"
+                   data-option-label="Select Post Lead Time...">
+                </input>
+              </div>
+            </div>
+            <!-- /post master info -->
+            
+        </form>
+
+        <hr/>
+
+        <div style="position:absolute;bottom:5px;left:0px;width:99%;text-align:right;">
+            <button type="button" id="g-btnSaveSocialPost" class="btn btn-default" data-loading-text="Saving..." data-bind="click: socialWindow.saveSocialPost,enabled:socialWindow.allowPost">Save</i></button>&nbsp;&nbsp;
+
+            <button type="button" class="btn btn-primary" data-loading-text="Posting..." data-bind="click: socialWindow.postSocial,enabled:socialWindow.allowPost"><i class="fa fa-send-o"></i>&nbsp;Share</button>
+            <button type="button" class="btn btn-default" data-bind="click: socialWindow.closeWindow">Close</button>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- MAP WINDOW -->
+<div id="g-windowMapSocial" class="modal-window" style="display:none">
+    
+    <div id="g-mapCanvasSocial" style="float:left;width:60%"></div>
+    
+    <div>
+        
+        <div>
+            <input id="g-inputMapSocialSearchQuery" class="form-control" style="width:200px;display:inline-block" type="text" placeholder="Enter search query">
+            <button type="button" id="g-btnMapSocialSearch" class="btn btn-default" data-bind="click: mapWindow.searchPlaces" data-loading-text="Searching...">Find Places</button>
+        </div>
+
+        <hr/>
+
+        <div data-bind="visible:mapWindow.hasFacebookTwitterPlaces">
+            <h4>Facebook Places</h4>
+            <div data-role="listview"
+                data-template="g-tmplFacebookPlacesRow"
+                data-bind="source: mapWindow.mapInfo.facebookPlaces,events:{dataBound:mapWindow.onFacebookPlacesDataBound}"
+                data-selectable="single"
+                id="g-kendoLVFacebookPlaces">
+            </div>
+            
+            <div class="div-map-places-navbar">
+                <button id="g-btnFacebookPrev" data-type="prev" data-url="" type="button" class="btn btn-default btn-xs" data-bind="click:mapWindow.getFacebookPlacesPaging">Prev</button>
+                <button id="g-btnFacebookNext" data-type="next" data-url="" type="button" class="btn btn-default btn-xs" data-bind="click:mapWindow.getFacebookPlacesPaging">Next</button>
+            </div>
+
+            <h4>Twitter Places</h4>
+            <div data-role="listview"
+                data-template="g-tmplTwitterPlacesRow"
+                data-bind="source: mapWindow.mapInfo.twitterPlaces,events:{dataBound:mapWindow.onTwitterPlacesDataBound}"
+                data-selectable="single"
+                id="g-kendoLVTwitterPlaces">
+            </div>
+        </div>
+
+        <div class="modal-window-toolbar">
+            <button id="g-btnMapSelectPlaces" class="btn btn-primary" data-bind="visible:mapWindow.hasFacebookTwitterPlaces,click: mapWindow.onSelect">Select</button>
+            <button id="g-btnMapClose" class="btn btn-default" data-bind="click: mapWindow.onCancel">Cancel</button>
+        </div>
+
+    </div>
+
+    <!-- <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    </div> -->
+
+</div>
+
+<!-- SOCIAL POSTS WINDOW -->
+<div id="gwindowSocialPosts" class="modal-window" style="display:none">
+    <div class="container-fluid">
+        
+        <div class="row row-header">
+                <div class="col-md-8"><h4>Social Network update</h4></div>
+                <div class="col-md-4"><h4>Details</h4></div>
+                
+        </div>
+
+        <div data-role="listview"
+            data-template="tmplSocialPostsRow"
+            data-bind="source: socialPostsWindow.savedSocialPosts"
+            data-selectable="single"
+            id="kendoLVSocialPosts">
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="btn btn-primary" data-bind="click: socialPostsWindow.onSelect">Select</button>
+        <button class="btn btn-default" data-bind="click: socialPostsWindow.onCancel">Cancel</button>
+    </div>
+</div>
+
+
+<script type="text/x-kendo-tmpl" id="g-tmplFacebookPlacesRow">
+
+    <div>#:name#<br/><small>#:location.street#</small></div>
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="g-tmplTwitterPlacesRow">
+
+    <div>#:name#<br/><small>#:attributes.street_address#</small></div>
+
+</script>
+
+
+
+<script type="text/x-kendo-tmpl" id="tmplSocialPostsRow">
+    <div class="row row-record">
+        <div class="col-md-8">
+            #:post#
+        </div>
+
+        <div class="col-md-3">
+
+            #if (url) {#
+                #if (String(url).includes('http://')){#
+                    <small><a href="#:url#" target="_blank">#:url#</a></small><br/>
+                #} else {#
+                    <small><a href="http://#:url#" target="_blank">#:url#</a></small><br/>
+                #}# 
+                    
+            #}#
+
+            #if (facebook && facebook.place) {#
+                <i class="fa fa-facebook-square">&nbsp;</i><small>#:facebook.placeInfo.name#</small><br/>
+            #}#
+
+            #if (twitter && twitter.place_id) {#
+                <i class="fa fa-twitter-square">&nbsp;</i><small>#:twitter.placeInfo.name#</small><br/>
+            #}#     
+
+        </div>
+        <div class="col-sm-1">
+            <button id="delSocialPost" type="button" class="btn btn-default" data-bind="click:socialPostsWindow.deleteSocialPost"><i class="fa fa-trash-o"></i></button>
+        </div>
+    </div>
+
+</script>
+
+<div id="windowOrderDetails">
+  
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6"><strong>Order No:  <span data-bind="text: selectedOrder.orderId"></span></strong></div>
+            <strong><div class="col-xs-6 text-right" data-bind="text: selectedOrder.createdAt"></div></strong>
+        </div>
+        <div class="row">
+            <div class="col-xs-6"><strong>Auth #: </strong></div>
+            <strong><div class="col-xs-6 text-right" data-bind="text: selectedOrder.chargeId"></div></strong>
+        </div>
+        <hr/>
+
+        <div data-template="order-items-template" data-bind="source: selectedOrder.orderItems"></div>
+        <hr/>
+        <div class="row" style="font-weight:bold">
+            <div class="col-xs-8">Sub Total:</div>
+            <div class="col-xs-4 text-right" data-bind="text: selectedOrder.formattedAmount"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">Discount:</div>
+            <div class="col-xs-4 text-right" data-bind="text: selectedOrder.formattedDiscountAmount"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">Taxes:</div>
+            <div class="col-xs-4 text-right" data-bind="text: selectedOrder.formattedTaxAmount"></div>
+        </div>
+
+        <div class="row" style="font-weight:bold">
+            <div class="col-xs-8">Total:</div>
+            <div class="col-xs-4 text-right" data-bind="text: selectedOrder.formattedGrandAmount"></div>
+        </div>
+        <div class="row">
+            <a id="anchorToggleSignature" data-bind="click:toggleSignature, visible:showSignatureAnchor">Show/Hide Signature</a>
+            <!-- attr:{src:selectedOrder.signatureImage}, -->
+            <img id="signatureImg" data-bind="visible:signatureVisible"></img>
+        </div>
+        <div class="row bottomToolbar">
+            <button type="button" class="btn btn-default" id="closeOrderBtn" data-bind="click: closeSelectedOrderWindow">Close</button>
+            <button type="button " class="btn btn-default text-left" id="refundOrderBtn" data-bind="click: refundOrder">Refund</button>
+            <button type="button" class="btn btn-default text-left"id="emailReceiptBtn" data-bind="click: emailReceipt">E-mail Receipt</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+"_id:string","acl:object","stockReportHeaderId:pointer|stockReportHeader|indexed","stockListItem:pointer|stockListItems","Qty:number"
+"52f91e1ae4b06d5cb0e63334","{ ""*"" : { ""read"" : true , ""write"" : true}}","52ef6f97e4b0e1813c84eaca","52f62ecce4b0148c3c6c8bea","8.0"
+"52f91e02e4b06d5cb0e63333","{ ""*"" : { ""read"" : true , ""write"" : true}}","52ef6f97e4b0e1813c84eaca","52f3e334e4b0148c3c6c84ff","113.0"
+"52f91dc2e4b06d5cb0e63332","{ ""*"" : { ""read"" : true , ""write"" : true}}","52ef6f97e4b0e1813c84eaca","52f62ee9e4b0148c3c6c8beb","11.0"

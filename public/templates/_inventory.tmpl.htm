@@ -1,0 +1,218 @@
+
+<div class="container-fluid" id="appContentWrapper">
+    <div class="row">
+
+        <!--MAIN CONTENT -->
+                <div class="row-header">
+                    <div class="col-xs-12 col-sm-6"> 
+                        <input name="lstTruckFilter" id="lstTruckFilter" data-role="dropdownlist"
+                               class="form-control k-input-lg" 
+                               data-text-field="name"
+                               data-value-field="objectId"
+                               data-filter="contains"
+                               data-option-label="Select Location..."
+                               data-bind="source: truckList, events:{change:onInventoryLocationChange}">
+                        </input>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 headerToolbarWrapper">
+                        <button type="button" class="btn btn-primary" data-bind="click:addInventoryRecord">
+                            <span class="hidden-xs">Add Inventory Item</span>
+                            <span class="visible-xs hidden-sm-* ">Add</span>
+                        </button>
+                        <button type="button" id="ShowActiveInventoryOnly" class="btn" 
+                            data-bind="click: toggleShowActiveButtons">
+                            <span class="hidden-xs">Active Only</span>
+                            <span class="visible-xs hidden-sm-* ">Active</span>
+                        </button>
+                  
+                    </div>  
+                </div>
+            <span tabindex="-1" id="searchBoxWrapper" role="presentation" class="col-md-12 k-widget k-textbox k-header k-state-default k-input-lg" data-bind="visible:editorModel.selectedTruck">
+                    <input id="inputSearchInventoryItems" placeholder="Search Inventory Items" type="text" class="k-input k-input-lg" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-busy="false">
+            </span>
+            <div class="row-header entityHeader inventoryHeader" id="inventoryListHeader">
+                <div class="col-xs-3"><h4><span>Name</h4></span></div>
+                <div class="col-xs-2 col-sm-3 text-center">
+                    <h4>
+                        <span class="hidden-xs">Current Level</span>
+                        <span class="visible-xs hidden-sm-* ">Level</span>
+                    </h4>
+            </div>
+                <div class="col-xs-3 text-center">
+                    <h4>
+                        <span class="hidden-xs">Alert Level</span>
+                        <span class="visible-xs hidden-sm-*">Alert</span>
+                    </h4>
+                </div>
+            </div>
+
+            <div data-role="listview"
+                    data-template="tmplInventoryRow"
+                    class="kendo-list-view trkListView",
+                    data-bind="source:inventoryList, events:{dataBound:onInventoryListDatabound}"
+                    data-auto-bind="false"
+                    id="locationInventoryList">
+            </div>
+
+        
+<!-- row template -->
+<script type="text/x-kendo-tmpl" id="tmplInventoryRow">
+   <div class="row-record align-middle trkListRow">
+        <div class="col-xs-3">#:text#</div>  
+
+        #if (currentLevel == null) {#
+            <div class="col-xs-2 col-sm-3 text-center">Inactive</div>
+        #}else{#
+            <div class="col-xs-2 col-sm-3 text-center">#:currentLevel#</div>
+        #}#
+
+        #if (alertLevel == null) {#
+            <div class="col-xs-2 col-sm-3 text-center">Not Set</div>
+        #}else{#
+            <div class="col-xs-2 col-sm-3 text-center">#:alertLevel#</div>
+        #}#
+        <div class="col-sm-3 col-xs-5">
+            <button type="button" class="btn btn-default btn-sm" data-bind="click:editInventoryItem">Edit</button>
+        </div>
+       
+   </div>
+
+</script>
+
+<!-- menu item price row template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemInventoryRow">
+    <div class="row">
+        <div class="col-xs-6 trkCellFirst">        
+            <select name="assignInventoryTo" id="assignInventoryTo" data-role="dropdownlist"
+                            required validationMessage="Please select a menu item"
+                            class="form-control k-input-lg" 
+                            data-text-field="name"
+                            data-value-field="objectId"
+                            data-filter="contains"
+                            data-option-label = "{ name: 'Select a menu item', objectId: '0' }"
+                            data-bind="source: allMenuItems, value:menuItem}">
+            </select>
+            <!--
+            <select name="assignPriceText" id="assignPriceText" data-role="dropdownlist"
+                            class="form-control k-input-lg"
+                            data-option-label = "Select Price Point"
+                            data-primitive = "true"
+                            data-value-field = "text"
+                            data-text-field = "text"
+                            data-bind="source: menuItem.prices">
+            </select> -->
+        </div>
+        <div class="col-xs-3 col-sm-5 trkCellGeneral"> 
+            <input data-role="numerictextbox"  class="form-control k-input-lg"
+                data-min="0"
+                data-spinners=false
+                data-format="n2" 
+                data-bind="value:decQty"
+                required id="assignDecQty" name="assignDecQty"
+                validationMessage="Enter Decrement Qty"/>
+                
+        </div>
+        <div class="col-xs-1 trkCellLast"><button type="button" class="btn btn-default btn-lg" data-bind="click:editorModel.deleteInventoryAssignment"><i class="fa fa-trash-o"></i></button></div>
+    </div>
+</script>
+
+<div id="inventoryStockAdjustment" style="display:none">
+  
+    <div class="container-fluid">
+        <div class="row">
+
+                <div class="form-group col-xs-12">
+                    <label for="selectedLocation">Location:</label>
+                    <input readonly name="selectedLocation" id="selectedLocation" class="form-control k-input-lg" data-bind="value:editorModel.selectedLocationName"></input>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label for="inventoryItemName">Name:</label>
+                    <input required name="inventoryItemName" id="inventoryItemName" class="form-control k-input-lg" data-bind="value:editorModel.selectedInventoryItem.text" validationMessage="Please enter a name"></input>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label>Currently Assigned to</label>
+                    <div class="table-wrap">
+                        <div>
+                            <div class="alert-info row">
+                                <div class="col-xs-6 trkCellHeaderFirst">
+                                    <h4>
+                                        <span class="hidden-xs">Menu Item</span>
+                                        <span class="visible-xs">Menu</span>
+                                    </h4>
+                                </div>
+                                <div class="col-xs-3 col-sm-5 trkCellGeneral">
+                                    <h4>
+                                        <span class="hidden-xs">Decrement By</span>
+                                        <span class="visible-xs">Dec.</span>
+                                    </h4>
+                                </div>
+                                <div class="col-xs-1 trkCellLast">
+                                        <button type="button" class="btn btn-default btn-lg" data-bind="click:editorModel.addMenuAssignment"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+<!--                         <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr class="alert-info">
+                                    <th rowspan="2" class="col-xs-10">Menu Item</th>
+                                    <th class="col-xs-2">Decrement By</th>
+                                    <th class="col-xs-1">
+                                        <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.addMenuAssignment"><i class="fa fa-plus"></i></button>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody data-bind="source: editorModel.selectedInventoryItem.assignedItems" data-template="tmplMenuItemInventoryRow"></tbody>   
+                        </table> -->
+                        <div data-bind="source: editorModel.selectedInventoryItem.assignedItems" data-template="tmplMenuItemInventoryRow"></div>
+                    </div>
+                </div>  
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label for="inventoryInitialLevel">Current qty:</label>
+                    <input  readonly disabled name="inventoryInitialLevel" id="inventoryCurrentLevel" class="form-control k-input-lg" 
+                            data-role="numerictextbox" data-bind="value:editorModel.selectedInventoryItem.currentLevel"
+                            data-format="n"
+                            data-spinners="false"
+                            data-decimals="2"
+                            data-min="0">
+                    </input>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label for="inventoryInitialLevel">Update qty to:</label>
+                    <input  name="inventoryInitialLevel" id="inventoryNewLevel" class="form-control k-input-lg" 
+                            data-role="numerictextbox" data-bind="value:editorModel.selectedInventoryItem.newLevel"
+                            data-format="n"
+                            data-spinners="false"
+                            data-decimals="2"
+                            data-min="0">
+                    </input>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label  for="inventoryAlertLevel">Send alert when qty is:</label>
+                    <input  required name="inventoryAlertLevel" id="inventoryAlertLevel" class="form-control k-input-lg" 
+                            data-role="numerictextbox" data-bind="value:editorModel.selectedInventoryItem.alertLevel"
+                            data-format="n"
+                            data-spinners="false"
+                            data-decimals="0"
+                            validationMessage="Please enter a value"
+                            data-min="0">
+                    </input>
+                </div>
+                <div class="form-group col-xs-12 col-sm-5">
+                    <label for="inventoryAlertTo">Send To</label>
+                    <input readonly disabled="disabled" name="inventoryAlertTo" id="inventoryAlertTo" class="form-control k-input" data-bind="value:getAlertRecipients">
+                    </input>
+                </div>
+                <div class="form-group col-xs-12">
+                        <label for="inventoryAdjustReason">Reason</label>
+                        <textarea placeholder="Reason for Adjustment" name="inventoryAdjustReason" id="inventoryAdjustReason" data-bind="value: editorModel.selectedInventoryItem.adjustReason" class="k-textbox"></textarea>
+                </div>
+            </div>
+
+        <div class="row bottomToolbar">
+            <button type="button" class="btn btn-default" data-bind="click: closeStockAdjustWindow">Close</button>
+            <button type="submit" class="btn btn-primary text-left" data-bind="click: closeAndSaveStockAdjustWindow">Save</button>
+        </div>
+    </div>
+</div>

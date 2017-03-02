@@ -1,0 +1,41 @@
+kendo.data.DataSource.prototype.sync = function() {
+	var that = this,
+                idx,
+                length,
+                created = [],
+                updated = [],
+                destroyed = that._destroyed,
+                data = that._flatData(that._data);
+
+    if (!that.reader.model) {
+        return;
+    }
+
+    for (idx = 0, length = data.length; idx < length; idx++) {
+        if (data[idx].isNew()) {
+            created.push(data[idx]);
+        } else if (data[idx].dirty) {
+            updated.push(data[idx]);
+        }
+    }
+
+    var promises = that._send("create", created);
+
+    promises.push.apply(promises ,that._send("update", updated));
+    promises.push.apply(promises ,that._send("destroy", destroyed));
+
+    $.when.apply(null, promises)
+        .then(function() {
+            var idx, length;
+
+            for (idx = 0, length = arguments.length; idx < length; idx++){
+                that._accept(arguments[idx]);
+            }
+
+            that._change({ action: "sync" });
+
+            that.trigger("sync");
+        });
+
+     return promises[0];
+}

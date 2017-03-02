@@ -1,0 +1,393 @@
+<!-- SCHEDULE TEMPLATE-->
+
+<div class="container-fluid" >
+    <div class="row">
+
+         <!--MAIN CONTENT -->
+            <div class="calendarWrapper">
+                <div class="row-header entityHeader calendarHeader" style="">
+                    <div class="col-xs-12">
+                        <label class="text-muted">Display schedule for...</label>
+                        <input  class="" data-role="dropdownlist" id="lstTruckSchedule" name="lstTruckSchedule"
+                                            data-text-field="name"
+                                            data-value-field="objectId"
+                                            data-bind="source: truckList,value:selectedTruckSchedule,events:{change:onTruckScheduleChange}"
+                                            data-option-label="All Trucks & Location"
+                                            data-value-primitive="true">
+                        </input>
+                    </div>
+                </div>
+
+                <div id="scheduleCalendar"/>
+            </div>
+
+        <!-- EDITOR CONTENT -->
+        <div class="col-xs-12 col-md-6 record-edit-view" id="appContentEditContainer" style="display:none">
+            <form role="form" id="frmScheduleRecordEdit" class="form-record-edit">
+
+            <div data-role="tabstrip" id="tabstrip">
+                <ul>
+                    <li class="k-state-active">
+                        Event
+                    </li>
+                    <li data-bind="visible: editorModel.isTabsVisible">Crew</li>
+                    <li style="display:none">Social</li>
+                </ul>
+
+                <!-- Event tab -->
+                <div>
+                    <div class="alert alert-warning" role="alert" data-bind="visible: editorModel.editRecurringEvent">
+                        You are editing a recurring event.
+                    </div>
+                    <input type="hidden" data-bind="value:editorModel.objectId">
+
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" data-bind="checked:editorModel.isPrivate"> Private
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lstTruck">Truck or Location</label>
+                        <input  class="" data-role="dropdownlist" id="lstTruck" name="lstTruck"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: truckList,value:editorModel.truck.objectId,events:{change:onTruckChange}"
+                                data-option-label="Select a truck..."
+                                required data-required-msg= "Select a truck/location"
+                                data-truckunassigned-msg="Truck/Location already assigned for another event"
+                                data-value-primitive="true">
+                        </input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lstTruck">Event Menu</label>
+                        <input  class="" data-role="dropdownlist" id="lstMenu" name="lstMenu"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: menuHeaders,value:editorModel.overrideMenu.objectId"
+                                data-option-label="Select event menu..."
+                                data-value-primitive="true">
+                        </input>
+                    </div>
+                    <div class="form-group">
+                        <label for="lstCurrentMenu">Bulk/Catering Menu</label>
+                        <input  class="form-control k-input-lg" data-role="dropdownlist" id="lstBulkMenu" name="lstBulkMenu"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: bulkMenuHeaders,value: editorModel.overrideBulkMenu.objectId"
+                                data-option-label="Select a menu..."
+                                data-value-primitive="true">
+                        </input>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtName">Event Name</label>
+                        <input class="form-control" name="txtName" id="txtName" data-bind="value:editorModel.name" 
+                        required data-required-msg="Event Name is required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kendoDPFrom">Start</label>
+                        <input class="kendo-form-control" name="kendoDPFrom" id="kendoDPFrom" data-role="datetimepicker" 
+                        required data-required-msg="Enter Start Date/Time" data-type="date" data-date-msg="Not a valid date"
+                        data-greaterthanorequaltoday-msg="Event cannot be in the past"
+                        data-bind="value: editorModel.startDateTime,events:{change: editorModel.testEndDateTime}" />
+                        <span class="k-invalid-msg" data-for="kendoDPFrom"></span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kendoDPTo">End</label>
+                        <input class="kendo-form-control" name="kendoDPTo" id="kendoDPTo" data-role="datetimepicker"
+                        required data-required-msg="Enter End Date/Time" data-type="date" data-date-msg="Not a valid date"
+                        data-greaterthanstart-msg="Must be greater than start date/time"
+                        data-bind="value: editorModel.endDateTime"/>
+                        <span class="k-invalid-msg" data-for="kendoDPTo"></span>
+                    </div>
+
+                    <div class="row" data-bind="invisible:editorModel.editRecurringEvent">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lstRecurrence">Recurrence</label>
+                                <input  class="" data-role="dropdownlist" id="lstRecurrence" name="lstRecurrence"
+                                        data-text-field="text"
+                                        data-value-field="value"
+                                        data-bind="source: recurrence,value:editorModel.recurrence">
+                                </input>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group" data-bind="visible: editorModel.showRecurrenceEndDate">
+                                <label for="kendoDPRecurrenceEndDate">End Date</label>
+                                <input class="kendo-form-control" placeholder="optional" name="kendoDPRecurrenceEndDate" id="kendoDPRecurrenceEndDate" data-role="datepicker"
+                                data-bind="value: editorModel.recurrenceEndDate"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    
+
+                    
+                    <div class="form-group">
+                        <label>Location  
+                            <button type="button" data-type="location" class="btn btn-default btn-xs" data-bind="click:showMap"><i class="fa fa-map-marker"></i> Set</button>
+                        </label>
+                        <input type="hidden" name="eventLat" data-bind="value: editorModel.locationData.lat" required 
+                                data-required-msg="Please select a location for this event.">
+                        <span class="k-invalid-msg" data-for="eventLat"></span>
+                        </input>
+                        <div data-bind="html:editorModel.displayLocation">
+
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+
+                <!-- Crew Members Tab -->
+                <div>
+
+                    <div class="form-group">
+
+                        <label>Select Crew Members</label>
+                        <table class="table table-bordered table-condensed">
+                             <tbody data-bind="source: editorModel.crewData.members" data-template="tmplCrewMemberRow">
+                            </tbody>   
+                        </table>
+                    </div>
+
+<!--                     <div class="form-group">
+                        <label for="txtCrewMessageText">Message Text</label>
+                        <input class="form-control" name="txtCrewMessageText" id="txtCrewMessageText" data-bind="value:editorModel.crewData.messageText" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lstCrewMessageTextLead">Message Text Lead Time</label>
+                        <input  class="" data-role="dropdownlist" id="lstCrewMessageTextLead" name="lstCrewMessageTextLead"
+                                data-text-field="text"
+                                data-value-field="value"
+                                data-bind="source: leadTimes,value:editorModel.crewData.messageTextLead">
+                        </input>
+                    </div> -->
+
+                </div>
+
+                <!-- Social Tab -->
+                <div>
+                    
+                    <div id="alertSocialConnect" class="alert alert-info alert-dismissible" role="alert" style="margin-top:15px" data-bind="invisible:isSocialNetworksConnected">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Connect to Social Networks</strong> To connect to a social network, go to Settings->Social Connect page.
+                    </div>
+
+                    <button class="btn btn-default btn-block" data-bind="click: showSavedSocialPosts" style="margin:15px 0px"><i class="fa fa-external-link"></i> Show Saved Posts</button>
+
+                    <div class="form-group">
+                        <label for="txtFacebookPost">Facebook Post&nbsp;
+                            <span class="badge alert-success" data-bind="visible:facebookConnected">Connected</span>
+                            <span class="badge alert-warning" data-bind="invisible:facebookConnected">Not Connected</span>
+                        </label>
+
+                        <div style="margin:5px 0px" data-bind="visible:editorModel.social.facebook.place.id">
+                            <span class="badge alert-info" data-bind="html:editorModel.social.facebook.place.name"></span>&nbsp;
+                            <button type="button" class="btn btn-default btn-xs" data-bind="click: editorModel.clearFacebookPlace"><i class="fa fa-trash-o"></i></button>
+                        </div>
+
+                        <textarea rows="2" class="form-control" name="txtFacebookPost" id="txtFacebookPost" data-bind="value:editorModel.social.facebook.post" />
+                        
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtFacebookPostURL">URL</label>
+                            <input class="form-control" name="txtFacebookPostURL" id="txtFacebookPostURL" data-bind="value:editorModel.social.  facebook.url" data-type="url" data-url-msg="Not a valid URL" />
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtTwitterMessage">Tweet&nbsp;
+                            <span class="badge alert-success" data-bind="visible:twitterConnected">Connected</span>
+                            <span class="badge alert-warning" data-bind="invisible:twitterConnected">Not Connected</span>
+                        </label>
+
+                        <div style="margin:5px 0px" data-bind="visible:editorModel.social.twitter.place.id">
+                            <span class="badge alert-info" data-bind="html:editorModel.social.twitter.place.name"></span>&nbsp;
+                            <button type="button" class="btn btn-default btn-xs" data-bind="click: editorModel.clearTwitterPlace"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                        
+                        <textarea rows="2" maxlength="140" class="form-control" name="txtTwitterMessage" id="txtTwitterMessage" data-bind="value:editorModel.social.twitter.post,events:{input:editorModel.copyToFB}" />
+                   
+                        
+                    </div>
+
+                    <hr/>
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" data-bind="checked:editorModel.social.autoTweetPost"> Auto Tweet/Post this when open for business
+                        </label>
+                    </div>
+
+                    <div class="form-group" data-bind="invisible: editorModel.social.autoTweetPost">
+                        <label for="lstPostLead">Post Lead Time</label>
+                        <input  class="" data-role="dropdownlist" id="lstPostLead" name="lstPostLead"
+                                data-text-field="text"
+                                data-value-field="value"
+                                data-bind="source: leadTimes,value:editorModel.social.postLead">
+                        </input>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <button type="button" class="btn btn-default" data-type="place" data-bind="click: showMap"><i class="fa fa-map-marker"></i> Search Places</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-toolbar">
+                
+                <button type="button" id="btnEventDelete" class="btn btn-danger" data-bind="click:deleteScheduleRecord" style="display:none"><i class="fa fa-trash-o"></i>&nbsp;Delete</button>
+                
+                <div class="btn-group dropup">
+                        
+                    <button type="button" class="btn btn-primary" data-loading-text="Saving..." data-bind="click:saveScheduleRecord"><i class="fa fa-check"></i> Save</button>
+                
+                    <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+<!-- 
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" data-bind="click:saveRecord" data-save-share="true">Save &amp; Share</a></li>
+                    </ul> -->
+
+                </div>
+
+                <button type="button" class="btn btn-default" data-bind="click:cancelSaveScheduleRecord"><i class="fa fa-times"></i>&nbsp;Cancel</button>
+            </div>
+            
+            </form>
+
+    </div>
+
+</div>
+
+<!--MAP VIEW WINDOW-->
+
+<div id="windowScheduleMap" style="display:none">
+    <input id="inputScheduleMapSearch" class="map-controls" type="text" placeholder="Enter place or address">
+    <div id="canvasScheduleMap" class="map-schedule"></div>
+
+    <div class="divMapPlaceSearch" style="display:none">
+        
+        <div class="divMapSearchPlaceholder" data-bind="invisible:hasFacebookTwitterPlaces">
+            <h3><i class="fa fa-search"></i> Searching Places...</h3>
+            <p>Please wait while we search for Facebook and Twitter places</p>
+        </div>
+
+        <div data-bind="visible:hasFacebookTwitterPlaces">
+            <h4>Facebook Places</h4>
+            <div data-role="listview"
+                data-template="tmplFacebookPlacesRow"
+                data-bind="source: facebookPlaces,events:{dataBound:onFacebookPlacesDataBound}"
+                data-selectable="single"
+                id="kendoLVFacebookPlaces">
+            </div>
+            <div class="divMapPlaceNavigation">
+                <button id="btnFacebookPrev" data-type="prev" data-url="" type="button" class="btn btn-default btn-xs" data-bind="click:getFacebookPlacesPaging">Prev</button>
+                <button id="btnFacebookNext" data-type="next" data-url="" type="button" class="btn btn-default btn-xs" data-bind="click:getFacebookPlacesPaging">Next</button>
+            </div>
+
+            <h4>Twitter Places</h4>
+            <div data-role="listview"
+                data-template="tmplTwitterPlacesRow"
+                data-bind="source: twitterPlaces,events:{dataBound:onTwitterPlacesDataBound}"
+                data-selectable="single"
+                id="kendoLVTwitterPlaces">
+            </div>
+        </div>
+
+        <div class="divMapToolbar">
+            <button id="btnBackToMap" class="btn btn-default" data-bind="click: backToMap"><i class="fa fa-arrow-circle-o-left"></i> Map</button>&nbsp;&nbsp;
+            <button id="btnMapSelectPlaces" class="btn btn-primary" data-bind="visible:hasFacebookTwitterPlaces,click: selectFacebookTwitterPlaces">Select</button>
+            <button id="btnMapClose" class="btn btn-default" data-bind="click: closeMapWindow">Cancel</button>
+
+        </div>
+
+    </div>
+    
+</div>
+
+<!-- SOCIAL POSTS WINDOW -->
+<div id="socialPostsWindow" class="modal-window" style="display:none">
+    <div class="container-fluid">
+        
+        <div class="row row-header">
+                <div class="col-md-6"><h4>Facebook</h4></div>
+                <div class="col-md-6"><h4>Twitter</h4></div>
+                
+        </div>
+
+        <div data-role="listview"
+            data-template="tmplSocialPostsRow"
+            data-bind="source: savedSocialPosts"
+            data-selectable="single"
+            id="kendoLVSocialPosts">
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="btn btn-primary" data-bind="click: loadSocialPost">Select</button>
+        <button class="btn btn-default" data-bind="click: closeSocialPostsWindow">Cancel</button>
+    </div>
+</div>
+
+
+<script type="text/x-kendo-tmpl" id="tmplCrewMemberRow">
+    <tr>
+        <td class="text-center"><input type="checkbox" data-bind="checked:isChecked" /></td>
+        <td data-bind="text:name"></td> 
+        
+    </tr>
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplFacebookPlacesRow">
+
+<div>#:name#<br/><small>#:location.street#</small></div>
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplTwitterPlacesRow">
+
+<div>#:name#<br/><small>#:attributes.street_address#</small></div>
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplSocialPostsRow">
+    <div class="row row-record">
+        <div class="col-md-6">
+            #:facebook.post#
+            #if (facebook.url.length) {#
+                <br/><small><a href="#:facebook.url#" target="_blank">#:facebook.url#</a></small>
+            #}#
+
+            #if (facebook.place.id) {#
+                <br/><small>#:facebook.place.name#</small>
+            #}#
+
+
+        </div>
+        <div class="col-md-6">
+            #:twitter.post#
+            #if (twitter.place.id) {#
+                <br/><small>#:twitter.place.name#</small>
+            #}#
+        </div>
+
+        <button type="button" class="btn btn-default" data-bind="click:deleteSocialPost"><i class="fa fa-trash-o"></i></button>
+    </div>
+</script>

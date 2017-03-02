@@ -1,0 +1,4 @@
+"_id:string","acl:object","truckId:string|indexed"
+"52ef6f97e4b0e1813c84eaca","{ ""*"" : { ""read"" : true , ""write"" : true}}","52f2adf2e4b0148c3c6c7f9e"
+"52ef6f21e4b0e1813c84eac9","{ ""*"" : { ""read"" : true , ""write"" : true}}","52f2adf2e4b0148c3c6c7f9e"
+"52ef6efae4b0a29a1b555b22","{ ""*"" : { ""read"" : true , ""write"" : true}}","52f2adf2e4b0148c3c6c7f9e"

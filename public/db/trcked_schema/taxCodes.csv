@@ -1,0 +1,4 @@
+"_id:string","acl:object","Description:string","Percentage:number","applyToAll:boolean|indexed"
+"53998c52e4b0a7e2630f814e","","Harris County Tax","1.25","false"
+"53998c61e4b0a7e2630f814f","","Texas State Tax","6.0","true"
+"53998c74e4b0a7e2630f8150","","US VAT","3.0","true"

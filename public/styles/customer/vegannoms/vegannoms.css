@@ -1,0 +1,40 @@
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  src: url(http://fonts.gstatic.com/s/pacifico/v7/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+.trckedCalendarBody {
+	/*min-height:91em;*/
+	background-color: transparent!important;
+	color: white!important;
+	font-family: 'Pacifico', Arial, Helvetica, sans-serif!important;
+	font-size:28px!important;
+	overflow-y: hidden;
+}
+
+.fc-event{
+	background-color:#1cad9e!important;
+}
+
+#vendorLogo{
+	border-radius:1em;
+}
+
+#eventDetail .modal-title{
+	color: #fc6d68!important;
+}
+
+#eventDetail .modal-body{
+	color:#6c4517!important;
+}
+
+#dtlPlaceName{
+	color:#fc6d68;
+}
+
+.fc-time{
+	color:#6c4517;
+}

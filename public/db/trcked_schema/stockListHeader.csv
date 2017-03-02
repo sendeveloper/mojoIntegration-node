@@ -1,0 +1,5 @@
+"_id:string","acl:object","Description:string"
+"52f3e21fe4b00fc15f84608f","{ ""52f26c39e4b00fc15f84591f"" : { ""read"" : true , ""write"" : true}}","Stock List 1 (araskin3i)"
+"52f3e276e4b0148c3c6c84f7","{ ""52f26c39e4b00fc15f84591f"" : { ""read"" : true , ""write"" : true}}","Stock List 2 (araskin3i)"
+"5320a628e4b07b0d8014a51f","{ ""5320a53de4b013c661e48f0e"" : { ""read"" : true , ""write"" : true}}","Truck 1 Stock List"
+"535eb784e4b05f697177f66d","{ ""535eb417e4b05f697177f659"" : { ""read"" : true , ""write"" : true}}","Main Stock List"

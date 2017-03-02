@@ -1,0 +1,24 @@
+.trckedCalendarBody {
+	/*min-height:91em;*/
+	background-color: transparent!important;
+	color: white!important;
+	font-family: 'EverAfter', Arial, Helvetica, sans-serif!important;
+	font-size:2.5em!important;
+	overflow-y: hidden;
+}
+
+.fc-event{
+	background-color:#D12720!important;
+}
+
+#vendorLogo{
+	border-radius:1em;
+}
+
+#eventDetail .modal-title{
+	color: #D12720!important;
+}
+
+#eventDetail .modal-body{
+	color:black!important;
+}

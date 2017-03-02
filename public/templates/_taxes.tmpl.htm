@@ -1,0 +1,99 @@
+<!-- TAXES TEMPLATE-->
+<div class="container-fluid" id="appContentWrapper">
+    <div class="row">
+
+         <!--MAIN CONTENT -->
+        <div class="col-xs-12">
+            
+            <div class="row-header" data-bind="visible:taxList.data().length">
+                <div class="col-xs-5"><h4>Description</h4></div>
+                <div class="col-xs-3" class="text-center"><h4>Percentage</h4></div>
+                <div class="col-xs-2" class="text-center"><h4>Apply to all</h4></div>
+                <div class="col-xs-2"><button type="button" class="btn btn-default" data-bind="click:addTaxRecordRecord">Add Tax</button></div>
+
+            </div>
+
+            <div    data-role="listview"
+                    data-template="tmplTaxRow"
+                    data-bind="source: taxList,events:{dataBound:onTaxListViewDataBound}"
+                    class="kendo-list-view"
+                    id="kendoListView">
+            </div>
+
+             
+        </div>
+
+        <!-- EDITOR CONTENT -->
+        <div class="col-xs-12 col-md-6 record-edit-view" id="appContentEditContainer" style="display:none">
+            
+            <form role="form" id="frmTaxRecordEdit" class="form-record-edit" data-role="validator">
+                    <input type="hidden" data-bind="value:editorModel.objectId">
+
+                    <div class="form-group">
+                        <label for="txtDescription">Description</label>
+                        <input class="form-control" name="txtDescription" id="txtDescription" data-bind="value:editorModel.description" 
+                        required data-required-msg="Description is required"/>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPercentage">Percentage</label>
+                        <input class="kendo-form-control" data-role="numerictextbox" 
+                                name="txtPercentage" id="txtPercentage"
+                                data-format="#.00"
+                                data-min="0"
+                                data-max="100"
+                                data-spinners=false
+                                data-bind="value:editorModel.percentage"
+                                required data-required-msg="Percentage is required"/>
+                                
+                    </div>
+
+<!--                     <div class="form-group">
+                        <label for="txtPercentage">QuickBooks Tax Code</label>
+                        <input  data-role="dropdownlist" 
+                                name="qboTaxCodes" id="qboTaxCodes"
+                                class="form-control k-input-lg"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source:externalCodes, value:editorModel.extTaxId"/>
+                                
+                    </div> -->
+
+                   <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="cbApplyToAll" data-bind="checked:editorModel.applyToAll">
+                            Apply to All
+                        </label>
+                    </div>
+              
+                    <div class="form-toolbar">
+                        
+                        <button type="button" class="col-xs-2 col-sm-3 btn btn-danger" data-bind="click:deleteRecord,visible:editorModel.objectId"><i class="fa fa-trash-o"></i>&nbsp;Delete</button>
+                        <div class="col-xs-9 col-sm-8 rightButtonGroup">
+                            <button type="button" class="saveButton btn btn-primary pull-right" data-loading-text="Saving..." data-bind="click:saveTaxRecord"><i class="fa fa-check"></i>&nbsp;Save</button>
+                            <button type="button" class="btn btn-default pull-right" data-bind="click:cancelSaveRecord"><i class="fa fa-times"></i>&nbsp;Cancel</button>
+                        </div>
+                    </div>
+
+
+            </form>
+        </div>
+        
+
+    </div>
+
+</div>
+
+<!-- row template -->
+<script type="text/x-kendo-tmpl" id="tmplTaxRow">
+   <div class="row row-record align-middle">
+        <div class="col-md-5">#:description#</div>
+        <div class="col-md-3" class="text-center">#:kendo.toString(percentage,"0.00\\%")#</div>
+        <div class="col-md-2" class="text-center">#:applyToAll==true?"Yes":"No"#</div>
+        <div class="col-md-2"><button type="button" class="btn btn-default btn-sm" data-bind="click:editTaxRecord" >Edit</button>
+</div>
+            
+   </div>
+
+</script>

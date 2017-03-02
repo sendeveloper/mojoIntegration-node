@@ -1,0 +1,1 @@
+"_id:string","acl:object","accountId:string|indexed","extId:string|indexed","customerId:string|indexed"

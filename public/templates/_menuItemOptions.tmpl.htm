@@ -1,0 +1,172 @@
+
+<div class="container-fluid" id="appContentWrapper">
+    
+    <div class="row">
+
+        <!-- MAIN CONTENT -->
+        <!--<div id="appContentContainer">-->
+            <!-- <div class="row k-pane k-scrollable" style="overflow-x:hidden;"> -->
+                    <div class="row-header entityHeader modiferGroupHeader">
+                        <div class="col-xs-9">
+                            <h4>
+                                Modifier Groups&nbsp;
+                            </h4>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary" data-bind="click:editorModel.menuOptionGroup.addMenuItemOptionGroup">
+                                <span class="hidden-xs">Add New Modifier Group</span>
+                                <span class="visible-xs">Add</span>
+                            </button>
+                        </div>
+                        <div tabindex="-1" id="searchBoxWrapper" role="presentation" class="col-xs-12 k-widget k-textbox k-header k-state-default k-input-lg">
+                            <input id="inputSearchMenuOptionGroups" placeholder="Search Modifiers" type="text" class="k-input" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-busy="false">
+                        </div>    
+                    </div>
+                    <div class="col-xs-12 trkListView"
+                         data-role="listview"
+                        data-template="tmplMenuItemOptionsRow"
+                        data-bind="source: menuItemOptions, events:{dataBound:editorModel.menuOptionGroup.onMenuOptionGroupListViewDataBound}"
+                        data-selectable="false"
+                        id="LVAllMenuItemOptions">
+                    </div>
+            <!-- </div>   -->
+        <!--</div>-->
+
+        <!-- EDITOR -->
+        <div class="record-edit-view col-xs-12 col-md-6" id="appContentEditContainer" style="display:none">
+            <form role="form" id="frmMenuItemOptionGroup" class="form-record-edit" style="display:none">
+                <div data-role="tabstrip">
+                    <ul>
+                        <li class="k-state-active">
+                            General
+                        </li>                       
+                    </ul>
+
+                    <!-- General Info -->
+                    <div>
+                        <input type="hidden" data-bind="value:editorModel.menuOptionGroup.objectId"/>
+                        <p class="text-info" data-bind="visible:editorModel.menuOptionGroup.legacy"><strong>This is a legacy Modifier Group and can not be changed.</strong> <br>Please delete this group and create a new group if you wish to make changes.</p>
+
+                        <div class="form-group" >
+                            <label for="txtMenuItemOptionGroupName">Name</label>
+                            <input class="form-control k-input-lg" name="txtMenuItemOptionGroupName" id="txtMenuItemOptionGroupName" placeholder="Enter Modifier Group Name" required data-required-msg="Modifier Group name is required" data-duplicate-msg="Option Group already exists" data-bind="value:editorModel.menuOptionGroup.name, disabled:editorModel.menuOptionGroup.legacy"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Options</label>
+                            <div class="table-wrap">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr class="alert-info">
+                                            <th class="col-xs-8">Description</th>
+                                            <th class="col-xs-4">Price</th>
+                                            <th style="">
+                                                <button type="button" class="btn btn-default btn-sm" 
+                                                    data-bind="click:editorModel.menuOptionGroup.addOption, disabled:editorModel.menuOptionGroup.legacy">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="optionGroupItems" data-bind="source: editorModel.menuOptionGroup.options" data-template="tmplMenuOptionsGroupRow"></tbody>
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                      
+                </div>
+                <div class="form-toolbar col-xs-12">
+                    <!-- <h1>hello</h1> -->
+                    <button type="button" class="col-xs-2 col-sm-3 btn btn-danger" data-bind="click:editorModel.menuOptionGroup.deleteMenuOptionsGroup, enabled:editorModel.menuOptionGroup.objectId"><i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp;Delete</span></button> 
+
+                    <div class="col-xs-9 col-sm-8 rightButtonGroup">
+
+                        <button type="button" class="saveButton btn btn-primary pull-right" data-loading-text="Saving..." data-bind="click:editorModel.menuOptionGroup.saveMenuOptionsGroup, disabled:editorModel.menuOptionGroup.legacy"><i class="fa fa-check"></i><span class="hidden-xs">&nbsp;Save</span></button>
+
+                        <button type="button" class="btn btn-default pull-right" data-bind="click:editorModel.menuOptionGroup.cancelSaveMenuOptionsGroup"><i class="fa fa-times"></i><span class="">&nbsp;Cancel</span></button>
+
+                    </div>
+                </div> 
+            </form>
+        </div>
+    </div>
+
+        <!-- /Menu Item POPUP -->
+    <div id="gMenuItemOptionAssignPopup" class="modal-window" style="display:none">
+        <div class="container-fluid">
+                <div class="col-sm-12" id="searchBoxHeadeWrapper">
+                    <span tabindex="-1" id="searchBoxInputWrapper" role="presentation" class="k-widget k-textbox k-header k-state-default">
+                        <input id="inputOptionsSearchMenuItems" placeholder="Search Menu Items" type="text" class="k-input" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-busy="false">
+                    </span>
+                </div>
+            <div class="col-md-12"
+                 data-role="listview"
+                data-template="tmplOptionsMenuItemRowAll"
+                data-bind="source: allMenuItems"
+                data-selectable="false"
+                id="kendoLVOptionsAllMenuItems">
+            </div>
+
+        </div>
+        <div class="toolbar">
+            <button class="btn btn-primary" data-bind="click: editorModel.menuOptionGroup.onMenuItemOptionPopupAssign">Assign</button>
+            <button class="btn btn-default" data-bind="click: editorModel.menuOptionGroup.onMenuItemOptionPopupCancel">Cancel</button>
+        </div>
+    </div>
+    <script type="text/x-kendo-tmpl" id="tmplOptionsMenuItemRowAll">
+       <div class="row row-record" data-bind="click: selectMenuItem">
+            <div class="col-md-10">
+                <img class="trckedImagePreview" data-bind="attr:{src:editorModel.menuItem.getImageUrl}" alt="Menu Item"></img>
+                <div class="allMenuItemsItemInfo">
+                    <h4>#:name#</h4> 
+                    <p>#:description#</p>
+                    
+                </div>
+                
+            </div>
+
+       </div>
+
+    </script>
+</div>
+
+<script type="text/x-kendo-tmpl" id="tmplMenuItemOptionsRow">
+   <div class="row row-record trkListRow">
+        <div class="col-xs-6">
+            <div class="menuItemOption">
+                <h4>#:name#</h4>                
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="btn btn-default btn-sm menuItemEditBtn" data-bind="click:editorModel.menuOptionGroup.assignMenuItemOptionsToItems"><span class="hidden-xs visible-sm-*">Assign to Menu Items</span><span class="visible-xs hidden-sm">Assign</span></button>
+        </div>
+        <div class="col-xs-2">
+            <button type="button" class="btn btn-default btn-sm menuItemEditBtn" data-bind="click:editorModel.menuOptionGroup.editMenuItemOptionsRecord">Edit</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplMenuOptionsGroupRow">
+    <tr>
+        <td>
+            <input name="optionDesc" data-bind="value: description, disabled:legacy, events:{change: editorModel.menuOptionGroup.onMenuItemOptionsGroupChange}" class="form-control k-textbox"/>
+        </td>
+        <td> 
+            <input data-role="numerictextbox" 
+                data-format="c"
+                data-min="0"
+                data-format="c2" 
+                data-spinners=false
+                data-bind="value:price, disabled:legacy, events:{change: editorModel.menuOptionGroup.onMenuItemOptionsGroupChange}"/>
+                
+        </td>
+        <td><button type="button" class="btn btn-default btn-sm" 
+        data-bind="click:editorModel.menuOptionGroup.deleteOption, disabled:legacy">
+        <i class="fa fa-trash-o"></i>
+        </button></td>
+    </tr>
+
+</script>
+
+
+

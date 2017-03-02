@@ -1,0 +1,210 @@
+<!-- STAFF TEMPLATE-->
+<div class="container-fluid" id="appContentWrapper">
+    <div class="row">
+
+         <!--MAIN CONTENT -->
+        <!--<div class="col-xs-12" id="appContentContainer">-->
+            
+            <div class="row-header entityHeader staffListHeader" data-bind="visible:staffList.data().length">
+                <div class="col-xs-4"><h4>Name</h4></div>
+                <div class="col-xs-3"><h4>Email</h4></div>
+                <div class="col-xs-2"><h4>Phone</h4></div>
+                <div class="col-xs-2 text-right"><button type="button" class="btn btn-primary" data-bind="click:addRecord">Add Team Member</button></div>
+                
+            </div>
+    
+
+            <div    data-role="listview"
+                    data-template="tmplStaffRow"
+                    data-bind="source: staffList,events:{dataBound:onStaffListViewDataBound}"
+                    class="kendo-list-view trkListView container-fluid"
+                    id="kendoLVStaff">
+            </div>
+
+            
+        <!--</div>-->
+
+        <!-- EDITOR CONTENT -->
+        <div class="col-xs-12 col-md-6 record-edit-view" id="appContentEditContainer" style="display:none">
+            
+            <form role="form" id="frmCrewRecordEdit" class="form-record-edit">
+                    <div data-role="tabstrip">
+                        <ul>
+                            <li class="k-state-active">
+                                General
+                            </li>                     
+                        </ul>
+                        <div>
+                            <input type="hidden" data-bind="value:editorModel.objectId">
+
+                            <div class="checkbox" style="display:none">
+                                <label>
+                                  <input type="checkbox" data-bind="checked:editorModel.active"> Active
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                    <label for="txtFirstName">First Name</label>
+                                    <input class="form-control" name="txtFirstName" id="txtFirstName" data-bind="value:editorModel.firstName" 
+                                    required data-required-msg="First Name is required"/>
+                                    
+                                </div>
+
+                                <div class="form-group col-xs-6">
+                                    <label for="txtLastName">Last Name</label>
+                                    <input class="form-control" name="txtLastName" id="txtLastName" data-bind="value:editorModel.lastName" 
+                                    required data-required-msg="Last Name is required" data-duplicate-msg="Staff member with the entered name already exist"/>
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                    <label for="txtEmail">Email</label>
+                                    <input class="form-control" name="txtEmail" id="txtEmail" data-bind="value:editorModel.email" 
+                                    required data-required-msg="Enter email address" data-email-msg="Not a valid Email Address"/>
+                                </div>
+
+                                <div class="form-group col-xs-6">
+                                    <label for="txtPhone">Phone</label>
+                                    <input class="kendo-form-control" data-role="maskedtextbox" id="txtPhone" name="txtPhone"
+                                       data-mask="(999) 000-0000"
+                                       data-bind="value: editorModel.phoneNumber"/>
+                                </div>
+
+                                <div class="form-group col-xs-12">
+                                    <label for="lstTruck">Default Location</label>
+                                    <input  class="" data-role="dropdownlist" id="lstTruck" name="lstTruck"
+                                            data-text-field="name"
+                                            data-value-field="objectId"
+                                            data-bind="source: truckList,value:editorModel.truck.objectId"
+                                            data-option-label="Select a truck/location..."
+                                            data-value-primitive="true">
+                                            
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                    <label for="txtDateHired">Date Hired</label>
+                                    <input class="kendo-form-control" name="txtDateHired" id="txtDateHired" data-role="datepicker"
+                                            data-bind="value: editorModel.dateHired"/>
+                                </div>
+
+                                <div class="form-group col-xs-6">
+                                    <label for="txtDateLeft">Date Left</label>
+                                    <input class="kendo-form-control" name="txtDateLeft" id="txtDateLeft" data-role="datepicker"
+                                            data-bind="value: editorModel.dateLeft"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row div-item-image">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <img class="trckedImagePreview" src="" />
+                                        <input style="color:transparent" type="file" data-bind="events:{change:editorModel.showImage}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 div-upload-progress" style="visibility:hidden">
+                                    <div class="form-group">     
+                                         <label>Uploading Image</label>
+                                         <div class="progress-bar" data-role="progressbar"
+                                                 data-min="0"
+                                                 data-max="100" style="width:100%">
+                                         </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="btn-group btn-toggle col-xs-12"> 
+                                    <div><label>Send schedule reminder SMS every Sunday</label></div>
+                                    <button id="sendScheduleOn" class="btn btn-primary btn-default active" data-bind="click: toggleScheduleSMS">ON</button>
+                                    <button id="sendScheduleOff" class="btn btn-default" data-bind="click: toggleScheduleSMS">OFF</button>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="btn-group col-xs-12"> 
+                                    <div><label>Send PIN activation request</label></div>
+                                    <button id="sendPOSActivtionSMS" class="btn btn-primary" data-bind="click: sendPOSActivation">Send SMS now</button>
+                                </div>
+                            </div>           
+                        </div>
+                    </div>
+                                  
+                    
+                    <div class="form-toolbar">
+                        <button type="button" class="btn btn-danger" data-bind="click:deleteRecord"><i class="fa fa-trash-o"></i>&nbsp;Delete</button> 
+                        <button type="button" class="btn btn-default" data-bind="click:cancelSaveRecord"><i class="fa fa-times"></i>&nbsp;Cancel</button>
+                        <button type="button" class="btn btn-primary" data-bind="click:saveRecord" data-loading-text="Saving..."><i class="fa fa-check"></i>&nbsp;Save</button>                        
+                        
+                    </div>
+
+            </form>
+        </div>
+        
+
+    </div>
+
+</div>
+
+<!-- <div id="windowImageUpload" style="display:none;position:relative">
+    <div class="container-fluid">
+        <div class="div-item-list-image">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Select an image below and then click 'Upload' button
+                    <small> (Maximum file size 20MB)</small>
+                    </p>
+                    
+                    <div class="form-group">
+                        <img src="" />
+                        <input type="file" data-bind="events:{change:imageUpload.showImage}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 div-upload-progress" style="visibility:hidden">
+                    <div class="form-group">     
+                         <label>Uploading Image</label>
+                         <div class="progress-bar" data-role="progressbar"
+                                 data-min="0"
+                                 data-max="100" style="width:100%">
+                         </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="text-align:right;margin-top:5px;">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" data-bind="click: imageUpload.upload">Upload</button>
+                <button type="button" class="btn btn-default" data-bind="click: imageUpload.cancel">Cancel</button>
+            </div>
+        </div>   
+    
+    </div>
+
+</div> -->
+<!-- row template -->
+<script type="text/x-kendo-tmpl" id="tmplStaffRow">
+   <div class="row row-record align-middle">
+        
+        <div class="col-xs-4">
+            <img data-bind="attr:{src:editorModel.getImage}" alt="Menu Item">
+            <div style="margin-left: 110px">
+                #:firstName+" " + lastName#
+            </div>
+        </div>
+
+        <div class="col-xs-3"><a href="mailto: #:email#">#:email#</a></div>
+        <div class="col-xs-2">#:phoneNumber#</div>
+        
+        <div class="col-xs-2 text-right">
+            <button type="button pull-left" class="btn btn-default btn-sm" data-bind="click:editRecord" >Edit</button>
+        </div>
+   </div>
+
+</script>

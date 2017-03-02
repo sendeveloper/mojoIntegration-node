@@ -1,0 +1,1 @@
+"_id:string","acl:object","email:string|indexed","extPaymentCustId:string|indexed","pwd:string","fwAccountId:string"

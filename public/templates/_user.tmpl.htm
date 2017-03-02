@@ -1,0 +1,99 @@
+
+<div class="container">
+
+<div data-bind="invisible:emailVerificationState">
+<!-- Signin Form -->
+<form class="form-signin" id="frmSignIn" role="form">
+    
+    <div class="alert alert-success alert-dismissible" id="alertEmailValidated" role="alert" style="display:none">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Email Validated!</strong> Congratulations, your email address has been validated successfully. Please sign-in again
+    </div>
+
+    <h2 class="form-signin-heading"><i class="fa fa-sign-in"></i> Trcked.com Login</h2>
+    <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Email address" 
+      required data-required-msg="Enter email address" data-email-msg="Not a valid Email" data-bind="value:email" autofocus>
+    <input type="password" name="txtPassword" id="txtPassword" class="form-control" placeholder="Password" 
+      required data-required-msg="Enter password" data-bind="value:password">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" data-bind="checked:rememberMe"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" id="btnSignIn" type="submit" data-bind="click:signIn" data-loading-text="Signing In...">Sign in</button>
+
+    <p>Not registered? <a href="#" data-bind="click:toggleViews">Click here</a> to create trcked.com account</p>
+    <p>Forgot Password? <a href="#" data-bind="click:emailResetLink">Click here</a> to reset your password</p>
+</form>
+
+<!-- Signup Form -->
+<form class="form-signin" id="frmSignUp" role="form" style="display:none">
+    <h2 class="form-signin-heading"><i class="fa fa-lock"></i> Create an Account</h2>
+    <p>Start using Trcked.com on your truck for 30 days at no cost. Just enter your details below...</p>
+    
+    <div class="form-group">
+      <input type="text" name="txtTruckName" id="txtTruckName" class="form-control" placeholder="Name of truck or business" 
+      required data-required-msg="Enter truck/business name" data-bind="value:vendorName" autofocus> 
+    </div>
+
+    <div class="form-group">
+      <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Email address" 
+      required data-required-msg="Enter email address" data-email-msg="Not a valid Email" data-bind="value:email" autofocus> 
+    </div>
+
+    <div class="form-group">
+      <input type="password" name="txtPassword1" id="txtPassword1" class="form-control" placeholder="Enter Password" 
+      required data-required-msg="Enter password" data-bind="value:password">
+    </div>
+    
+    <div class="form-group">
+      <input type="password" name="txtPassword2" id="txtPassword2" class="form-control" placeholder="Enter Password Again" 
+      required data-required-msg="Enter password">
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" id="btnSignUp" type="submit" data-bind="click:signUp" data-loading-text="Releasing the hounds...">Register</button>
+
+    <a href="#" data-bind="click:toggleViews"><i class="fa fa-chevron-circle-left"></i> Back to Signin</a>      
+</form>
+
+<!-- Reset Password -->
+<form class="form-signin" id="frmResetPassword" role="form" style="display:none">
+    <h2 class="form-signin-heading"><i class="fa fa-lock"></i> Reset your Password</h2>
+    <p>Please enter your new password twice</p>
+    
+    <div class="form-group">
+      <input type="password" name="txtResetPassword1" id="txtResetPassword1" class="form-control" placeholder="Enter Password" 
+      required data-required-msg="Enter password">
+    </div>
+    
+    <div class="form-group">
+      <input type="password" name="txtResetPassword2" id="txtResetPassword2" class="form-control" placeholder="Enter Password Again" 
+      required data-required-msg="Enter password">
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" id="btnResetPassword" type="submit" data-bind="click:resetPassword" data-loading-text="Please wait...">Reset Password</button>
+
+</form>    
+
+</div>
+
+<form class="form-signin" id="frmEmailValidate" role="form" data-bind="visible:emailVerificationState">
+  <h2 class="form-signin-heading text-center"><i class="fa fa-inbox"></i> Please verify your email</h2>
+  <p class="text-center">Thank you for signing up. We need to verify your email address before you can begin using the system. 
+    Please check your email <span class="badge alert-success" data-bind="text:email"></span> and follow the instructions to 
+    verify your email address. Once you have successfully completed the verification process, click the Continue button below.
+  </p>
+
+  <p class="alert alert-info small">
+    If you have not received an email from us, please click on the Resend Email button below
+  </p>
+
+  <button class="btn btn-lg btn-primary btn-block" type="button" data-bind="click:verifyEmail" data-loading-text="Please wait...">Continue</button>
+
+  <button class="btn btn-default btn-block" type="button" data-bind="click:resendEmail" data-loading-text="Please wait...">Resend Email</button>
+
+
+</form>
+
+</div>
+

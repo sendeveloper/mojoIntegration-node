@@ -1,0 +1,7 @@
+<Response>
+<Say>Thank you for your call.</Say>
+<Say voice="woman">
+If you have any questions about your order, please call us directly on the number listed on our website
+</Say>
+<Hangup />
+</Response>

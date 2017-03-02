@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+ 
+<html>
+ 
+<head>
+    <title>Mojo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ 
+    <!-- prevent caching -->
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+        
+    <!-- STYLE SHEETS -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'> 
+    <link rel="stylesheet" href="styles/bootstrap.css" />
+    <link rel="stylesheet" href="styles/bootstrap-theme.css" />
+<!--     <link rel="stylesheet" href="styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/kendo.bootstrap.css" /> -->
+    <link rel="stylesheet" href="styles/kendo2016.11.17.core/kendo.bootstrap.css" />
+    <link rel="stylesheet" href="styles/kendo2016.11.17.core/kendo.common-bootstrap.core.css" /> 
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/kendo.dialogs.css" />
+</head>
+ 
+<body>
+ 
+    <style scoped>
+        /* Notifications */
+        .k-notification-error.k-group {
+            background: rgba(100%,0%,0%,.7);
+            color: #ffffff;
+        }
+ 
+        .k-notification-success.k-group {
+            background: rgba(0%,60%,0%,.7);
+            color: #fff;
+        }
+ 
+        .k-notification-info.k-group {
+            background: rgba(0%,0%,0%,.7);
+            color: #fff;
+        }
+ 
+        .notification-error,.notification-success,.notification-info {
+            width: 300px;
+            min-height: 100px;
+        }
+        .notification-error h4,.notification-success h4,.notification-info h4 {
+            padding: 15px 10px 5px;
+        }
+        .notification-error i,.notification-success i,.notification-info i {
+            float:left;
+            margin: 15px;
+        }
+ 
+        .notification-error p,.notification-success p,.notification-info p {
+            padding: 0px 15px;
+            margin-left:55px;
+            font-size: 90%;
+            word-wrap:break-word;
+        }
+ 
+        /* Signin Form */
+        .form-signin {
+          max-width: 500px;
+          padding: 15px;
+          margin: 100px auto;
+        }
+ 
+        .form-signin-heading {
+            color:grey;
+        }
+ 
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+          margin-bottom: 10px;
+        }
+        .form-signin .checkbox {
+          font-weight: normal;
+        }
+        .form-signin .form-control {
+          position: relative;
+          height: auto;
+          -webkit-box-sizing: border-box;
+             -moz-box-sizing: border-box;
+                  box-sizing: border-box;
+          padding: 10px;
+          font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+          z-index: 2;
+        }
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+         /* Credit Card Payment Form */
+        #ccCardHolderName{
+            min-width:100%;
+        }
+
+        #ccardExpiry{
+            max-width:100%;
+        }
+
+         #ccardCVC{
+          max-width: 100%;
+         }
+
+/*        .ccExpMonthGroup{
+          padding-right:0px;
+        }
+*//*        .ccExpYearGroup{
+          margin-left:0.1em!important;
+        }
+*/
+    </style>
+ 
+    <div class="container" id="divContainer" style="display:none;max-width:500px;padding:15px;margin:15px auto 10px auto">
+
+        <img src="<%=logo%>" alt="trcked logo" style="display:block;margin: 30px auto 30px auto;max-height:100px"/>
+ 
+        <div >
+            <!-- Signin Form -->
+            <form id="frmSignIn" role="form" data-bind="visible:isSignInVisble">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Login to Mojo</div>
+                    <div class="panel-body">
+                     
+                        <div class="alert alert-success alert-dismissible" id="alertEmailValidated" role="alert" style="display:none">
+                          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <strong>Email Validated!</strong> Congratulations, your email address has been validated successfully. Please sign-in again
+                        </div>
+ 
+                        <div class="form-group">
+                             
+                            <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Email address"
+                            required data-required-msg="Enter email address" data-email-msg="Not a valid Email" data-bind="value:email" autofocus>
+                             
+                        </div>
+ 
+                        <div class="form-group">
+                            <input type="password" name="txtPassword" id="txtPassword" class="form-control" placeholder="Password"
+                            required data-required-msg="Enter password" data-bind="value:password">
+                        </div>
+ 
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" data-bind="checked:rememberMe"> Remember me
+                          </label>
+                        </div>
+                         
+                        <button class="btn btn-lg btn-primary btn-block" id="btnSignIn" type="submit" style="margin-bottom:30px;" data-bind="click:signIn" data-loading-text="Signing In...">Sign in</button>
+ 
+                        <p>Not registered? <a href="#" data-bind="click:toggleViews">Click here</a> to create a Mojo account</p>
+                        <p>Forgot Password? <a href="#" data-bind="click:emailResetLink">Click here</a> to reset your password</p>
+                    </div>
+                </div>
+ 
+            </form>
+ 
+            <!-- Signup Form -->
+            <form id="frmSignUp" role="form" data-bind="visible:isRegisterVisible">
+ 
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Create an Account</div>
+                    <div class="panel-body">
+                        <p>Start using Mojo. Just enter your details below...</p>
+                 
+                        <div class="form-group">
+                          <input type="text" name="txtTruckName" id="txtTruckName" class="form-control" placeholder="Name of business"
+                          required data-required-msg="Enter truck/business name" data-bind="value:vendorName" autofocus> 
+                        </div>
+ 
+                        <div class="form-group">
+                          <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Email address"
+                          required data-required-msg="Enter email address" data-email-msg="Not a valid Email" data-bind="value:email" autofocus> 
+                        </div>
+ 
+                        <div class="form-group">
+                          <input type="password" name="txtPassword1" id="txtPassword1" class="form-control" placeholder="Enter Password"
+                          required data-required-msg="Enter password" data-bind="value:password">
+                        </div>
+                         
+                        <div class="form-group">
+                          <input type="password" name="txtPassword2" id="txtPassword2" class="form-control" placeholder="Enter Password Again"
+                          required data-required-msg="Enter password">
+                        </div>
+ 
+                        <div class="checkbox">
+                            <label>
+                              <input type="checkbox" data-bind="checked: termsOfServiceAccepted"> I have read and agree to the <a href="#" data-bind="click:showTermsOfService">Terms of Service</a>
+                            </label>
+                        </div>
+                         <input type="hidden" name="txtRefPartner" id="txtRefPartner" data-bind="value:refPartner">
+                        <button class="btn btn-lg btn-primary btn-block" id="btnSignUp" type="submit" data-bind="click:signUp" data-loading-text="Releasing the hounds..." data-binding="enabled:isbtnRegisterEnabled" style="margin-bottom:30px">Register</button>
+ 
+                        <a href="#" data-bind="click:toggleViews"><i class="fa fa-chevron-circle-left"></i> Back to Signin</a>  
+                    </div>
+                </div>
+                      
+            </form>
+ 
+            <!-- Reset Password -->
+            <form id="frmResetPassword" role="form" data-bind="visible:isResetVisible">
+ 
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Create an Account</div>
+                    <div class="panel-body">
+ 
+                        <p>Please enter your new password twice</p>
+                 
+                        <div class="form-group">
+                          <input type="password" name="txtResetPassword1" id="txtResetPassword1" class="form-control" placeholder="Enter Password"
+                          required data-required-msg="Enter password">
+                        </div>
+                         
+                        <div class="form-group">
+                          <input type="password" name="txtResetPassword2" id="txtResetPassword2" class="form-control" placeholder="Enter Password Again"
+                          required data-required-msg="Enter password">
+                        </div>
+ 
+                        <button class="btn btn-lg btn-primary btn-block" id="btnResetPassword" type="submit" data-bind="click:resetPassword" data-loading-text="Please wait...">Reset Password</button>
+                    </div>
+                </div>
+            </form>    
+ 
+        </div>
+ 
+        <form id="frmEmailValidate" role="form" data-bind="visible:emailVerificationState">
+ 
+            <div class="panel panel-primary">
+                <div class="panel-heading">Please verify your email</div>
+                <div class="panel-body">
+                    <p class="text-center">Thank you for signing up. We need to verify your email address before you can begin using the system. 
+                    Please check your email <span class="badge alert-success" data-bind="text:email"></span> and follow the instructions to 
+                    verify your email address. Once you have successfully completed the verification process, click the Continue button below.
+                  </p>
+ 
+                  <p class="alert alert-info small">
+                    If you have not received an email from us, please click on the Resend Email button below
+                  </p>
+ 
+                  <button class="btn btn-lg btn-primary btn-block" type="button" data-bind="click:verifyEmail" data-loading-text="Please wait...">Continue</button>
+ 
+                  <button class="btn btn-default btn-block" type="button" data-bind="click:resendEmail" data-loading-text="Please wait...">Resend Email</button>
+ 
+                </div>
+            </div>
+        </form>
+ 
+
+ <form method="post" name="payment-info-form" id="payment-info-form" data-bind="visible:isPaymentVisible">
+      <div class="panel panel-primary">
+          <div class="panel-heading">Please enter your credit card information</div>
+          <div class="panel-body">
+              <p class="text-left">You will <strong>not</strong> be charged for the first 30 days.</p>
+              <p class="text-left">You may cancel <i>any time</i> in the first 30 days <u>at no cost.</u></p>
+              <p class="text-left">After the first 30 days, you may cancel any time with 30 days notice.</p>
+              <div class="form-group">
+
+                <input type="hidden" name="apikey" id="apikey" payeezy-data="apikey" value="7hpf1N6AqvaLL2UebNWoXllCcR5b89ya"/>
+                <input type="hidden" name="js_security_key" id="js_security_key"  payeezy-data="js_security_key" value="js-0ed061862fe5b902dc94a2e5b567e3bc0ed061862fe5b902"/>
+                <input type="hidden" name="ta_token" id="ta_token" payeezy-data="ta_token" value="LIKH"/>
+              </div>
+
+              <div class='card-wrapper'></div>
+              <div class="form-group col-xs-12">
+                <input payeezy-data="card_type" type="hidden" payeezy-data="card_type" name="lstCardType" id="lstCardType" data-bind="value:selectedCardType">
+                </input>
+              </div>
+              
+              <div class="form-group col-xs-12">
+                <input id="ccCardHolderName" required class="form-control k-textbox k-input-lg" placeholder="John Smith" payeezy-data="cardholder_name">
+              </div>
+              <div class="form-group col-xs-6 ccNumGroup">
+<!--                 <input id="ccCardNumber" required class="form-control" data-role="maskedtextbox" 
+                placeholder="Enter Card Number" data-mask="0000-0000-0000-0000"> -->
+                <input type="text" class="form-control k-textbox k-input-lg" id="ccCardNumber" placeholder="4111 1111 1111 1111" 
+                data-bind="value:ccNumberDisplay"></input>
+                <input required type="hidden" payeezy-data="cc_number"  data-bind="value:ccNumber">
+              </div>
+
+              <div class="form-group col-xs-3">
+                <input required id="ccardExpiry" class="form-control k-textbox k-input-lg" placeholder="12/16" data-bind="value:ccExpFull">
+                <input required type="hidden" payeezy-data="exp_month" data-bind="value:ccExpMonth">
+                <input required type="hidden" payeezy-data="exp_year" data-bind="value:ccExpYear">
+              </div>
+              <div class="form-group col-xs-3">
+                <input required id="ccardCVC" class="form-control k-textbox k-input-lg" placeholder="123" payeezy-data="cvv_code" >
+              </div>
+
+              <div id="generate-token">
+                <button type ="Submit" data-bind="enabled:isPayButtonEnabled" class="btn btn-lg btn-primary btn-block">Sign Me Up</button>
+              </div>
+              <div class="form-group col-xs-12">
+                <a href="#" data-bind="click:backToCreateAcct"><i class="fa fa-chevron-circle-left"></i> Back to Create Account</a>
+              </div>
+          </div>
+      </div>
+  </form>
+
+    </div>
+ 
+    <span id="kendoNotification" style="display:none;"></span>
+ 
+    <div id="windowTermsOfService"></div>
+ 
+    <script src="js/jquery-1.11.1.js"></script>
+<!--     // <script src="js/kendo.ui.core.js"></script>
+    // <script src="js/kendo.override.js"></script>
+    // <script src="js/kendo.dialogs.js"></script> -->
+    <script src="js/kendo2016.11.17.core/kendo.ui.core.js"></script>
+    <script src="js/kendo2016.11.17.core/kendo.dialogs.js"></script>
+
+    <script src="js/jquery.blockUI.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/amplify.js"></script>
+    <script src="js/jstz.min.js"></script>
+    <script src="js/payeezy_v3.2.js" type="text/javascript"></script>
+    <script src="js/card.js" type="text/javascript"></script>
+     
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.js"></script>
+    <![endif]-->
+     
+    <!-- /SCRIPTS -->
+ 
+   <script>
+ 
+    var appDefaults={};
+    var ajaxHeader={};
+    var kendoNotification=null;
+ 
+    function URLToArray(url) {
+      var request = {};
+      var pairs = url.substring(url.indexOf('?') + 1).split('&');
+      for (var i = 0; i < pairs.length; i++) {
+          if(!pairs[i])
+              continue;
+          var pair = pairs[i].split('=');
+          request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+       }
+       return request;
+    }
+
+
+    function getParameterByName(name, includeRetUrl) {
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      if (!includeRetUrl){
+        var urlParts = URLToArray(window.location.href);
+        if (urlParts[name])
+          return decodeURIComponent(urlParts[name].replace(/\+/g, " "))
+        else 
+          return "";
+      } else {
+        var results = regex.exec( window.location.href );
+        if( results == null )
+          return "";
+        else{
+          return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+      }
+     }
+ 
+    function isUserLoggedIn(){
+ 
+        var deferred=$.Deferred();
+ 
+        var headers={};
+ 
+        if(amplify.store("trcked.com") ) {
+ 
+            ajaxHeader["X-Parse-Session-Token"]=amplify.store("trcked.com").sessionToken;
+ 
+            // ensure that the user session has not expired
+            // make a test call to the database
+            $.ajax({
+                     
+                    url: "/parse/users/"+amplify.store("trcked.com").userID,
+                    dataType: "json",
+                    type:"GET",
+                    headers: ajaxHeader,
+                    beforeSend:function(){
+                      kendo.ui.progress($('body'), true);
+                    },
+                    complete:function(){
+                      kendo.ui.progress($('body'), false);
+                    },
+                    success: function(result) {
+                        deferred.resolve(true, result.emailValidated);
+                    },
+ 
+                    error: function() {
+ 
+                      deferred.resolve(false, null);
+                    }
+                });
+        }
+ 
+        else
+            deferred.resolve(false, null);
+ 
+        return deferred.promise();
+     }
+ 
+     // User Model
+     var userModel = kendo.observable({
+        
+        email: "",
+        password: "",
+        rememberMe: true,
+        vendorName:"",
+        isSignInVisble: false,
+        isRegisterVisible: false,
+        isPaymentVisible: false,
+        isPayButtonEnabled: true,
+        isResetVisible: false,
+        validatorSignIn: null,
+        validatorSignUp: null,
+        validatorResetPassword:null,
+        emailVerificationState:false,
+        resetRequestID: null,
+        paymentRequired : false,
+        refPartner: null,
+        vendorToken: null,
+        ccNumber:null,
+        ccNumberDisplay:null,
+        ccExpMonth:null,
+        ccExpYear:null,
+        ccExpFull:null,
+        termsOfServiceAccepted:false,
+        cardTypes:[
+          { internalId:"visa", payEezyValue:"Visa"},
+          { internalId:"mastercard", payEezyValue:"Mastercard"},
+          { internalId:"amex", payEezyValue:"American Express"},
+          { internalId:"discover", payEezyValue:"Discover"}
+        ],
+        selectedCardType:null,
+
+        completeEmailValidation: function(verifyid) {
+            var deferred=$.Deferred();
+
+            $.ajax({
+                         
+                url: "/parse/functions/newUserVerify",
+                dataType: "json",
+                type:"POST",
+                headers: ajaxHeader,
+                 
+                data:kendo.stringify({
+                        verifyId: verifyid,
+                        sessionToken: amplify.store("trcked.com").sessionToken
+                    }),
+                beforeSend:function(){
+                  kendo.ui.progress($('body'), true);
+                },
+                complete:function(){
+                  kendo.ui.progress($('body'), false);
+                },
+                success: function(result) {
+                     
+                    //cleanURL();
+                    // $("#alertEmailValidated").toggle();
+                    userModel.set("emailVerificationState", false); // by setting this to false we hide the 
+                                                                    // email validation screen since all is well
+                    var store=amplify.store("trcked.com");
+                    store.emailValidated=true;
+                    amplify.store("trcked.com",store);
+                    kendoNotification.show({ title:'E-mail Verified', message:"Your email address has been verified. Thank you." },"success");
+                    deferred.resolve();
+                },
+ 
+                error: function(httpResponse) {
+                    kendoNotification.show({    title:'Error', 
+                                                message:"Email validation failed." + JSON.parse(httpResponse.responseJSON.error).message },
+                                           "error");        
+                    deferred.reject();
+                }
+ 
+            });
+
+            return deferred;
+        },
+ 
+        attachValidator: function() {
+            this.validatorSignUp=$("#frmSignUp").kendoValidator({
+                validateOnBlur: false,
+                rules:{
+                    verifyPasswords: function(input){
+                        var ret = true;
+                        if (input.is("#txtPassword2"))
+                            ret = input.val() === $("#txtPassword1").val();
+                        return ret;
+                    }
+                },
+                messages:{
+                    verifyPasswords: "Password do not match"
+                }
+            }).data("kendoValidator");
+ 
+            this.validatorSignIn=$("#frmSignIn").kendoValidator({
+                validateOnBlur:false
+            }).data("kendoValidator");
+ 
+            this.validatorResetPassword=$("#frmResetPassword").kendoValidator({
+                validateOnBlur: false,
+                rules:{
+                    verifyPasswords: function(input){
+                        var ret = true;
+                        if (input.is("#txtResetPassword2"))
+                            ret = input.val() === $("#txtResetPassword1").val();
+                        return ret;
+                    }
+                },
+                messages:{
+                    verifyPasswords: "Password do not match"
+                }
+            }).data("kendoValidator");
+ 
+        },
+ 
+        signIn:function(e){
+ 
+            var self=this;
+ 
+            e.preventDefault();
+             
+            if(this.validatorSignIn.validate()==false) {
+                
+               return;
+ 
+            }
+             
+            $("#btnSignIn").button("loading");
+ 
+            // make an ajax request to signin the user
+           $.ajax({
+                         
+                url: "/parse/functions/userLogin",
+                dataType: "json",
+                type:"POST",
+                headers: ajaxHeader,
+                 
+                data:kendo.stringify({
+                       userName: this.get("email").toLowerCase(),
+                       password: this.get("password"),
+                }),
+                beforeSend:function(){
+                  kendo.ui.progress($('body'), true);
+                },
+                complete:function(){
+                  kendo.ui.progress($('body'), false);
+                },
+                success: function(jsonResponse) {
+                     
+                    if(jsonResponse.result.sessionToken) {   // logged-in
+                        var result = jsonResponse.result;
+                        amplify.store( "trcked.com", {  userID: result.userId,
+                                                        userName: self.email.toLowerCase(),
+                                                        sessionToken:result.sessionToken,
+                                                        vendorID:result.vendor,
+                                                        emailValidated:result.emailValidated 
+                                                      } );
+                         
+                        self.completeSignInSignUp(false);
+                    }
+                     
+                    else {
+                        kendoNotification.show(appDefaults.notificationMessages.siginError,"error");
+                    }
+ 
+                    $("#btnSignIn").button("reset");
+                },
+ 
+                error: function(errorResponse) {
+ 
+ 
+                    if (errorResponse.responseJSON && errorResponse.responseJSON.code == 209){
+                        //invalid session token, clear it out
+                        amplify.store( "trcked.com",null);
+                        delete ajaxHeader["X-Parse-Session-Token"];
+                        //recursive call
+                        self.signIn(e);
+                    } else {
+                        kendoNotification.show(appDefaults.notificationMessages.siginError,"error");
+                        $("#btnSignIn").button("reset");
+                    }
+                }
+ 
+            });
+ 
+        },
+ 
+        backToCreateAcct: function(e){
+
+            this.set("isRegisterVisible", true);
+            this.set("isSignInVisble", false);
+            this.set("isPaymentVisible", false);
+
+        },
+
+        toggleViews: function(e){
+             
+            e.preventDefault();
+ 
+            this.validatorSignUp.hideMessages();
+            this.validatorSignIn.hideMessages();
+  
+            this.set("isRegisterVisible", !this.isRegisterVisible);
+            this.set("isSignInVisble", !this.isSignInVisble);
+
+            // $("#frmSignUp").toggle();
+            // $("#frmSignIn").toggle();
+ 
+        },
+ 
+        signUp: function(e){
+ 
+            var refPartnerId = $('#txtRefPartner').val();
+ 
+            if (refPartnerId){
+                this.set("refPartner", refPartnerId);
+            }
+ 
+            var self=this;
+ 
+            e.preventDefault();
+ 
+            if(!self.termsOfServiceAccepted) {
+                kendo.ui.ExtAlertDialog.show({ title: "Terms of Service", message: "Please READ and ACCEPT Terms of Service first.",icon:"k-ext-information" });
+ 
+                return;
+            }
+ 
+ 
+            if(this.validatorSignUp.validate()==false)
+                return; 
+            
+            userModel.set("isbtnRegisterEnabled", false);
+            // $("#btnSignUp").button("loading");
+
+            //now ask for payment
+            // this.set("paymentRequired", true);
+             
+            //clear out any existing session tokens (shouldnt be any)
+            amplify.store("trcked.com",null);
+
+            // $("#frmSignUp").hide();
+            this.set("isPaymentVisible", true);
+            this.set("isRegisterVisible", false)
+
+            //ensure that the cursor is at the beginning of the masked task box
+            //taken from http://www.telerik.com/forums/always-set-the-caret-at-the-beginning-when-field-is-empty
+
+            // $("#ccCardNumber").bind("focus", function () {
+
+            //    if (this.createTextRange) {
+            //        var part = this.createTextRange();
+            //        part.move("character", 0);
+            //        part.select();
+            //    } else if (this.setSelectionRange) {
+            //        var maskedinput = this;
+            //        setTimeout(function () { 
+            //            maskedinput.setSelectionRange(0, 0);
+            //        }, 0)
+            //    }
+            // });                       
+        },
+ 
+        showTermsOfService: function(e){
+ 
+            e.preventDefault();
+ 
+            var termsOfServiceWindow = $("#windowTermsOfService");
+                if(!termsOfServiceWindow.data("kendoWindow")) {
+                    termsOfServiceWindow.kendoWindow({
+                        width: "715",
+                        height: "575",
+                        title: "Please read the document carefully",
+                        content: "content/terms_of_service.html",
+                        modal: true
+ 
+                    });
+                }
+ 
+            termsOfServiceWindow.data("kendoWindow").center().open();
+        },
+ 
+        completeSignInSignUp: function(isNewAccount) {
+ 
+            var targetUrl = getParameterByName('retUrl', true);
+
+            if (amplify.store("trcked.com")) {
+                 
+                if (targetUrl != ""){
+                    //window.location.replace(targetUrl);
+                    var verifyId = getParameterByName("verifyid", true);
+                    if (verifyId){
+                      userModel.completeEmailValidation(verifyId)
+                      .then(function(){
+                        //all is well, we can redirecto the main app now
+                        if (amplify.store("trcked.com").emailValidated == true)   
+                          window.location.replace("app.htm");                        
+                        });
+                    } else {
+                      //just go to the target URL
+                      window.location.replace(targetUrl);
+                    }
+                } else {
+                    if (amplify.store("trcked.com").emailValidated == true)   
+                      window.location.replace("app.htm");
+                    else {
+                      //show the email verification screen
+                      this.set("emailVerificationState",true);
+                      this.set("isSignInVisble", false);
+                      this.set("isPaymentVisible", false);
+                    }
+                }
+                return;
+            }
+
+        },
+ 
+        verifyEmail: function(e) {
+            
+            var self=this;
+            var btnVerify=$(e.target);
+ 
+            btnVerify.button("loading");
+ 
+             $.ajax({
+                url: '/parse/users/'+amplify.store("trcked.com").userID,
+                dataType: 'json',
+                type: 'GET',
+                headers: ajaxHeader,
+                beforeSend:function(){
+                  kendo.ui.progress($('body'), true);
+                },
+                success:function(result){
+                   if(result.emailValidated) {
+                        // alert('verified!');
+                        var store=amplify.store("trcked.com");
+                        store.emailValidated=true;
+                        amplify.store("trcked.com",store);
+                        kendoNotification.show({ title:'E-mail Verified', message:"Your email address has been verified. Thank you." },"success"); 
+                    }
+ 
+                   else
+                        kendoNotification.show({ title:'Not Verified', message:"Your email address is not verified" },"error"); 
+                },
+                error:function(result){
+                    kendoNotification.show({ title:'Error', message:"An error occured...try again" },"error");                        
+                },
+                complete:function(){
+                    kendo.ui.progress($('body'), false);
+
+                    if(amplify.store("trcked.com").emailValidated)
+                        window.location.replace("app.htm");
+                     
+                    btnVerify.button("reset");
+                }
+ 
+            });         
+ 
+        },
+ 
+        resendEmail: function(e) {
+            var self=this;
+            var btnResend=$(e.target);
+ 
+            btnResend.button("loading");
+ 
+             $.ajax({
+                url: '/parse/functions/userVerifyEmailResend',
+                dataType: 'json',
+                type: 'POST',
+                headers: ajaxHeader,
+ 
+                data: kendo.stringify({
+                    // userId: amplify.store("trcked.com").userID
+                    userName: amplify.store("trcked.com").userName.toLowerCase()
+                }),
+                beforeSend:function(){
+                  kendo.ui.progress($('body'), true);
+                },
+                success:function(httpResponse){
+                   if(httpResponse.result.sendStatus)
+                       kendoNotification.show({ title:'Email Sent', message:"Please check your inbox" },"success");
+                   else
+                        kendoNotification.show({ title:'Error', message:"Error occured while sending email" },"error"); 
+                },
+                error:function(result){
+                    kendoNotification.show({ title:'Error', message:"An error occured...try again" },"error");                        
+                },
+                complete:function(){
+                    kendo.ui.progress($('body'), false);
+                    btnResend.button("reset");
+                }
+ 
+            });         
+ 
+        },
+ 
+        emailResetLink: function(e) {
+             
+            var self=this;
+            e.preventDefault();
+ 
+            if(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email)==false) {
+                kendo.ui.ExtAlertDialog.show({ title: "Invalid Email", message: "Please enter a valid email address",icon:"k-ext-error" });
+                return;
+            }
+ 
+            $.when(kendo.ui.ExtYesNoDialog.show({ title: "Email Reset link", message: "A password reset link will be emailed to you. Continue?",icon:"k-ext-question" }))
+            .done(function (response) {
+                if(response.button=="Yes") {
+                  delete ajaxHeader["X-Parse-Session-Token"];
+                  $.ajax({
+                            url: '/parse/functions/userPwdResetRequest',
+                            dataType: 'json',
+                            type: 'POST',
+                            headers:ajaxHeader,
+                            data:kendo.stringify({
+                                email: self.email.toLowerCase()
+                            }),
+                            beforeSend:function(){
+                              kendo.ui.progress($('body'), true);
+                            },
+                            complete:function(){
+                              kendo.ui.progress($('body'), false);
+                            },
+                            success:function(result){
+                                kendoNotification.show({ title:'Check email', message: "If your email address exists in our system, you should receive the password reset link" },"success");
+                                 
+                            },
+                         
+                            error:function(jqXHR,textStatus,errorThrown){
+                                kendoNotification.show({title:"Error!",message:"An error occured while processing the request"},"error")
+                                //handleAjaxError(jqXHR,textStatus,errorThrown);                      
+                            }
+
+                  });
+                }
+            });
+ 
+ 
+ 
+        },
+ 
+        resetPassword: function(e) {
+            var self=this;
+ 
+            e.preventDefault();
+            if(this.validatorResetPassword.validate()==false)
+                return; 
+             
+            $("#btnResetPassword").button("loading");
+            
+            $.ajax({
+                    url: '/parse/functions/userPwdResetComplete',
+                    dataType: 'json',
+                    type: 'POST',
+                    headers:ajaxHeader,
+                    data:kendo.stringify({
+                        resetRequestId: this.resetRequestID,
+                        newPwd: $("#txtResetPassword1").val()
+                    }),
+                    success:function(httpResponse){
+                        if(httpResponse.result.success)
+                            kendoNotification.show({ title:'Password Changed', message: "Password has been changed successfully. Please Sign in" },"success");
+                        else
+                            kendoNotification.show({ title:'Error', message: httpResponse.result.message },"error");
+ 
+                    },
+                 
+                    error:function(jqXHR,textStatus,errorThrown){
+                        kendoNotification.show({title:"Error!",message:"An error occured while processing the request"},"error")
+                        //handleAjaxError(jqXHR,textStatus,errorThrown);                      
+                    },
+                    beforeSend:function(){
+                      kendo.ui.progress($('body'), true);
+                    },
+                    complete:function(){
+                       kendo.ui.progress($('body'), false);
+                       $("#frmResetPassword").hide();
+                       $("#frmSignIn").show();
+                        
+                    }
+ 
+            });
+        }
+ 
+     });
+     
+ 
+     $(function() {
+        //init notifications
+        kendoNotification = $("#kendoNotification").kendoNotification({
+                        position: {
+                            pinned: true,
+                            top: 30,
+                            right: 30
+                        },
+                        autoHideAfter: 4000,
+                        stacking: "down",
+                        templates: [
+                         {
+                            type: "info",
+                            template: $("#infoTemplate").html()
+                        },
+ 
+                        {
+                            type: "error",
+                            template: $("#errorTemplate").html()
+                        }, {
+                            type: "success",
+                            template: $("#successTemplate").html()
+                        }]
+            }).data("kendoNotification");
+ 
+        //bind the view model
+        kendo.bind(document.body, userModel);
+        userModel.attachValidator();
+ 
+        //initalize card payment screen
+      //   var Card = require("card");
+      // var card = new Card({
+      //     form: '#payment-info-form',
+      //     container: '#payment-info-form'
+
+      //     // formSelectors: {
+      //     //     nameInput: 'input[name="first-name"], input[name="last-name"]'
+      //     // }
+      // });
+
+
+        //load app defaults
+        var trckedConfig;
+        if (String(window.location.href).indexOf('//app.') > 0){
+            trckedConfig = 'trcked_app.json';
+        } else
+            trckedConfig = 'trcked_dev.json';
+ 
+        // console.log('server URL Environment Variable' + process.env.SERVER_URL);
+        //load app defaults
+        $.ajax({    
+          
+            url: trckedConfig,
+            type: "GET",
+            headers:{"Content-Type":"application/json"},
+             
+            success:function(result){
+                userModel.set("isSignInVisble", true);
+
+                console.log('JSON config has been loaded');
+
+                appDefaults = result;
+ 
+                //ajax header
+                ajaxHeader["Content-Type"]="application/json";
+                ajaxHeader["X-Parse-Application-Id"]=appDefaults.parse.applicationID;
+                ajaxHeader["X-Parse-REST-API-Key"]=appDefaults.parse.restAPIKey;
+
+                //onchange of credit card number field
+                // $("#ccCardNumber").kendoMaskedTextBox({
+                //     change: function() {
+                //         var value = this.value();
+                //         console.log(value); //value is the selected date in the maskedtextbox
+                //         value = value.replace(/-/g, "");
+                //         value = value.replace(/_/g, "");
+                //         userModel.set("ccNumber", value);
+                //     }
+                // });
+
+                //initialize card screen
+              var card = new Card({
+                  form: '#payment-info-form',
+                  container: '.card-wrapper',
+
+                  formSelectors: {
+                      nameInput: '#ccCardHolderName',
+                      cvcInput:'#ccardCVC',
+                      expiryInput:'#ccardExpiry',
+                      numberInput:'#ccCardNumber'
+
+                  },
+                  placeholders: {
+                      number: '4111 1111 1111 1111',
+                      name: 'John Smith',
+                      expiry: '12/16',
+                      cvc: '123'
+                  }
+              });
+
+                //this will get triggered when user clicks on SUBMIT on the payment form
+                $('#payment-info-form').submit(function(e) {
+
+                  //get the card type to send to Payeezy
+                  for (var i = 0; i < userModel.get("cardTypes").length - 1; i++){
+                    var testObj = userModel.get("cardTypes")[i];
+                    if (testObj.internalId == card.cardType){
+                      userModel.set("selectedCardType", testObj.payEezyValue);
+                      break;
+                    }
+                  };
+
+                  //break the full expiration date into month/year which is how Payeezy expects it
+                  var expirationArray = userModel.get("ccExpFull").split('/');
+                  userModel.set("ccExpMonth", String( expirationArray[0]).trim() );
+                  userModel.set("ccExpYear", String( expirationArray[1]).trim() );
+
+                  if (!userModel.get("ccNumberDisplay")){
+                    //there is abug in the form wher ethe user Model is NOT updated 
+                    //with the entered PAN for certain types of card. To fix this we read the DOM for the value
+                    userModel.set("ccNumberDisplay", $('#ccCardNumber').val());
+                  }
+
+                  //strip our all or any white spaces 
+                  userModel.set("ccNumber", userModel.get("ccNumberDisplay").replace(/\s/g, '') );
+
+
+                  // userModel.set("selectedCardType", _.find(userModel.get("cardTypes"), {internalId:card.cardType}).payEezyValue);
+
+                  // console.log(card);
+                  userModel.set("isPayButtonEnabled", false);
+
+                  //invalid session token, clear it out
+                  amplify.store( "trcked.com",null);
+                  delete ajaxHeader["X-Parse-Session-Token"];
+
+                  // var $form = $(this);
+                  var apiKey = document.getElementById("apikey").value;
+                  var js_security_key = document.getElementById("js_security_key").value;
+                  // <!-- Setting Key parameters for Payeezy gettoken method -->
+                  Payeezy.setApiKey(apiKey);
+                  Payeezy.setJs_Security_Key(js_security_key);
+                  Payeezy.setTa_token(ta_token.value);
+                  Payeezy.setAuth(true);
+                  Payeezy.createToken(function(status, response){
+                    // console.log(status);
+                    console.log(response);
+
+                    if (response.status == 'success'){
+                        userModel.set("vendorToken", response.token);
+                        
+                        $.ajax({
+                            url: '/parse/functions/newUserRegister',
+                            dataType: 'json',
+                            type: 'POST',
+                            headers:ajaxHeader,
+                            data:kendo.stringify({
+                                vendorName: userModel.get('vendorName'),
+                                email: userModel.get('email').toLowerCase(),
+                                password: userModel.get('password'),
+                                vendorTimezone: jstz.determine().name(),
+                                refPartner: userModel.get('refPartner'),
+                                vendorToken: userModel.get("vendorToken")
+                            }),
+                            success:function(jsonResponse){
+                                if (!jsonResponse.result.message){
+                                    userModel.set("isPaymentVisible", false);
+                                    
+                                    var result = jsonResponse.result;
+                                    amplify.store( "trcked.com", {  userID: jsonResponse.result._id,
+                                                                    userName: userModel.get("email"),
+                                                                    sessionToken: jsonResponse.result.sessionToken,
+                                                                    vendorID: jsonResponse.result.newVendorId,
+                                                                    emailValidated:false 
+                                                                  } );
+                                     
+                                } else {
+                                    kendoNotification.show({ title:'Error Signing Up', message:jsonResponse.result.message + '( ' + jsonResponse.result.code + ' )' },"error");
+
+                                    userModel.set("isbtnRegisterEnabled", true);
+                                    // $("#btnSignUp").button("reset");
+                                }
+                            },
+                            error:function(result){
+                                var errorObject = result.responseJSON;
+                                 
+                                var errorMsg;
+             
+                                if (errorObject.error)
+                                  errorMsg = errorObject.error.message;
+             
+                                if (errorObject.message)
+                                    errorMsg = errorObject.message;
+
+                                kendoNotification.show({ title:'Error Signing Up', message:errorMsg },"error");
+
+                                userModel.set("isbtnRegisterEnabled", true);
+                                // $("#btnSignUp").button("reset");                       
+                            },
+                            beforeSend:function(){
+                              kendo.ui.progress($('body'), true);
+                            },
+                            complete:function(){
+                                kendo.ui.progress($('body'), false);
+                                if ( amplify.store("trcked.com") && amplify.store("trcked.com").sessionToken){
+                                  userModel.completeSignInSignUp(true);
+                                }
+             
+                                userModel.set("isbtnRegisterEnabled", true);
+                                userModel.set("isPayButtonEnabled", true);
+
+                                
+                    
+                            }
+             
+                        }); 
+                    
+                    } else {
+                        // $("#btnSignUp").button("reset");
+
+                        userModel.set("isbtnRegisterEnabled", true);
+                        userModel.set("isPayButtonEnabled", true);
+
+                        var errorMsg = 'Card not charged';
+                        if ( response.Error && response.Error.messages.length > 0)
+                          errorMsg = response.Error.messages[0].description;
+
+                        kendoNotification.show({    title:'Card not valid', 
+                                                    message: errorMsg}, "error");                     
+                    };
+                  });
+
+                  e.preventDefault();//supress standard form submission
+
+                });
+
+                if (getParameterByName("refPartner")){
+                    $('#txtRefPartner').val(getParameterByName("refPartner"));
+                }
+ 
+                if(getParameterByName("verifyid")) {
+                    console.log('veriyf ID has been found!');
+                    //1. check if the user is currently logged in
+                    $.when(isUserLoggedIn())
+                    .then(function(loggedIn, emailValidated) {
+                      if (loggedIn && !emailValidated){
+                        userModel.completeEmailValidation(getParameterByName("verifyid"))
+                        .then(function(){
+                          window.location.replace('app.htm');  
+                        });
+                      } else if (!loggedIn){
+                        window.location.replace("index.htm?force_login=1&retUrl=index.htm?verifyid=" + getParameterByName("verifyid"));
+                      } else if (loggedIn && emailValidated)
+                        window.location.replace('app.htm');
+                    }, function(){
+                        kendoNotification.show({ title:'E-mail not validated', message:'Email could not be validated.' },"error");       
+                    });
+                }
+ 
+                else if(getParameterByName("resetid")) {
+                    userModel.resetRequestID=getParameterByName("resetid");
+                    // $("#frmSignIn").hide();
+                    userModel.set("isSignInVisble", false);
+                    userModel.set("isResetVisible", true);
+                    // $("#frmResetPassword").show();
+                    $("#divContainer").show();
+                    return;
+ 
+                }
+ 
+                else if(getParameterByName("register") && getParameterByName("register")=="1") {
+                    // userModel = this;
+                    userModel.set("isRegisterVisible", true);
+                    userModel.set("isSignInVisble", false);
+
+                    // $("#frmSignIn").hide();
+                    // $("#frmSignUp").show();
+
+                };
+ 
+                var forceLogin = getParameterByName("force_login");
+ 
+                if (forceLogin!="1")
+                    $.when(isUserLoggedIn()).then(function(loggedIn, emailValidated) {
+ 
+                        if (loggedIn) {
+                            console.log('user is all ready logged in. Redirecting to app...');
+                            // redirect to the dashboard
+                            window.location.replace("app.htm")
+                        }
+ 
+                        else {
+                            console.log('user is not logged in. Showing Logon Page');
+                            // user is not logged in - login first!
+                            $("#divContainer").show();
+ 
+                        }
+ 
+                    });
+                else{
+                    //clear out any stored client side data and try again
+                    amplify.store("trcked.com",null);
+                    //show the login screen
+                    $("#divContainer").show();
+                }
+            },
+             
+            error: function(){
+                alert('trcked.json could not be loaded.');
+            }
+        });
+     });
+ 
+     </script>
+ 
+    <!-- NOTIFICATIONS -->
+    <script id="infoTemplate" type="text/x-kendo-template">
+        <div class="notification-info">
+            <i class="fa fa-info-circle fa-3x"></i>
+            <h4>#= title #</h4>
+            <p>#= message #</p>
+        </div>
+    </script>
+ 
+    <script id="errorTemplate" type="text/x-kendo-template">
+        <div class="notification-error">
+            <i class="fa fa-times-circle fa-3x"></i>
+            <h4>#= title #</h4>
+            <p>#= message #</p>
+        </div>
+    </script>
+ 
+    <script id="successTemplate" type="text/x-kendo-template">
+        <div class="notification-success">
+            <i class="fa fa-check-circle-o fa-3x"></i>
+            <h4>#= title #</h4>
+            <p>#= message #</p>
+        </div>
+    </script>
+ 
+    <!-- /NOTIFICATIONS -->
+ 
+</body>
+ 
+</html>

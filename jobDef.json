@@ -1,0 +1,132 @@
+{
+    "jobs":[
+        {
+            "id":"repushMissedNotifications",
+            "cronTerm":"*/1 * * * *",
+            "modulePath":"./pusher.js",
+            "rootAttribute":"trkPusher",
+            "method":"repushMissedNotifications",
+            "hcheckId":"https://hchk.io/104857d4-48c7-445e-8092-15dafb4fe67a"
+        },
+        {
+            "id":"batchUpdateOrderPayInfo",
+            "cronTerm":"NEVER",
+            "modulePath":"./order.js",
+            "rootAttribute":"trkOrder",
+            "method":"batchUpdateOrderPayInfo"
+        },
+        {
+            "id":"qboOrdersPush",
+            "cronTerm":"0 7 * * * *",
+            "modulePath":"./vendor.js",
+            "rootAttribute":"trkVendor",
+            "method":"qboOrdersPush",
+            "hcheckId":"https://hchk.io/992f64dd-6f6d-4866-956e-a3fc8a72d44a"
+        },
+        {
+            "id":"postToSocial",
+            "cronTerm":"*/30 * * * *",
+            "modulePath":"./social.js",
+            "rootAttribute":"trkSocial",
+            "method":"savedSocialPostsPOST",
+            "hcheckId":"https://hchk.io/d92e1227-ab28-4ba8-afee-9149436038c1"
+        },
+        {
+            "id":"refreshQBOAccessTokens",
+            "cronTerm":"0 4 * * *",
+            "modulePath":"./vendor.js",
+            "rootAttribute":"trkVendor",
+            "method":"qboRefreshAccessToken",
+            "hcheckId":"https://hchk.io/0313670b-1904-4d9a-af21-498a04a0a14c"
+        },
+    	{
+    		"id":"billVendors",
+    		"cronTerm":"0 8 * * *",
+    		"modulePath":"./vendor.js",	
+    		"rootAttribute":"trkVendor",
+    		"method":"billVendors",
+            "hcheckId":"https://hchk.io/73014dfd-c3c1-4ee1-a510-86007fcdaffb"
+    	},
+    	{
+    		"id":"emailInventoryReport",
+    		"cronTerm":"0 9 * * *",
+    		"modulePath":"./inventory.js",
+    		"rootAttribute":"trkInventory",
+    		"method":"processEmailInventoryAlerts",
+            "hcheckId":"https://hchk.io/ee428fa8-1946-40e3-9a88-3fbab9b29819"
+    	},
+    	{
+    		"id":"doRealTimeInventoryAlerts",
+    		"cronTerm":"*/10 * * * *",
+    		"modulePath":"./inventory.js",
+    		"rootAttribute":"trkInventory",
+    		"method":"processRealTimeAlerts",
+            "hcheckId":"https://hchk.io/9794255e-fcb7-4eea-a2b7-a82172335ebb"
+    	},
+    	{
+    		"id":"completeOutstandingOrders",
+    		"cronTerm":"30 7 * * *",
+    		"modulePath":"./order.js",
+    		"rootAttribute":"trkOrder",
+    		"method":"completeOutstandingOrders",
+            "hcheckId":"https://hchk.io/912d4d14-555b-4f96-87e6-d7dd240649f6"
+    	},
+    	{
+    		"id":"emailDailySalesReport",
+    		"cronTerm":"30 7 * * *",
+    		"modulePath":"./order.js",
+    		"rootAttribute":"trkOrder",
+    		"method":"emailDailySalesReport",
+            "hcheckId":"https://hchk.io/029497a4-9958-4651-b21d-4fe7c14188ca"
+    	},
+    	{
+    		"id":"deleteExpiredUrls",
+    		"cronTerm":"0 5 * * *",
+    		"modulePath":"./utility.js",
+    		"rootAttribute":"trkUtility",
+    		"method":"deleteExpiredUrls",
+            "hcheckId":"https://hchk.io/4eefee5a-f602-4422-9472-a867061d4b99"
+    	},
+    	{
+    		"id":"publishScheduleToSocial",
+    		"cronTerm":"30 7 * * *",
+    		"modulePath":"./social.js",
+    		"rootAttribute":"trkSocial",
+    		"method":"publishScheduleToSocial",
+            "hcheckId":"https://hchk.io/7a2d1e15-e35d-40f2-b975-7d3e6971d114"
+    	},
+    	{
+    		"id":"genRepeatSocialPosts_CST",
+    		"cronTerm":"0 7 * * *",
+    		"modulePath":"./social.js",
+    		"rootAttribute":"trkSocial",
+    		"method":"generateRepeatedSocialPosts",
+    		"data":{
+				"timeZone": "America/Chicago"
+			},
+            "hcheckId":"https://hchk.io/e9af353f-c931-4e1d-a174-c0ad59d35a27"
+    	},
+    	{
+    		"id":"genRepeatSocialPosts_PST",
+    		"cronTerm":"0 7 * * *",
+    		"modulePath":"./social.js",
+    		"rootAttribute":"trkSocial",
+    		"method":"generateRepeatedSocialPosts",
+    		"data":{
+				"timeZone": "America/Los_Angeles"
+			},
+            "hcheckId":"https://hchk.io/39396414-24c2-492e-acfb-a28bde0aaa71"
+    	},
+    	{
+    		"id":"genRepeatSocialPosts_EST",
+    		"cronTerm":"0 7 * * *",
+    		"modulePath":"./social.js",
+    		"rootAttribute":"trkSocial",
+    		"method":"generateRepeatedSocialPosts",
+    		"data":{
+				"timeZone": "America/New_York"
+			},
+            "hcheckId":"https://hchk.io/991cfeda-6178-4333-adee-736e5376dfee"
+    	}
+    ]
+}

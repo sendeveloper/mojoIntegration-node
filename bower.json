@@ -1,0 +1,21 @@
+{
+  "name": "mojoServer",
+  "description": "Mojo",
+  "main": "index.js",
+  "authors": [
+    "Alon Raskin <araskin@go3i.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/araskin/mojoServer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist-plugin-pointlabels": "^0.0.4",
+    "chartist-plugin-tooltip": "^0.0.16"
+  }
+}

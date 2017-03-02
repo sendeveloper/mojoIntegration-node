@@ -1,0 +1,1 @@
+{"data":[{"menuItemId":{"collName":"menuItems","value":null,"type":"pointer"},"desc":{"value":null,"type":"string"},"qty":{"value":null,"type":"number"},"modifiers":{"value":null,"type":"object"},"orderHeader":{"collName":"orders","indexed":true,"value":null,"type":"pointer"}}]}

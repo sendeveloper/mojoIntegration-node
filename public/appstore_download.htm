@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Download our mobile app!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- prevent caching -->
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+	<meta http-equiv="pragma" content="no-cache" />
+
+	<!-- STYLE SHEETS -->
+	<link rel="stylesheet" href="styles/bootstrap.css" />
+	<link rel="stylesheet" href="styles/bootstrap-theme.css" />
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+	
+</head>
+
+<body>
+	<style scoped>
+		
+		.header {
+			text-align:center;
+			padding:10px;
+		}
+
+		.header img{
+			vertical-align: bottom;
+			width:50px;
+			height:50px;
+		}
+		.header h2{
+			display:inline-block;
+			font-weight:300;
+		}
+
+		hr.hr-style1 {
+		    border: 0;
+		    height: 1px;
+		    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+		    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+		    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+		    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+		}
+
+		p {
+			text-align: center;
+		}
+
+	</style>
+
+	<div class="container-fluid"  style="">
+
+		<div class="header">
+			<img src="" style="display:none"></img>
+			<h2 class="text-center" id="textVendorName" style="display:none">vendorname</h2>
+		</div>
+
+		<hr class="hr-style1"/>
+
+        <div id="webOrdering" class="alert alert-info" style="display:none" role="alert">
+        	<strong>Coming Soon: </strong>Online web ordering will be available soon...
+        </div> 
+        
+        <h2 class="text-center"><i class="fa fa-download"></i> Download our Mobile App!</h2>
+        
+        <p id="textRedirect" style="display:none">
+        	<i class="fa fa-spinner fa-spin"></i> Please wait while we redirect you to the appstore
+        </p>
+        <!-- apple store -->
+        <p>
+        	<a id="linkAppleAppStore" href="#" style="display:none"><img src="images/apple_appstore.png" alt="App Store" style="width:250px;height:80px"></a>
+        </p>
+
+        <!-- google play store -->
+        <p>
+        	<a id="linkGooglePlay" href="#" style="display:none"><img src="images/google_play.png" alt="Google Play" style="width:270px;height:90px"></a>
+        </p>
+
+        <div id="divNoApps" class="alert alert-warning" style="display:none" role="alert">
+        	<strong>No Apps! </strong>The vendor does not have any apps listed in the appstore(s)
+        </div>      
+		
+	</div>
+
+	<script src="js/jquery-1.11.1.js"></script>
+	<script src="js/kendo.ui.core.js"></script>
+	<script src="js/amplify.js"></script>
+
+	<script>
+		/**
+		 * JavaScript Client Detection
+		 * (C) viazenetti GmbH (Christian Ludwig)
+		 */
+		(function (window) {
+		    {
+		        var unknown = '-';
+
+		        // screen
+		        var screenSize = '';
+		        if (screen.width) {
+		            width = (screen.width) ? screen.width : '';
+		            height = (screen.height) ? screen.height : '';
+		            screenSize += '' + width + " x " + height;
+		        }
+
+		        //browser
+		        var nVer = navigator.appVersion;
+		        var nAgt = navigator.userAgent;
+		        var browser = navigator.appName;
+		        var version = '' + parseFloat(navigator.appVersion);
+		        var majorVersion = parseInt(navigator.appVersion, 10);
+		        var nameOffset, verOffset, ix;
+
+		        // Opera
+		        if ((verOffset = nAgt.indexOf('Opera')) != -1) {
+		            browser = 'Opera';
+		            version = nAgt.substring(verOffset + 6);
+		            if ((verOffset = nAgt.indexOf('Version')) != -1) {
+		                version = nAgt.substring(verOffset + 8);
+		            }
+		        }
+		        // MSIE
+		        else if ((verOffset = nAgt.indexOf('MSIE')) != -1) {
+		            browser = 'Microsoft Internet Explorer';
+		            version = nAgt.substring(verOffset + 5);
+		        }
+		        // Chrome
+		        else if ((verOffset = nAgt.indexOf('Chrome')) != -1) {
+		            browser = 'Chrome';
+		            version = nAgt.substring(verOffset + 7);
+		        }
+		        // Safari
+		        else if ((verOffset = nAgt.indexOf('Safari')) != -1) {
+		            browser = 'Safari';
+		            version = nAgt.substring(verOffset + 7);
+		            if ((verOffset = nAgt.indexOf('Version')) != -1) {
+		                version = nAgt.substring(verOffset + 8);
+		            }
+		        }
+		        // Firefox
+		        else if ((verOffset = nAgt.indexOf('Firefox')) != -1) {
+		            browser = 'Firefox';
+		            version = nAgt.substring(verOffset + 8);
+		        }
+		        // MSIE 11+
+		        else if (nAgt.indexOf('Trident/') != -1) {
+		            browser = 'Microsoft Internet Explorer';
+		            version = nAgt.substring(nAgt.indexOf('rv:') + 3);
+		        }
+		        // Other browsers
+		        else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
+		            browser = nAgt.substring(nameOffset, verOffset);
+		            version = nAgt.substring(verOffset + 1);
+		            if (browser.toLowerCase() == browser.toUpperCase()) {
+		                browser = navigator.appName;
+		            }
+		        }
+		        // trim the version string
+		        if ((ix = version.indexOf(';')) != -1) version = version.substring(0, ix);
+		        if ((ix = version.indexOf(' ')) != -1) version = version.substring(0, ix);
+		        if ((ix = version.indexOf(')')) != -1) version = version.substring(0, ix);
+
+		        majorVersion = parseInt('' + version, 10);
+		        if (isNaN(majorVersion)) {
+		            version = '' + parseFloat(navigator.appVersion);
+		            majorVersion = parseInt(navigator.appVersion, 10);
+		        }
+
+		        // mobile version
+		        var mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
+
+		        // cookie
+		        var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+
+		        if (typeof navigator.cookieEnabled == 'undefined' && !cookieEnabled) {
+		            document.cookie = 'testcookie';
+		            cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
+		        }
+
+		        // system
+		        var os = unknown;
+		        var clientStrings = [
+		            {s:'Windows 3.11', r:/Win16/},
+		            {s:'Windows 95', r:/(Windows 95|Win95|Windows_95)/},
+		            {s:'Windows ME', r:/(Win 9x 4.90|Windows ME)/},
+		            {s:'Windows 98', r:/(Windows 98|Win98)/},
+		            {s:'Windows CE', r:/Windows CE/},
+		            {s:'Windows 2000', r:/(Windows NT 5.0|Windows 2000)/},
+		            {s:'Windows XP', r:/(Windows NT 5.1|Windows XP)/},
+		            {s:'Windows Server 2003', r:/Windows NT 5.2/},
+		            {s:'Windows Vista', r:/Windows NT 6.0/},
+		            {s:'Windows 7', r:/(Windows 7|Windows NT 6.1)/},
+		            {s:'Windows 8.1', r:/(Windows 8.1|Windows NT 6.3)/},
+		            {s:'Windows 8', r:/(Windows 8|Windows NT 6.2)/},
+		            {s:'Windows NT 4.0', r:/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
+		            {s:'Windows ME', r:/Windows ME/},
+		            {s:'Android', r:/Android/},
+		            {s:'Open BSD', r:/OpenBSD/},
+		            {s:'Sun OS', r:/SunOS/},
+		            {s:'Linux', r:/(Linux|X11)/},
+		            {s:'iOS', r:/(iPhone|iPad|iPod)/},
+		            {s:'Mac OS X', r:/Mac OS X/},
+		            {s:'Mac OS', r:/(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/},
+		            {s:'QNX', r:/QNX/},
+		            {s:'UNIX', r:/UNIX/},
+		            {s:'BeOS', r:/BeOS/},
+		            {s:'OS/2', r:/OS\/2/},
+		            {s:'Search Bot', r:/(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
+		        ];
+		        for (var id in clientStrings) {
+		            var cs = clientStrings[id];
+		            if (cs.r.test(nAgt)) {
+		                os = cs.s;
+		                break;
+		            }
+		        }
+
+		        var osVersion = unknown;
+
+		        if (/Windows/.test(os)) {
+		            osVersion = /Windows (.*)/.exec(os)[1];
+		            os = 'Windows';
+		        }
+
+		        switch (os) {
+		            case 'Mac OS X':
+		                osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+		                break;
+
+		            case 'Android':
+		                osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+		                break;
+
+		            case 'iOS':
+		                osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
+		                osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+		                break;
+		        }
+		        
+		        // flash (you'll need to include swfobject)
+		        /* script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" */
+		        var flashVersion = 'no check';
+		        if (typeof swfobject != 'undefined') {
+		            var fv = swfobject.getFlashPlayerVersion();
+		            if (fv.major > 0) {
+		                flashVersion = fv.major + '.' + fv.minor + ' r' + fv.release;
+		            }
+		            else  {
+		                flashVersion = unknown;
+		            }
+		        }
+		    }
+
+		    window.userPlatform = {
+		        screen: screenSize,
+		        browser: browser,
+		        browserVersion: version,
+		        mobile: mobile,
+		        os: os,
+		        osVersion: osVersion,
+		        cookies: cookieEnabled,
+		        flashVersion: flashVersion
+		    };
+		}(this));
+	</script>
+
+	<script>
+		$(function() {
+
+			var appleAppStoreURL=null;
+			var googlePlayURL=null;
+
+			function getParameterByName(name) {
+              name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+              var regexS = "[\\?&]"+name+"=([^&#]*)";
+              var regex = new RegExp( regexS );
+              var results = regex.exec( window.location.href );
+              if( results == null )
+                return "";
+              else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            if(getParameterByName("vendorID")) {
+               
+                var vendorID=getParameterByName("vendorID");
+                
+                	var appDefaults = {};
+			        //load app defaults
+			        var trckedConfig;
+			        if (String(window.location.href).indexOf('//app.') > 0){
+			            trckedConfig = 'trcked_app.json';
+			        } else
+			            trckedConfig = 'trcked_dev.json';
+            
+		            $.ajax({    
+		             
+		                url: trckedConfig,
+		                type: "GET",
+		                headers:{"Content-Type":"application/json"},
+		                
+		                success:function(result){
+		                    //console.log('success loading app defaults!' + JSON.stringify(result));
+		                    appDefaults = result;
+		                }
+		            }).then(function(){
+		                var headerArray = [];
+		                headerArray["X-Parse-REST-API-Key"] = appDefaults.parse.restAPIKey;
+		                headerArray["X-Parse-Application-Id"] = appDefaults.parse.applicationID;
+		                headerArray["Content-Type"] = "application/json";      
+
+		                //get the vendor info
+                        return $.ajax({
+                            url: "/parse/functions/vendorGetInfo",
+                            dataType: "json",
+                            type:"POST",
+                            headers: headerArray,
+                            data:kendo.stringify({
+                                vendorId: vendorID
+                            })
+                        });
+		            }).then(function(ajaxResponse){
+		            	var result = ajaxResponse.result;
+						$("#textVendorName").text(result.vendorInfo.description).show();
+						if(result.vendorInfo.pictureLogo)
+							$(".header > img").attr("src",result.vendorInfo.pictureLogo.url).show();
+
+                    	if(result.vendorInfo.settings && typeof result.vendorInfo.settings==="object" && (result.vendorInfo.settings.appleAppStoreURL||result.vendorInfo.settings.googlePlayURL)) {
+                        	
+                        	var appleBundleId = result.vendorInfo.settings.appleAppStoreURL;
+                        	var googleAppId = result.vendorInfo.settings.googlePlayURL;
+
+                        	if (appleBundleId)
+                        		var desktopAppleUrl = 
+                        			'https://itunes.apple.com/us/app/keynote/id' 
+                        			+ appleBundleId + '?mt=8';
+
+                        	if (googleAppId)
+                        		var desktopGooglePlayUrl = 
+                        		'http://play.google.com/store/apps/details?id=' 
+                        		+ googleAppId;
+
+
+                        	desktopAppleUrl && $("#linkAppleAppStore").attr("href",desktopAppleUrl)&&$("#linkAppleAppStore").toggle();
+                        	desktopGooglePlayUrl && $("#linkGooglePlay").attr("href",desktopGooglePlayUrl)&&$("#linkGooglePlay").toggle();
+
+                        	var redirectURL = null;
+
+                        	var targetOS = userPlatform.os.toUpperCase();
+                        	console.log('target os is ' + targetOS);
+
+                        	switch(targetOS){
+                        		case 'IOS':
+                        			if (appleBundleId)
+                        				redirectURL= 'itms://itunes.apple.com/us/app/apple-store/id' + appleBundleId + '?mt=8';
+                        			break;
+                        		case 'ANDROID':
+                        			if (googleAppId)
+                        				redirectURL= 'market://details?id=' + googleAppId;
+                        			break;
+                        		case 'MAC OS X':
+                        			$('#webOrdering').show();
+                        		case 'WINDOWS':
+                        			$('#webOrdering').show();
+
+                        	};
+
+                        	console.log('redirect Url is ' + redirectURL);
+
+                        	if(redirectURL) {
+                        		$("#textRedirect").toggle();
+                        		setTimeout(function() {
+                        			window.location.replace(redirectURL);
+                        		}, 5000);
+                        	}
+
+                        }
+
+                        else {
+                        	$("#divNoApps").toggle();
+                        }
+                	});
+
+            }
+
+            else {
+            	$("#divNoApps").toggle();
+            }
+
+           
+		});
+	</script>
+
+</body>
+
+</html>

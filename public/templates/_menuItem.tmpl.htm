@@ -1,0 +1,452 @@
+<!-- MENU TEMPLATE -->
+<div class="container-fluid" id="appContentWrapper">
+    
+    <div class="row">
+
+        <!-- MAIN CONTENT -->
+        <!--<div    id="appContentContainer">-->
+
+            <!-- <div class="row k-pane k-scrollable" style="overflow-x:hidden;"> -->
+                    <div class="row-header entityHeader">
+                        <div class="col-xs-9">
+                            <h4>
+                                Menu Items&nbsp;
+                            </h4>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary" data-bind="click:editorModel.menuItem.addMenuItemRecord">
+                                <span class="hidden-xs">Add New Menu Item</span>
+                                <span class="visible-xs">Add</span>
+                        </button>
+                        </div>
+                        <div tabindex="-1" id="searchBoxWrapper" role="presentation" class="col-xs-12 k-widget k-textbox k-header k-state-default k-input-lg">
+                            <input id="inputSearchMenuItems" placeholder="Search Menu Items" type="text" class="k-input" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-busy="false">
+                        </div>                        
+                    </div>
+
+                    <div class="col-xs-12 trkListView"
+                         data-role="listview"
+                        data-template="tmplMenuItemRowAll"
+                        data-bind="source: allMenuItems, events:{dataBound:editorModel.menuItem.onMenuItemListViewDataBound}",
+                        data-selectable="false"
+                        id="kendoLVAllMenuItems">
+                    </div>
+            <!-- </div>          -->
+        <!--</div>-->
+
+        <!-- /MAIN CONTENT -->
+        
+        <!-- EDITOR -->
+        <div class="record-edit-view col-xs-12 col-md-6" id="appContentEditContainer" style="display:none">
+
+            <!-- Menu Items -->
+            <form role="form" id="frmMenuItemRecordEdit" class="form-record-edit" style="display:none">
+                
+                <div data-role="tabstrip" id="menuItemTabStrip">
+                    <ul>
+                        <li class="k-state-active">
+                            Item
+                        </li>
+                        <li>
+                            Modifiers
+                        </li>
+                    </ul>
+
+                    <!-- General Item Info -->
+                    <div>
+                        <div class="form-group">
+                        <label for="copyFromMenuItem" data-bind="visible:editorModel.menuItem.isCopyFromVisible">Copy From</label>
+                        <select name="copyFromMenuItem" id="copyFromMenuItem" data-role="dropdownlist"
+                                        class="form-control k-input-lg" 
+                                        data-text-field="name"
+                                        data-value-field="objectId"
+                                        data-filter="contains"
+                                        data-option-label = "{ name: 'Select menu item...', objectId: '0' }"
+                                        data-bind="source: editorModel.menuItem.copyFromList, value:editorModel.menuItem.copyFromMenuItem, visible:editorModel.menuItem.isCopyFromVisible, events:{change:editorModel.menuItem.onCopyFromMenuItemSelect}">
+                        </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMenuItemName">Item Name</label>
+                            <input class="form-control k-input-lg" name="txtMenuItemName" id="txtMenuItemName" placeholder="Enter item name" 
+                                    data-bind="value:editorModel.menuItem.name" required data-required-msg="Name is required" data-duplicate-msg="Item name already exists"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="txtMenuItemDescription">Description</label>
+                            <input class="form-control k-input-lg" name="txtMenuItemDescription" id="txtMenuItemDescription" placeholder="Enter item description" data-bind="value:editorModel.menuItem.description"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Minimum Total Order Amount</label>
+                            <input data-role="numerictextbox" 
+                                data-format="c"
+                                data-min="0"
+                                data-spinners=false
+                                data-bind="value:editorModel.menuItem.minTotalOrderAmount"
+                                class="form-control k-input-lg trkFullWidth" 
+                                placeholder="Leave blank for no minimum"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <div class="table-wrap">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr class="alert-info">
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th style="">
+                                                <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.menuItem.menuItemPrices.add"><i class="fa fa-plus"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody data-bind="source: editorModel.menuItem.menuItemPrices.prices" data-template="tmplMenuItemPriceRow"></tbody>   
+                                </table>
+                            </div>
+                        </div>                     
+
+                        <div class="form-group">
+                            <label>Taxes</label>
+                            <div class="table-wrap">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr class="alert-info">
+                                            <th></th>
+                                            <th>Description</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody data-bind="source: editorModel.menuItem.taxes" data-template="tmplMenuItemTaxesRow">
+                                    </tbody>   
+                                </table>
+                            </div>
+                            <label>Global Tax Exempt</label>
+                            <div class="btn-group btn-toggle pull-right"> 
+                                <button type="button" id="globalTaxYes" class="btn btn-primary btn-default active" 
+                                data-bind="click: editorModel.menuItem.toggleTaxExempt">Yes</button>
+                                <button type="button" id="globalTaxNo" class="btn btn-default" 
+                                data-bind="click: editorModel.menuItem.toggleTaxExempt">No</button>
+                            </div>
+                        </div>
+
+                        <div class="row div-item-image menuItemImageEdit">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <img class="trckedImagePreview" data-bind="attr:{src:editorModel.menuItem.getImageUrl}"/>
+                                    <input style="color:transparent" type="file" data-bind="events:{change:editorModel.menuItem.showImage}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 div-upload-progress" style="display:none">
+                                <div class="form-group">     
+                                     <label>Uploading Image</label>
+                                     <div class="progress-bar" data-role="progressbar"
+                                             data-min="0"
+                                             data-max="100" style="width:100%">
+                                     </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Print on Kitchen Ticket?</label>
+                            <div class="btn-group btn-toggle pull-right"> 
+                                <button type="button" id="printToKTYes" class="btn btn-primary btn-default active" 
+                                data-bind="click: editorModel.menuItem.togglePrintToKT">Yes</button>
+                                <button type="button" id="printToKTNo" class="btn btn-default" 
+                                data-bind="click: editorModel.menuItem.togglePrintToKT">No</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Show on Digital Board</label>
+                            <div class="btn-group btn-toggle pull-right"> 
+                                <button type="button" id="showOnDigitalBoardYes" class="btn btn-primary btn-default active" 
+                                data-bind="click: editorModel.menuItem.toggleShowOnDigitalBoard">Yes</button>
+                                <button type="button" id="showOnDigitalBoardNo" class="btn btn-default" 
+                                data-bind="click: editorModel.menuItem.toggleShowOnDigitalBoard">No</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Options -->
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-10 optionDropDownWrapper">
+                                        <div class="form-group">
+                                            <input name="lstOptionGroups" id="lstOptionGroups" data-role="dropdownlist"
+                                                   data-text-field="name"
+                                                   data-value-field="objectId"
+                                                   data-bind="source: menuItemOptions, value:editorModel.menuItem.selectedOptionsGroup"
+                                                   data-option-label="Select Modifier Group...">
+                                            </input>
+                                        </div>
+                                </div>
+                                <div class="col-xs-2 optionButtonAddWrapper">
+                                    <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.menuItem.menuItemOptionsAssignmentAdd">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <div class="row table-wrap" >
+                                    <div class="col-xs-12 trkListView"
+                                         data-role="listview"
+                                        data-template="tmplAssignedMenuItemOptions"
+                                        data-bind="source: editorModel.menuItem.optionGroups",
+                                        data-selectable="false">
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> 
+
+                <div class="col-xs-12 form-toolbar">
+                    
+                    <button type="button" class="col-xs-2 col-sm-3 btn btn-danger pull-left" data-bind="click:editorModel.menuItem.deleteRecord, visible:editorModel.menuItem.objectId"><i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp;Delete</span></button> 
+                    
+                    <div class="col-xs-9 col-sm-8 rightButtonGroup"> 
+
+                        <button type="button" class="saveButton btn btn-primary pull-right" data-loading-text="Saving..." data-bind="click:editorModel.menuItem.saveMenuItemRecord"><i class="fa fa-floppy-o"></i><span class="hidden-xs">&nbsp;Save</span></button>
+
+                        <button type="button" class="btn btn-default pull-right" data-bind="click:editorModel.menuItem.cancelSaveRecord"><i class="fa fa-times"></i><span class="">&nbsp;Cancel</span></button>
+                        
+                    </div>
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+    
+</div>
+
+<div id="cropper-modal" style="display:none">
+    <div class="row">
+        <div class="col-md-10">
+            <p class="lead">Your image must be cropped to ensure that it displays correctly on all devices.</p>
+            <p><strong>Zoom:</strong> Scroll the mouse wheel or drag touch on a touch screen device
+            <br><strong>Move:</strong> Using a mouse, "Click and hold" or "drag and hold" on a touch screen device</p>
+        </div>
+    </div>
+    <div id="cropper-image" class="row">
+        <div id="cropper-image-div" class="col-md-10">
+            <img src="" alt="Picture">
+        </div>
+    </div>
+    <div class="row btnRow">
+        <div class="col-md-10">
+            <button type="button" class="btn btn-primary saveButton" data-bind="click: imageUpload.doCrop" data-loading-text="Saving...">Save</button>
+            <button type="button" class="btn btn-default" data-bind="click: imageUpload.cancelCrop">Cancel</button>
+        </div>
+    </div>                                       
+</div>
+
+<!-- menu item MENU assignment -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemMenuAssignment">
+    <tr>
+        <td class="tdGroupName">
+            <input type="hidden" data-bind="value: objectId"/>
+            <input data-bind="value: name" class="form-control k-textbox" readonly aria-readonly="true"/>
+        </td>
+
+       <td class="tdDeleteMenuItemOption">
+            <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.menuItem.menuItemOptionsAssignmentDelete">
+                <i class="fa fa-trash-o"></i>
+            </button>
+       </td>
+    </tr>
+</script>
+
+<!-- menu item option groups -->
+<script type="text/x-kendo-tmpl" id="tmplAssignedMenuItemOptions">
+    <div class="row modifierRow">
+        <div class="col-xs-12 form-group">
+            <input type="hidden" data-bind="value: objectId"/>
+            <div data-bind="html: name" class="col-xs-8 noMargin noLeftPadding text-muted lead"></div>
+            <button type="button" class="col-xs-2 col-sm-1 btn btn-default btn-sm pull-right" data-bind="click:editorModel.menuItem.menuItemOptionsAssignmentDelete">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </div>
+       <div class="col-xs-12 form-group">
+            <label for="lstDefaultOptions">Default Modifiers</label>
+            <select class="form-control k-input-lg trkFullWidth" name="lstDefaultOptions" id="lstDefaultOptions" data-role="multiselect"
+                       data-text-field="description"
+                       data-value-field="id"
+                       data-option-label="Select Option..."
+                       data-bind="source: options, value:defaultValues" data-value-primitive="true">
+            </select>
+    
+       </div>
+
+        <div class="col-xs-6 form-group">
+            <label for="lstDefaultOptions">Min Required</label>
+            <input data-role="numerictextbox" 
+                data-format="n0" name="minRequiredItems"
+                data-min="0"
+                data-spinners ="false"
+                data-bind="value:amount"
+                required class="form-control k-input-lg"
+                validationMessage="Please enter number of required items"/>
+       </div>
+        <div class="col-xs-6 form-group">
+            <label for="maxRequiredItems">Max Allowed</label>
+            <input data-role="numerictextbox" 
+                data-format="n0" name="maxRequiredItems"
+                data-min="0"
+                data-spinners ="false"
+                data-bind="value:maxAmount"
+                required class="form-control k-input-lg trkFullWidth" validationMessage="Please enter a maximum amount (zero or greater)"/>               
+       </div>
+    </div>
+</script>
+
+
+<!-- menu item price row template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemPriceRow">
+    <tr>
+        <td><input data-bind="value: text" class="k-textbox form-control"/></td>
+        <td> 
+            <input data-role="numerictextbox" 
+                data-format="c"
+                data-min="0"
+                data-spinners=false
+                data-bind="value:price"
+                required
+                validationMessage="Please enter price"/>
+                
+        </td>
+        <td><button type="button" class="btn btn-default btn-sm" data-bind="click:delete"><i class="fa fa-trash-o"></i></button></td>
+    </tr>
+
+</script>
+
+<!-- menu item modifier row template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemModifierRow">
+    <tr>
+        <td><input name="modiferDesc" data-bind="value: modifierText" class="form-control" required
+        validationMessage="Please enter modifier description"/>
+        <span class="k-invalid-msg" data-for="modiferDesc">
+        </td>
+        <td> 
+            <input data-role="numerictextbox" 
+                data-format="c"
+                data-min="0"
+                data-format="c2" 
+                data-spinners=false
+                data-bind="value:cost"/>
+                
+        </td>
+        <td><button type="button" class="btn btn-default btn-sm" data-bind="click:delete"><i class="fa fa-trash-o"></i></button></td>
+    </tr>
+
+</script>
+
+<!-- /menu item modifier row template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemTaxesRow">
+    <tr data-bind="{attr:{class:rowClass}}">
+        <td style="text-align:center">
+            #if (applyToAll==false){#
+                <input type="checkbox" data-bind="checked:isChecked" />
+            #}#
+        </td>
+        <td data-bind="text:description"></td> 
+        <td>#:kendo.toString(percentage,"0.00\\%")#</td> 
+        
+    </tr>
+
+</script>
+
+<!-- /menu item modifier editor template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemModifierEditor">
+    <form role="form" id="frmMenuItemModifierEdit">
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" name="txtMenuItemModifierText" id="txtMenuItemModifierText" data-bind="value:modifierText"/>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        
+                        <input data-role="numerictextbox" 
+                                        name="txtMenuItemModifierCost" id="txtMenuItemModifierCost"
+                                        data-format="c"
+                                        data-min="0"
+                                        data-max="100"
+                                        data-bind="value:cost"
+                                        style="width:100%">
+                                        
+
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="text-align:right">
+                    <div class="form-group">
+                        <a class="btn btn-default btn-xs k-update-button" href="\\#"><i class="fa fa-check"></i></a>
+                        <a class="btn k-cancel-button btn-default btn-xs" href="\\#"><i class="fa fa-times"></i></a>
+                    </form>
+                </div>
+        </div>
+    </form>
+
+    
+</script>
+
+<!-- menu item tax row template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemTaxRow">
+   <div class="row row-menu-header">
+        <div class="col-md-6 row-menu-header-content">#:description#</div>
+        <div class="col-md-3 row-menu-header-content">#:kendo.toString(parseFloat(percentage),"0.00\\%")#</div>
+            
+        <div class="col-md-3" style="text-align:right">
+            <a class="k-edit-button btn btn-default btn-xs" href="\\#"><i class="fa fa-pencil"></i></a>
+             <a class="k-delete-button btn btn-default btn-xs" href="\\#"><i class="fa fa-trash-o"></i></a>
+        </div>
+    
+   </div>
+
+</script>
+
+<!-- /menu item tax row template -->
+
+<!-- menu item tax editor template -->
+<script type="text/x-kendo-tmpl" id="tmplMenuItemTaxEditor">
+     <form role="form" id="frmMenuItemTaxEdit">
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        
+                        <input name="lstTaxCode" id="lstTaxCode" data-role="dropdownlist"
+                                   data-text-field="description"
+                                   data-value-field="objectId"
+                                   data-bind="source: taxCodes,value:objectId">
+                        </input>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                       <label>this</label>
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="text-align:right">
+                    <div class="form-group">
+                        <a class="btn btn-default btn-xs k-update-button" href="\\#"><i class="fa fa-check"></i></a>
+                        <a class="btn k-cancel-button btn-default btn-xs" href="\\#"><i class="fa fa-times"></i></a>
+                    </form>
+                </div>
+        </div>
+    </form>
+</script>

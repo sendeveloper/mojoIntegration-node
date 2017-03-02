@@ -1,0 +1,189 @@
+<div class="container-fluid" id="appContentWrapper">
+    <div class="row">
+        <!--MAIN CONTENT -->
+        <!--<div class="col-xs-12">-->
+            <ul id="panelBar">
+
+                <li id="settingsBar">
+                    
+                    <span class="k-link k-state-selected text-center">
+                        Mojo Kitchen Display System
+                    </span>
+                    <span class="fa fa-globe pull-left" data-bind="click:displayKDSOverview"></span>
+                    <div class="row col-xs-2">
+                        <div class="form-group">
+                            <label for="lstTrucks">Select truck or location</label>
+                            <input  class="" data-role="dropdownlist" id="lstTrucks" name="lstTrucks"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: truckList, events:{change:onTruckLocationSelected}, value:selectedTruck"
+                                    data-option-label="Select your truck/location..."
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="row col-xs-1">
+                        <div class="form-group">
+                            <label for="kdsKDSId">Select KDS ID</label>
+                            <input  class="" data-role="dropdownlist" id="kdsKDSId" name="kdsKDSId"
+                                    data-bind="source: KDSIDArray, events:{change:onKDSIDChange}, value:currentKDSId"
+                                    data-option-label="Select a KDS ID"
+                                    data-value-primitive="true" required>
+                            </input>
+                        </div>
+                    </div>
+                    <div class="row col-xs-3">
+                        <div class="form-group">
+                            <label for="lstScheduleEvents">Select your event</label>
+                            <input  class="" data-role="dropdownlist" id="lstScheduleEvents" name="lstScheduleEvents"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: scheduledEvents, enabled: eventScheduleEnabled, events:{change:onScheduleEventSelected}"
+                                    data-option-label="Select schedule events"
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="row col-xs-6">
+                        <div class="form-group menuCategoryFormGroup">
+                            <label for="lstMenuCategories">Select your categories</label>
+                            <a class="pull-right" data-bind="click:selectAllCategories"><i class="fa fa-list"></i>All</a>
+                            <select class="" data-role="multiselect" id="lstMenuCategories" name="lstMenuCategories"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: menuCategoryList, enabled:menuCategoryEnabled, 
+                                                value:preSelectedCategories"
+                                    data-auto-bind="false"
+                                    data-option-label="Select Menu Categories"
+                                    data-value-primitive="true">
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <button id="kdsGoBtn" type="button" class="btn btn-primary" data-bind="click: onKDSGoBtnClick" disabled>
+                            <i class="fa fa-check"></i>Get My Orders
+                        </button>
+                    </div>
+                    <div class="row col-xs-12">
+                        <div data-role="listview"
+                            data-template="tmplMenuItem"
+                            data-bind="source: totalMenuItemList, visible:false"
+                            data-selectable="false"
+                            id="kdsLVMenuItemList">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <div    data-role="listview"
+                        data-template="tmplKDSOrder"
+                        data-bind="source: currentOrderList"
+                        data-selectable="false"
+                        data-auto-bind="false"
+                        id="kdsLVOrderList">
+                </div>
+            </div>
+        <!--</div>-->
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="tmplMenuItem">
+    <div class="row row-record col-xs-3">
+        <div class="col-xs-4 kdsMenuItemName">#:name#</div>
+    </div>
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplKdsHeader">
+    <div class="row row-record col-xs-12">
+        <img src="images/trcked_logo.png" alt="trcked logo" style="display:block;margin: 30px auto 30px auto"/>
+        <h2>Mojo Kitchen Display System</h2>
+    </div>
+</script>
+
+<!-- KDS Order Template -->
+<script type="text/x-kendo-tmpl" id="tmplKDSOrder">
+   <div class="kdsOrder">
+        <div class="kdsOrderHeader">
+            <div class="col-xs-6">
+                <button id="kdsNextStateBtn" type="button" class="btn btn-primary kdsCompleteBtn" data-bind="click: updateOrderStatus">
+                    <span class="kdsOrderCurrentStatus">#:concatOrderId# #:orderStatusText#</span>
+                </button>
+            </div>
+            <div data-bind="attr: { id: timeAgoId}" class="col-xs-6 text-right kdsTimeAgo">#:timeAgo#</div>
+        </div>
+        <div class="kdsOrderItemList">
+                    <div data-role="listview"
+                    data-template="tmplKDSOrderItems"
+                    data-bind="source: orderItems"
+                    data-selectable="false"
+                    id="kdsLVOrderItemsList">
+                    </div>
+        </div>
+    </div>
+</script>
+
+
+<!-- KDS Order Items Template  -->
+<script type="text/x-kendo-tmpl" id="tmplKDSOrderItems">
+   <div class="row row-record col-xs-12">
+        <div class="kdsOrderItem">
+            <div class="col-xs-10 pull-left">#:description#
+                #    if (typeof priceText != 'undefined' && priceText != null){#
+                        <br>#:priceText#
+                # } #
+            </div>
+            <div class="col-xs-2 pull-right text-right">#:qty#</div>
+        </div>
+
+        #if (typeof note != 'undefined'){#
+            <div class="col-xs-12 itemNotes">#:note#</div>
+        # } #
+        <div class="kdsOrderItemModifiers">
+                    <div data-role="listview"
+                    data-template="tmplKDSOrderItemModifierItem"
+                    data-bind="source: options"
+                    data-selectable="false"
+                    id="kdsLVOrderItemModifiersList">
+                </div>
+        </div>
+    </div>
+</script>
+
+<!-- KDS Order Items Template  -->
+<script type="text/x-kendo-tmpl" id="tmplKDSOrderItemModifierItem">
+    <div class="row col-xs-12">
+        <div class="col-xs-10 pull-left kdsOrderItemModifier">#:modifierText#</div>
+    </div>
+</script>
+
+<!-- KDS Overview window -->
+<div id="kdsOverview" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn close" data-dismiss="modal">Close</button>
+                <h3 class="modal-title">Item Summary</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row col-xs-12">
+                    <div    data-role="listview"
+                            data-template="tmplKDSItemSummaryTemplate"
+                            data-bind="source: menuItemSummary"
+                            data-selectable="false"
+                            id="kdsMenuItemSummary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- KDS Order Items Summary Template  -->
+<script type="text/x-kendo-tmpl" id="tmplKDSItemSummaryTemplate">
+    <div class="row row-record col-xs-12">
+        <div class="col-xs-10 pull-left">#:description#</div>
+        <div class="col-xs-2 pull-right text-right">#:qty#</div>
+    </div>
+</script>

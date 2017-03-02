@@ -1,0 +1,1 @@
+{"data":[{"_id":"53998c52e4b0a7e2630f814e","Description":"Harris County Tax","Percentage":1.25,"applyToAll":{"indexed":true,"value":false,"type":"boolean"}},{"_id":"53998c61e4b0a7e2630f814f","Description":"Texas State Tax","Percentage":6.0,"applyToAll":true},{"_id":"53998c74e4b0a7e2630f8150","Description":"US VAT","Percentage":3.0,"applyToAll":true}]}

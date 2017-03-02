@@ -1,0 +1,251 @@
+<div class="container-fluid" id="appContentWrapper">
+	
+	<style scoped>
+/*    	.panel {
+    		min-height:200px;
+    	}
+
+    	#twitterPosts iframe {
+    		width:100%!important;
+    	}
+
+    	#panelSocial,#panelOrder,#panelSchedule{
+
+    		height:400px;
+    		overflow-y: auto;
+    	}*/
+
+    	
+    </style>
+
+    <!-- system messages -->
+    <div class="row" style="margin-top:20px">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+			  <div class="panel-heading">
+			    <h3 class="panel-title" style="display:inline-block"><i class="fa fa-exclamation-triangle"></i> System Messages</h3>
+			    <div class="pull-right">
+			    	<label class="checkbox-inline">
+                        <input type="checkbox" data-bind="checked:dashboardMessagesConstraints.showInformationMessages,click:saveSettings">Information&nbsp;
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-bind="checked:dashboardMessagesConstraints.showWarningMessages,click:saveSettings">Warning&nbsp;
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-bind="checked:dashboardMessagesConstraints.showSuccessMessages,click:saveSettings">Success&nbsp;
+                    </label>
+			    </div>
+			    <div class="clearfix"></div>
+			  </div>
+			  
+			  <div class="text-center text-muted" data-bind="visible:loadingMsgs">
+			  	<h3><span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Checking...Please wait.</h3>
+			  </div>
+
+			  <div class="text-center text-muted" data-bind="visible:allSetFlag">
+			  	
+			  	<h3><span class="fa fa-check-square-o" aria-hidden="true"></span> You are good to go.</h3>
+			  </div>
+
+			  <ul class="list-group" data-template="info-messages-template" data-bind="source:infoMessages, visible:msgsExist">
+			  </ul>
+			</div>
+		</div>	
+	</div>
+
+	<div class="row">
+		
+		<!-- social posts -->
+		<div class="col-md-4">
+			<div class="panel panel-info" id="panelSocial">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Social</h3>
+			  </div>
+			  
+			  <div class="panel-body">
+
+			  	<div class="row text-muted" data-bind="visible:noSocialConnected">
+			  		<div class="col-md-12">
+			  			Social networks not connected
+			  		</div>
+			  	</div>
+
+			  	<!-- Facebook Posts -->
+				<div id="facebookPosts" data-template="facebookPostsTemplate" data-bind="source:facebookPosts">
+				  <div class="row" data-bind="visible:loadingFbPosts">
+			  		<div class="col-md-12"><h4><span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Loading your Facebook Posts...</h4></div>
+			  	  </div>
+				</div>
+
+				<!-- Twitter Status -->
+				<div id="twitterPosts">
+					<div class="row" data-bind="visible:loadingTwPosts">
+						<div class="col-md-12"><h4><span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Loading your tweets...</h4></div>
+				 	</div>
+				</div>
+
+			  </div>
+			</div>
+		</div>
+
+		<!-- orders -->
+		<div class="col-md-4">
+			<div class="panel panel-success " id="panelOrder">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Real Time Orders (Last 10 only)</h3>
+			  </div>
+			  <div class="panel-body">
+			  	<div class="row" data-bind="visible:loadingPosOrders">
+					<div class="col-md-12">
+						<h4><span style="top:10px" class="fa fa-spinner fa-spin" aria-hidden="true"></span> Fetching POS and online orders...</h4>
+					</div>
+				</div>
+			    <div data-template="orders-list-template" data-bind="source: orders"></div>
+			    <div class="row text-muted" data-bind="visible:noPosOrdersFound">
+			  		<div class="col-md-12">
+			  			No orders found
+			  		</div>
+			  	</div>
+			  </div>
+			</div>
+		</div>
+
+		<!-- schedule -->
+		<div class="col-md-4">
+			<div class="panel panel-info" id="panelSchedule">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Upcoming Schedule</h3>
+			  </div>
+			  <div class="panel-body">
+			  	
+			  	<div class="row" data-bind="visible:loadingSchedule">
+					<div class="col-md-12">
+						<h4><span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Fetching upcoming schedule...</h4>
+					</div>
+				</div>
+			    <div class="row text-muted" data-bind="visible:noScheduleEntriesFound">
+			  		<div class="col-md-12">
+			  			No Schedule Entries found
+			  		</div>
+			  	</div>
+			    <ul class="list-group" data-template="event-list-template" data-bind="source:eventList"></ul>
+			  </div>
+
+			  
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- order details window -->
+<!-- <div id="windowOrderDetails">
+	
+	<button type="button" class="btn btn-default" data-bind="click: closeSelectedOrderWindow">Close</button>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6"><strong>Order No:  <span data-bind="text: selectedOrder.orderId"></span></strong></div>
+			<strong><div class="col-md-6 text-right" data-bind="text: selectedOrder.createdAt"></div></strong>
+		</div>
+
+		<hr/>
+
+        <div data-template="order-items-template" data-bind="source: selectedOrder.orderItems"></div>
+        <hr/>
+        <div class="row" style="font-weight:bold">
+        	<div class="col-md-8">Sub Total:</div>
+        	<div class="col-md-4 text-right" data-bind="text: selectedOrder.formattedAmount"></div>
+        </div>
+
+        <div class="row">
+        	<div class="col-md-8">Taxes:</div>
+        	<div class="col-md-4 text-right" data-bind="text: selectedOrder.formattedTaxAmount"></div>
+        </div>
+
+        <div class="row" style="font-weight:bold">
+        	<div class="col-md-8">Total:</div>
+        	<div class="col-md-4 text-right" data-bind="text: selectedOrder.formattedGrandAmount"></div>
+        </div>
+
+	</div>
+</div> -->
+
+<!-- template scripts -->
+<script id="orders-list-template" type="text/x-kendo-template">
+	<div class="row container-fluid" style='border-bottom:1px solid \\#eee;padding-top:15px;padding-bottom:10px'>
+
+		<div class="row">
+			<div class="col-md-5">#:orderId#</div>
+			<div class="col-md-2">#:kendo.toString(amount+taxAmount, "$\\#\\#,\\#.00")#</div>
+			<div class="col-md-5">#:saleMode==2?"Pick up at":"Ordered at"#<br>#:moment(createdAt).format('MM/DD/YY, h:mm a')#</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				#:truckName#
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-muted">
+				#:orderItemsStr#
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="order-items-template" type="text/x-kendo-template">
+	<div class="row container-fluid" style='border-bottom:1px solid \\#eee;padding-top:5px;padding-bottom:5px'>
+
+		<div class="row">
+			<div class="col-md-8">#:description# (x#:qty#)</div>
+			<div class="col-md-4 text-right">#:kendo.toString(price, "$\\#\\#,\\#.00")#</div>
+		</div>
+		
+	</div>
+</script>
+
+<script id="info-messages-template" type="text/x-kendo-template">
+	<li class="list-group-item dashboardInfoMsg">
+		#if(parseInt(code)>=100 && parseInt(code)<200){#
+			<i class="fa fa-2x fa-warning text-warning"></i>&nbsp;
+		#}#
+
+		#:infoMsg#
+
+		<span class="btn-group pull-right" style="margin-top:0px">
+			  <button type="button" class="btn btn-default btn-sm" data-bind="click: fixIssue">Fix this</button>
+			  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			    <span class="caret"></span>
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			  	<li>&nbsp;&nbsp;<i class="fa fa-clock-o"></i> Remind me after...</li>
+			    <li class="divider"></li>
+			    <li><a href="" data-reminder="1 Hour" data-bind="click:setReminder">1 Hour</a></li>
+			    <li><a href="" data-reminder="3 Hours" data-bind="click:setReminder">3 Hours</a></li>
+			    <li><a href="" data-reminder="6 Hours" data-bind="click:setReminder">6 Hours</a></li>
+			    <li class="divider"></li>
+			    <li><a href="" data-reminder="1 Week" data-bind="click:setReminder">1 Week</a></li>
+			    <li><a href="" data-reminder="2 Weeks" data-bind="click:setReminder">2 Weeks</a></li>
+			    
+			  </ul>
+		</span>
+
+		<div class="clearfix"></div>
+	</li>
+
+</script>
+
+<script id="event-list-template" type="text/x-kendo-template">
+	<li class="list-group-item">
+		<a href="\\#" data-bind="click:openEvent">#:name#</a> on #:moment(startDateTime).format('MMMM Do YYYY, h:mm a')#
+		<span> - #:truckName#</span>
+	</li>
+
+</script>
+
+<script id="facebookPostsTemplate" type="text/x-kendo-template">
+	<div class="fb-post" data-href="https://www.facebook.com/permalink.php?story_fbid=#:postID#&id=#:pageID#" data-width="480">
+		
+	</div>
+
+</script>

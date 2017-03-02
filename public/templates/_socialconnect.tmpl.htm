@@ -1,0 +1,46 @@
+<div class="container-fluid" id="appContentWrapper">
+
+	<div class="alert alert-info alert-dismissible" role="alert" style="margin-top:15px">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <strong>Connect to Social Networks</strong> If you are already connected to a social network, clicking the "Connect" button will re-connect you to the corresponding network.
+	</div>
+
+	<form role="form" style="margin-top:50px">
+		
+
+		<div class="form-group">
+			<label for="lstFacebookPages">Facebook&nbsp;
+				<span class="badge alert-success" data-bind="visible:facebookConnected">Connected</span>
+				<span class="badge alert-warning" data-bind="invisible:facebookConnected">Not Connected</span>
+			</label>
+
+			<input  class="k-input-lg" data-role="dropdownlist" id="lstFacebookPages" name="lstFacebookPages"
+		        data-text-field="name"
+		        data-value-field="id"
+		        data-bind="source: facebookPages,events:{change:setFacebookPage},enabled: facebookConnected"
+		        data-option-label="Select default Facebook page..."
+		        data-value-primitive="true">
+	                                
+	        </input>
+
+	        <button type="button" class="btn btn-default btn-block btn-lg" data-bind="click: connectFacebook"><i class="fa fa-facebook"></i> Connect</button>
+
+
+		</div>
+
+		<hr/>
+
+		<div class="form-group">
+			<label>Twitter&nbsp;
+				<span class="badge alert-success" data-bind="visible:twitterConnected">Connected to <span data-bind="text:twitterName"></span></span>
+				<span class="badge alert-warning" data-bind="invisible:twitterConnected">Not Connected</span>
+				
+			</label>
+			
+			<button type="button" class="btn btn-default btn-lg btn-block" data-bind="click: connectTwitter"><i class="fa fa-twitter"></i> Connect</button>
+
+		</div>
+	</form>
+
+</div>
+

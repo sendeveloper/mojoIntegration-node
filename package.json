@@ -1,0 +1,44 @@
+{
+  "name": "mojoServer",
+  "version": "1.0.17",
+  "description": "Mojo",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sendeveloper/mojoIntegration-node.git"
+  },
+  "dependencies": {
+    "agenda": "^0.9.0",
+    "agendash": "^0.3.2",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "codebird": "^2.6.0",
+    "crypto-js": "^3.1.6",
+    "ejs": "^2.4.1",
+    "express": "^4.11.2",
+    "heartland-nodejs": "^0.1.2",
+    "http-auth": "^2.4.10",
+    "human-interval": "^0.1.6",
+    "kerberos": "~0.0.x",
+    "lodash": "^4.12.0",
+    "mandrill-api": "^1.0.45",
+    "moment": "^2.13.0",
+    "moment-timezone": "^0.5.4",
+    "node-quickbooks": "^2.0.11",
+    "oauth-1.0a": "^2.0.0",
+    "parse": "~1.8.0",
+    "parse-dashboard": "^1.0.18",
+    "parse-server": "^2.2.11",
+    "prettycron": "^0.10.0",
+    "pusher": "^1.3.0",
+    "request-stats": "^1.0.1",
+    "xml2js": "^0.4.17",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=4.3"
+  }
+}

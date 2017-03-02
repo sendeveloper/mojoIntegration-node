@@ -1,0 +1,7 @@
+"_id:string","acl:object","Name:string|indexed","Description:string","currentMenu:pointer|menuHeader|indexed","assignedStockList:pointer|stockListHeader|indexed","lastLocation:geopoint|indexed","locationUpdateStamp:date","currentStatus:string","vendor:pointer|vendor|indexed"
+"52ffd14ce4b013c661e3543a","","Saurabh Truck 1","Creamiest milk shakes ever!","","","[ 29.756950124833 , -95.355461601575]","2014-05-28 00:00:00.000","OPEN","53860565e4b0a73d895c6787"
+"52f2adf2e4b0148c3c6c7f9e","","Saurabh Truck 3","Low fat milkshakes that will make you want to jump up with joy","5359c1c4e4b07b9b72c496a6","52f3e276e4b0148c3c6c84f7","[ 29.7605422896 , -95.36232915093]","2014-05-12 00:00:00.000","OPEN","53860565e4b0a73d895c6787"
+"535eb716e4b05f697177f66b","","Jeremy's Truck 1","Best Juice in the World!","53808f76e4b09f5c7d4a86b4","","[ 29.767877545176 , -95.379725021925]","2014-05-29 00:00:00.000","CLOSED","5386059be4b0a73d895c6789"
+"5359c19ce4b07b9b72c4949a","","Jeremy's Truck 2","Best Juice in the World!","5359c1c4e4b07b9b72c496a6","","[ 29.790590511008 , -95.387483543309]","2014-05-20 00:00:00.000","OPEN","5386059be4b0a73d895c6789"
+"5320a5dee4b07b0d8014a51d","","Anurag Truck 1","Best Pasta around!!!","","","[ 29.747033804022 , -95.359154861237]","2014-05-30 00:00:00.000","CLOSED","53860591e4b0a73d895c6788"
+"52f92133e4b0148c3c6ca08d","","Saurabh Truck 2","Creamiest milk shakes ever!","","","[ 29.760553 , -95.366943]","2014-05-21 00:00:00.000","OPEN","53860565e4b0a73d895c6787"

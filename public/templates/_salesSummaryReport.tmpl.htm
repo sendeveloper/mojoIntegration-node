@@ -1,0 +1,201 @@
+
+    <div class="container-fluid" id="appContentWrapper">
+       <!-- <div class="row row-record col-md-12 rptOrderHistory"> -->
+        <div id="salesSummaryReport" class="panel panel-primary">
+            <div class="panel-heading">Sales Summary</div>
+            <div class="panel-body">
+                <div id="reportParams" class="row row-record col-xs-12 reportParams">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="lstTrucks">Select truck or location</label>
+                        <input  class="" data-role="dropdownlist" id="lstTrucks" name="lstTrucks"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: truckList, value:selectedTruck"
+                                data-option-label="All trucks/locations"
+                                data-value-primitive="true">
+                        </input>
+                        <span class="k-invalid-msg" data-for="Status"></span>
+                    </div>        		
+                    <div class="form-group col-xs-12 col-sm-6 col-md-2">
+                        <label for="kendoDPFrom">Duration</label>
+                        <input class="kendo-form-control" name="srptDuration" id="srptDuration" data-role="dropdownlist" 
+                        data-text-field="text" data-value-field="id" data-bind="source: durationSelection, events:{change:onDurationChange}" />
+                    </div>   
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="kendoDPFrom">Start</label>
+                        <input class="kendo-form-control" name="srptFromDate" id="srptFromDate" data-role="datetimepicker" 
+                            required data-required-msg="Enter Start Date/Time" data-type="date" data-date-msg="Not a valid date"
+                            data-bind="value: startDateTime,events:{change:onFromDateChange" />
+                    </div>              
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="kendoDPFrom">End</label>
+                        <input class="kendo-form-control" name="srptToDate" id="srptToDate" data-role="datetimepicker"
+                            required data-required-msg="Enter End Date/Time" data-type="date" data-date-msg="Not a valid date"
+                            data-bind="value: endDateTime, events:{change:onToDateChange" />
+                    </div>        
+                    <div class="submitButtonWrapper form-group col-xs-12 col-md-1">
+                        <button id="posOrderReportGoBtn" type="button" class="btn btn-primary pull-left" data-bind="click: executeSalesReport, enabled:runReportEnabled">
+                            <i class="fa fa-check"> Run </i>
+                        </button>
+                    </div>
+                </div>
+                <div id="pleaseWait" class="row col-xs-12 text-center text-muted"><i class="fa fa-refresh fa-spin"></i> Please Wait </div>
+                <div class="row reportHint k-selectable">
+                    <div class="userPrompt col-xs-12 k-selectable"><i class="text-muted fa fa-table fa-2x"></i>
+                        <div class="text-primary fa-2x">Sales Summary</div>
+                        <p class="text-muted">Click 'Run Report' to view your Sales Summary. <br>To view individual truck/location activity and/or terminal summary, select a truck/location. <br>Only terminals with activity will be shown.</p>
+                    </div>
+                </div>
+                <div id="highLevelView" class="col-xs-12" data-template="tmplHighLevelSummary" data-bind="source: resultObject, visible:resultReceived"></div>
+                <div id="scrollableSalesResult" class="row col-xs-12" data-bind="visible:resultReceived">
+                    <div id="summaryView" class="col-xs-12" data-template="tmplSalesGrandTotal" data-bind="source: resultObject"></div>
+                    <div id="terminalSummaryView" class="col-xs-12" data-template="tmplterminalSummary" data-bind="source: resultObject.terminals"></div>
+                </div>
+            </div>
+       </div>
+    </div>
+
+<script type="text/x-kendo-tmpl" id="tmplHighLevelSummary">
+    <div class="row leftRoundedCorner rightRoundedCorner">
+        <div>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Ticket</span>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Average</span>
+        </div>
+        <div>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Walk-up</span>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Avg. Walk-up</span>
+        </div>
+        <div>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Mobile</span>
+            <span class="col-md-1 hidden-xs visible-md visible-lg headingLabel text-center bg-info">Avg. Mobile</span>
+        </div>
+    </div>
+    
+    <div class="row leftRoundedCorner rightRoundedCorner">
+
+
+    </div>
+
+    <div class="row grandTotalRow">
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(prodOrderCount, "n0")#</span>
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(averageOrder, "c")#</span>
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(walkupOrderCount,"n0")#</span>
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(averageWalkup,"c")#</span>
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(mobileOrderCount,"n0")#</span>
+        <span class="col-md-1 hidden-xs visible-md visible-lg resultValue">#:kendo.toString(averageMobile,"c")#</span>
+    </div>
+</script>
+<script type="text/x-kendo-tmpl" id="tmplterminalSummary">
+    <div class="row leftRoundedCorner rightRoundedCorner">
+        <span class="col-md-1 col-xs-3 text-left headingLabel bg-info">Terminal #:id#</span>
+        <span class="col-md-2 col-xs-2 headingLabel text-center bg-info">Gross</span>
+        <span class="col-md-3 col-xs-2 headingLabel text-center bg-info">Refund(s)</span>
+        <span class="col-md-3 col-xs-2 headingLabel text-center bg-info">Discounts</span>
+        <span class="col-md-3 col-xs-3 headingLabel text-center bg-info">Net</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-3 resultLabel text-left">Cash</span>
+        <span class="col-md-2 col-xs-2 resultValue">#:kendo.toString(cashGross,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(cashRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(cashDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netCash,"c")#</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-3 resultLabel text-left">Credit</span>
+        <span class="col-md-2 col-xs-2 resultValue">#:kendo.toString(creditGross,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(creditRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(creditDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netCredit,"c")#</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-3 resultLabel text-left">Voucher</span>
+        <span class="col-md-2 col-xs-2 resultValue">#:kendo.toString(voucherGross,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(voucherRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(voucherDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netVoucher,"c")#</span>
+    </div>
+</script>
+
+<script type="text/x-kendo-tmpl" id="tmplSalesGrandTotal">
+
+    <div class="row leftRoundedCorner rightRoundedCorner">
+        <span class="col-md-1 col-xs-2 text-left headingLabel bg-info">Type</span>
+        <span class="col-md-2 col-xs-3 headingLabel text-center bg-info">Gross Receipts</span>
+        <span class="col-md-3 col-xs-2 headingLabel text-center bg-info">Refund(s)</span>
+        <span class="col-md-3 col-xs-2 headingLabel text-center bg-info">Discount</span>
+        <span class="col-md-3 col-xs-3 headingLabel text-center bg-info">Net</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-2 resultLabel">Product</span>
+        <span class="col-md-2 col-xs-3 resultValue">#:kendo.toString(grossSales,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(refundTotal,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(salesDiscountTotal,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netSales,"c")#</span>
+
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-2 resultLabel">Delivery</span>
+        <span class="col-md-2 col-xs-3 resultValue">#:kendo.toString(grossDelivery,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(refundDelivery,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(discountDelivery,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netDelivery,"c")#</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-2 resultLabel">Tax</span>
+        <span class="col-md-2 col-xs-3 resultValue">#:kendo.toString(grossTax,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(refundedTax,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">N/A</span>
+        <span class="col-md-3 col-xs-3 resultValue">#:kendo.toString(netTax,"c")#</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-2 resultLabel">Tip</span>
+        <span class="col-md-2 col-xs-3 resultValue">#:kendo.toString(grossTips,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(refundedTips,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">N/A</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(netTips,"c")#</span>
+    </div>
+    <div class="row grandTotalRow">
+        <span class="col-md-1 col-xs-3 resultLabel grandTotal">Total</span>
+        <span class="col-md-2 col-xs-3 resultValue grandTotal">#:kendo.toString(grossGrandTotal,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue grandTotal">#:kendo.toString(grandTotalRefunds,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue grandTotal">#:kendo.toString(grandTotalDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue grandTotal">#:kendo.toString(netGrandTotal,"c")#</span>
+    </div>
+    <div class="row subTotalLineFirst">
+        <span class="col-md-1 col-xs-3 resultLabel">Cash</span>
+        <span class="col-md-2 col-xs-3 resultValue breakDown">#:kendo.toString(cashGross,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(cashRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue breakdown">#:kendo.toString(cashDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(cashNet,"c")#</span>
+    </div>
+    <div class="row">
+        <span class="col-md-1 col-xs-3 resultLabel">Credit Card</span>
+        <span class="col-md-2 col-xs-3 resultValue breakDown">#:kendo.toString(creditGross,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(creditRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue breakdown">#:kendo.toString(creditDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(creditNet,"c")#</span>
+    </div>
+    <div class="row subTotalLineLast">
+        <span class="col-md-1 col-xs-3 resultLabel">Voucher</span>
+        <span class="col-md-2 col-xs-3 resultValue breakDown">#:kendo.toString(voucherGross,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(voucherRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue breakdown">#:kendo.toString(voucherDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(voucherNet,"c")#</span>
+    </div>
+    <div class="row breakDownLine">
+        <span class="col-md-1 col-xs-3 resultLabel">Walk-Up</span>
+        <span class="col-md-2 col-xs-3 resultValue breakDown">#:kendo.toString(walkupGross,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(walkupRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue breakdown">#:kendo.toString(walkupDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(walkupNetReceipts,"c")#</span>
+
+    </div>
+    <div class="row breakDownLine">
+        <span class="col-md-1 col-xs-3 resultLabel">Mobile Orders</span>
+        <span class="col-md-2 col-xs-3 resultValue breakDown">#:kendo.toString(mobileGross,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(mobileRefund,"c")#</span>
+        <span class="col-md-3 col-xs-2 resultValue">#:kendo.toString(mobileDiscount,"c")#</span>
+        <span class="col-md-3 col-xs-3 resultValue breakDown">#:kendo.toString(mobileNet,"c")#</span>
+
+    </div>
+</script>

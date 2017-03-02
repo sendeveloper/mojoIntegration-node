@@ -1,0 +1,293 @@
+
+<div class="container-fluid" id="appContentWrapper">
+    <div class="row">
+
+        <!--MAIN CONTENT -->
+        <!--<div class="col-xs-12" id="appContentContainer">-->
+        
+            
+            <div class="nav-record-list" style="display:none">
+
+                <form class="form-inline" role="form">
+                    <div class="form-group" style="display:none">
+                        <label class="sr-only" for="lstStatus">Select Status</label>
+                        <input name="lstStatus" id="lstStatus" data-role="dropdownlist"
+                               class="form-control k-input-lg" 
+                               data-text-field="text"
+                               data-value-field="value"
+                               data-bind="source: filterTruckStatus,events:{change:onStatusChange}">
+                        </input>
+                    </div>
+
+                    <div class="form-group" style="width:300px;display:none">
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="txtSearch" id="txtSearch">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="btnSearch" data-bind="click:searchData"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-default" type="button" id="btnSearchReset" data-bind="click:searchDataReset"><i class="fa fa-times"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="row-header" data-bind="visible:hasRecords">
+                <div class="col-xs-4 col-sm-4"><h4>Name</h4></div>
+                <div class="col-xs-4 col-sm-4 text-center"><h4><span>Menu</span></h4></div>
+                <!-- <div class="hidden-xs visible-md-* col-sm-3 text-center"><h4>Location</h4></div> -->
+                <div class="col-xs-4 text-center"><button type="button" class="btn btn-primary" data-bind="click:addTruckRecord">
+                    <span class="hidden-xs">Add Truck/Location</span>
+                    <span class="visible-xs">Add</span>
+                </button></div>
+                
+            </div>
+
+
+            <div data-role="listview"
+                    data-template="tmplTruckRow"
+                    data-bind="source: truckList,events:{dataBound:onTruckListViewDataBound}"
+                    class="kendo-list-view trkListView"
+                    id="kendoListView">
+            </div>
+        
+        <!--</div>-->
+
+        <!-- EDITOR CONTENT -->
+        
+        <div class="col-xs-12 col-md-6" id="appContentEditContainer" class="record-edit-view" style="display:none">
+        
+            <form role="form" id="frmTruckRecordEdit" class="form-record-edit">
+                <input type="hidden" data-bind="value:editorModel.objectId">
+
+
+                <div data-role="tabstrip">
+                    <ul>
+                        <li class="k-state-active">
+                            General
+                        </li>
+                        <li>
+                            Delivery
+                        </li>
+
+<!--                     <div class="form-group">
+                        <label for="txtTruckName">Truck/Location Name</label>
+                        <input class="form-control" name="txtTruckName" id="txtTruckName" placeholder="Enter truck name" data-bind="value:editorModel.name" 
+                        required data-required-msg="Name is required" data-duplicate-msg="Truck already exists with the name entered"/>
+                    </div> -->
+                        
+                    </ul>
+                
+                    <!-- General -->
+                    <div>
+                        
+                        <div class="form-group">
+                            <label for="txtTruckName">Name</label>
+                            <input class="form-control k-input-lg" name="txtTruckName" id="txtTruckName" placeholder="Enter truck/restaurant name" data-bind="value:editorModel.name" 
+                            required data-required-msg="Name is required" data-duplicate-msg="Truck/Restaurant already exists with the name entered"/>
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtStatus">Status</label>
+                            <input  class="" data-role="dropdownlist" id="lstStatus" name="lstStatus"
+                                    class="form-control k-input-lg"
+                                    data-text-field="text"
+                                    data-value-field="value"
+                                    data-bind="source: status,value:editorModel.currentStatus"
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lstCurrentMenu">Current Menu</label>
+                            <input  class="form-control k-input-lg" data-role="dropdownlist" id="lstCurrentMenu" name="lstCurrentMenu"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: menuHeaders,value:editorModel.menuHeader.objectId"
+                                    data-option-label="Select a menu..."
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lstCurrentMenu">Bulk/Catering Menu</label>
+                            <input  class="form-control k-input-lg" data-role="dropdownlist" id="lstBulkMenu" name="lstBulkMenu"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: bulkMenuHeaders,value: editorModel.bulkMenuHeader.objectId"
+                                    data-option-label="Select a menu..."
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lstCurrentMenu">Order to this location should be sent to...</label>
+                            <input  class="form-control k-input-lg" data-role="dropdownlist" id="lstLocations" name="lstLocations"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: editorModel.locations,value:editorModel.centralKitchen.objectId"
+                                    data-option-label="no where. Leave them here please."
+                                    data-value-primitive="true">
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Can customers order from this location?</label>
+                            <div class="btn-group btn-toggle pull-right"> 
+                                <button type="button" id="retailLocationOn" class="btn btn-primary btn-default active" data-bind="click: toggleIsLocationRetail">Yes</button>
+                                <button type="button" id="retailLocationOff" class="btn btn-default" data-bind="click: toggleIsLocationRetail">No</button>
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- Delivery -->
+                    <div>
+                        <div class="form-group">
+                            <label>Customer Delivery Available</label>
+                            <div class="btn-group btn-toggle pull-right"> 
+                                <button type="button" id="deliveryOff" class="btn btn-primary btn-default active" data-bind="click: editorModel.toggleDelivery">No</button>
+                                <button type="button" id="deliveryOn" class="btn btn-default" data-bind="click: editorModel.toggleDelivery">Yes</button>
+                            </div>
+                        </div>
+                       
+                        <div id="deliveryChargeType">
+                            <div class="row">
+                                <div class="form-group">
+                                    <input type="checkbox" class="form-control k-input-lg k-checkbox" name="minimumOrder" id="minimumOrder" data-bind="checked: editorModel.delivery.minimumOrder.enabled, enabled:editorModel.delivery.enabled">
+                                    <label class="k-checkbox-label" for="minimumOrder">Minimum Order Amount</label>
+                                    <input data-role="numerictextbox" class="form-control k-input-lg displayInline"
+                                        data-min="0"
+                                        data-spinners=false
+                                        data-format="c2"
+                                        name="minOrderAmount"
+                                        data-bind="value:editorModel.delivery.minimumOrder.amount, enabled:editorModel.delivery.minimumOrder.enabled"
+                                        data-activeNotZero-msg="Minimum delivery amound must be greater than zero"/>
+                                    
+                                </div>
+                                <span data-for='minOrderAmount' class='k-invalid-msg'></span>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <input type="checkbox" class="form-control k-input-lg k-checkbox" name="fixedCharge" id="fixedCharge" data-bind="checked: editorModel.delivery.fixedCharge.enabled, enabled:editorModel.delivery.enabled">
+                                    <label class="k-checkbox-label" for="fixedCharge">Fixed Delivery charge</label>
+                                    <input data-role="numerictextbox" class="displayInline"
+                                        data-min="0"
+                                        data-spinners=false
+                                        data-format="c2" 
+                                        data-bind="value:editorModel.delivery.fixedCharge.amount, enabled:editorModel.delivery.fixedCharge.enabled"
+                                        name="fixedChargeAmount"
+                                        data-activeNotZero-msg="Fixed delivery charge must be greater than zero"/>
+                                    
+                                </div>
+                                <span data-for='fixedChargeAmount' class='k-invalid-msg'></span>                         
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <input type="checkbox" name="distanceCharge" id="distanceCharge" class="form-control k-input-lg k-checkbox" data-bind="checked: editorModel.delivery.distanceCharge.enabled, enabled:editorModel.delivery.enabled">
+                                    <label class="k-checkbox-label" for="distanceCharge">Per mile Charge</label>
+                                    <input data-role="numerictextbox" class="form-control k-input-lg displayInline"
+                                        data-min="0"
+                                        data-spinners=false
+                                        data-format="c2" 
+                                        data-bind="value:editorModel.delivery.distanceCharge.amount, enabled: editorModel.delivery.distanceCharge.enabled"
+                                        name="distanceChargeAmount"
+                                        data-activeNotZero-msg="$/mile charge must be greater than zero"/>
+                                </div>
+                                <span data-for='distanceChargeAmount' class='k-invalid-msg'></span>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <input type="checkbox" name="deliveryTaxed" id="deliveryTaxed" class="form-control k-input-lg k-checkbox" data-bind="checked: editorModel.delivery.deliveryTax.enabled, enabled:editorModel.delivery.enabled">
+                                    <label class="k-checkbox-label" for="deliveryTaxed">Delivery is taxed at </label>
+                                    <input data-role="numerictextbox" class="displayInline"
+                                        data-min="0"
+                                        data-spinners=false
+                                        data-format="n2" 
+                                        data-bind="value:editorModel.delivery.deliveryTax.percent, enabled: editorModel.delivery.deliveryTax.enabled"
+                                        name="deliveryTaxPercent"
+                                        data-activeNotZero-msg="Tax % must be greater than zero"/>
+                                    <span> percent </span>
+                                </div>
+                                <span data-for='deliveryTaxed' class='k-invalid-msg'></span>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="maxDeliveryDistance">Maximum delivery distance (miles)</label>
+                                    <input data-role="numerictextbox" class="form-control k-input-lg displayInline"
+                                        data-format="n1"
+                                        data-min="1"
+                                        data-spinners=true required data-message="You must specify a maximum delivery distance"
+                                        data-bind="value:editorModel.delivery.maxDeliveryDistance, enabled:editorModel.delivery.enabled"
+                                        id="maxDeliveryDistance" name="maxDeliveryDistance"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label id="displayCommentsLabel" class="col-sm-12" for="deliveryComments">Delivery Comments</label>
+                                    <textarea class="form-control k-input-lg" placeholder="This text will be visible to your customers on the delivery screen. ie. Driver does not carry more than $20 change. Etc." 
+                                    class="k-textbox col-sm-12" data-bind="value: editorModel.delivery.deliveryDescription, enabled:editorModel.delivery.enabled" 
+                                    id="delivCommentsTexatArea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>              
+                <div class="col-xs-12 form-toolbar">
+                    
+                    <button type="button" class="col-xs-3 btn btn-danger" data-bind="click:deleteTruckRecord,visible:editorModel.objectId"><i class="fa fa-trash-o"></i>&nbsp;Delete</button>
+
+                    <div class="rightButtonGroup">
+                        <button type="button" class="btn btn-primary pull-right" data-loading-text="Saving..." data-bind="click:saveTruckRecord"><i class="fa fa-check"></i>&nbsp;Save</button>  
+                        <button type="button" class="btn btn-default pull-right" data-bind="click:cancelSaveTruckRecord"><i class="fa fa-times"></i>&nbsp;Cancel</button>
+                    </div>
+                  
+                </div>
+                <div style="clear:both"></both>
+
+            </form>
+        </div>
+        
+        
+    </div>
+    
+
+</div>
+<!-- / TRUCKS -->
+
+<!--MAP VIEW WINDOW-->
+<div id="mapWindow" style="display:none">
+    
+</div>
+<!--/MAP VIEW WINDOW-->
+
+<!--         <div class="col-md-1">
+            <button type="button" class="btn btn-default btn-sm" data-bind="click: loadInventory">
+                <i class="fa fa-heartbeat"></i>Inventory
+            </button>
+        </div> -->
+
+        
+<!-- row template -->
+<script type="text/x-kendo-tmpl" id="tmplTruckRow">
+   <div class="row-record trkListRow">
+        <div class="col-xs-4 col-sm-4 ">#:name#</div>
+        <div class="col-xs-4 col-sm-3" data-bind="html:getMenuDescription"></div>
+
+<!--        <div class="hidden-xs visible-sm-* col-sm-3 text-center">
+            #if (typeof lastLocation =='undefined') {#
+                No Last Location
+            #}else{ #
+                <button type="button" class="btn btn-default" data-name="#=name#" data-latitude="#=lastLocation[0]#" data-longitude="#=lastLocation[1]#" 
+                 data-locationupdatestamp="#=locationUpdateStamp#" data-bind="click:showMap,html:getButtonText"></button>
+            #} #
+        </div> -->
+        <div class="col-xs-3">
+            <button type="button" class="btn btn-default btn-lg pull-right" data-bind="click:editTruckRecord" >Edit</button>
+        </div>
+        
+   </div>
+
+</script>

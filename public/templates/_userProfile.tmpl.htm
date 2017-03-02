@@ -1,0 +1,59 @@
+<div class="container-fluid" id="appContentWrapper">
+	<div class="row">
+	<div class="col-xs-12">
+		<form role="form" id="frmUserProfile" data-role="validator" style="margin-top:25px">
+
+			<div class="form-group">
+				<label for="txtEmail">Username</label>
+				<input required class="form-control" name="txtEmail" id="txtEmail" data-type="email" data-required-msg="Email address is required" data-email-msg="Not a valid Email" data-bind="value:email"  />
+				<span class="help-block">must be a valid email address</span>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="txtFirstName">First Name</label>
+		                <input class="form-control" name="txtFirstName" id="txtFirstName" data-bind="value:firstName" placeholder="First"/>
+	            	</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="txtFirstName">Last Name</label>
+		                <input class="form-control" name="txtLastName" id="txtLastName" data-bind="value:lastName" placeholder="Last"/>
+		            </div>
+				</div>
+
+			</div>
+
+
+			<div class="form-group">
+	            <label for="txtPhone">Phone</label>
+	            <input class="kendo-form-control" data-role="maskedtextbox" id="txtPhone" name="txtPhone"
+	               data-mask="(999) 000-0000"
+	               data-bind="value: phoneNumber"/>
+	        </div>
+			
+
+			<div class="well well-sm">
+				<h4><i class="fa fa-lock"></i> Change your password</h4>
+				<p>Only enter your password if you wish to change it, else leave the fields blank</p>
+
+				<div class="form-group">
+		          <input type="password" name="txtPassword1" id="txtPassword1" class="form-control" placeholder="Enter Password" 
+		          data-bind="value:password">
+		        </div>
+		        
+		        <div class="form-group">
+		          <input type="password" name="txtPassword2" id="txtPassword2" class="form-control" placeholder="Enter Password Again">
+		          
+		        </div>
+			</div>
+
+
+
+			<button type="button" class="btn btn-primary btn-block btn-lg" data-loading-text="Saving..." data-bind="click:saveUserProfile"><i class="fa fa-check"></i> Save</button>
+		</form>
+	</div>
+	</div>
+</div>

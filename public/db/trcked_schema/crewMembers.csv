@@ -1,0 +1,4 @@
+"_id:string","acl:object","FirstName:string","LastName:string","Email:string","phoneNumber:number"
+"530b972ce4b0fe98ca2373f3","","Frank","Frankerson","frank@frankerson.com","2.074087489E9"
+"530b9741e4b0fe98ca2373f5","","Courtesy","Call","courtesy@call.com","9.884093685E9"
+"530b971ee4b0fe98ca2373f2","{ ""52f26c39e4b00fc15f84591f"" : { ""read"" : true , ""write"" : true}}","Alon","Raskinovich","araskin3i@gmail.com","2.074094983E9"

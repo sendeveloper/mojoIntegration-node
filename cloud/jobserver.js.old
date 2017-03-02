@@ -1,0 +1,128 @@
+
+var _ = require('lodash');
+
+module.exports = function(agenda){
+	
+	var _agenda = agenda;
+
+	var setupJobs = function(){
+		var self = this;
+
+		var aPromise = new Parse.Promise();
+
+		fs = require('fs');
+
+		fs.readFile('./jobDef.json', 'utf8', 
+			function (err,fileData) {
+				if (err) {
+					console.log(err);
+					aPromise.reject(err);
+				} else {
+					// console.log(fileData);
+					var jobConfig = JSON.parse(fileData);
+					//now that we have the JSON 
+					//lets schedule all the jobs using agenda
+					console.log('Found ' + jobConfig.jobs.length + ' jobs in Job Config');
+					
+					var prettyCron = require('prettycron');
+
+					_agenda.on('start', function(job) {
+						console.log();
+							console.log("**********************************");
+							console.log("** Job %s starting at %s", job.attrs.name, new Date().toString());
+							console.log('');
+					});
+
+					_agenda.on('complete', function(job) {
+						console.log();
+							console.log("Job %s finished at %s", job.attrs.name, new Date().toString());
+							console.log("**********************************");
+							console.log();
+					});
+
+					_agenda.on('fail', function(error, job) {
+						console.log();
+						console.log("Job %s failed at %s", job.attrs.name, new Date().toString());
+						console.log("**********************************");
+						console.log();
+
+						//now send a notification email
+						var TrkUtil = require('./utility.js').trkUtility;
+						var trkUtil = new TrkUtil();
+						  
+						var mailParams = {
+						  	template_name: "batchJobError",
+						 	message:{
+						 		global_merge_vars:[
+							 		{	name: 'jobName', content:job.attrs.name },
+							 		{	name: 'jobFailReason', content:job.attrs.failReason },
+							 		{	name: 'JOBDATA', content:JSON.stringify(job.attrs) }
+						 		]
+						 	}
+						};
+
+						trkUtil.sendEmail(mailParams, 'alon@getyomojo.com');
+					});
+
+					_.each(jobConfig.jobs, function(aJobDef){
+						console.log();
+						console.log('Defining Job : ' + aJobDef.id + ' ' + prettyCron.toString(aJobDef.cronTerm));
+						console.log(aJobDef.id + ' first run will be ' + prettyCron.getNext(aJobDef.cronTerm));
+						console.log();
+
+						_agenda.define(aJobDef.id, function(job, done){
+							var rootModule = require(aJobDef.modulePath);
+							var rootAttrib;
+
+							if (aJobDef.rootAttribute)
+								rootAttrib = new rootModule[aJobDef.rootAttribute];
+							else
+								rootAttrib = new rootModule;
+
+							if (!aJobDef.data)
+								aJobDef.data = {};
+
+							rootAttrib[aJobDef.method](job, aJobDef.data)
+							.then(function(){
+								done();
+							}, function(error){
+								console.log(error);
+								if (!error  || !error.message)
+									var error = {message:'Error running Job' + aJobDef.id};
+
+								job.fail(error.message);
+								job.save();
+
+								//now send a notification email
+								var TrkUtil = require('./utility.js').trkUtility;
+								var trkUtil = new TrkUtil();
+								  
+								var mailParams = {
+								  	template_name: "batchJobError",
+								 	message:{
+								 		global_merge_vars:[
+									 		{	name: 'jobName', content:job.attrs.name },
+									 		{	name: 'jobFailReason', content:job.attrs.failReason },
+									 		{	name: 'JOBDATA', content:JSON.stringify(job.attrs) }
+								 		]
+								 	}
+								};
+
+								trkUtil.sendEmail(mailParams, 'alon@getyomojo.com');
+							});
+						});
+						
+						_agenda.every(aJobDef.cronTerm, aJobDef.id, aJobDef.data);
+					})
+					aPromise.resolve();
+				}
+			}
+		);
+
+		return aPromise;
+	};
+
+	return {
+		setupJobs:setupJobs
+	}
+}

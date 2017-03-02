@@ -1,0 +1,78 @@
+
+    <div class="container-fluid" id="appContentWrapper">
+       <!-- <div class="row row-record col-md-12 rptOrderHistory"> -->
+        <div id="top5ModifiersReport" class="panel panel-primary">
+            <div class="panel-heading">Top Selling Menu Modifiers</div>
+            <div class="panel-body">
+                <div id="reportParams" class="row row-record col-xs-12 reportParams">
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label for="lstTrucks">Select truck or location</label>
+                        <input  class="" data-role="dropdownlist" id="lstTrucks" name="lstTrucks"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: truckList, value:selectedTruck"
+                                data-option-label="All trucks/locations"
+                                data-value-primitive="true">
+                        </input>
+                        <span class="k-invalid-msg" data-for="Status"></span>
+                    </div>        		
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label for="kendoDPFrom">Duration</label>
+                        <input class="kendo-form-control" name="srptDuration" id="srptDuration" data-role="dropdownlist" 
+                        data-text-field="text" data-value-field="id" data-bind="source: durationSelection, events:{change:onDurationChange}" />
+                    </div>   
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="kendoDPFrom">Start</label>
+                        <input class="kendo-form-control" name="srptFromDate" id="srptFromDate" data-role="datetimepicker" 
+                            required data-required-msg="Enter Start Date/Time" data-type="date" data-date-msg="Not a valid date"
+                            data-bind="value: startDateTime,events:{change:onFromDateChange" />
+                    </div>              
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="kendoDPFrom">End</label>
+                        <input class="kendo-form-control" name="srptToDate" id="srptToDate" data-role="datetimepicker"
+                            required data-required-msg="Enter End Date/Time" data-type="date" data-date-msg="Not a valid date"
+                            data-bind="value: endDateTime, events:{change:onToDateChange" />
+                    </div>        
+                    <div class="submitButtonWrapper form-group col-xs-12">
+                        <button id="posOrderReportGoBtn" type="button" class="btn btn-primary pull-left" data-bind="click: executeTopModifiersReport, enabled:runReportEnabled">
+                            <i class="fa fa-check"> Run </i>
+                        </button>
+                    </div>
+                </div>
+                <div id="pleaseWait" class="row col-xs-12 text-center text-muted"><i class="fa fa-refresh fa-spin"></i> Please Wait </div>
+                <div class="row reportHint k-selectable">
+                    <div class="userPrompt col-xs-12 k-selectable"><i class="text-muted fa fa-table fa-2x"></i>
+                        <div class="text-primary fa-2x">Top Selling Menu Modifiers</div>
+                        <p class="text-muted">Click 'Run' to view your top selling menu modifiers.</p>
+                    </div>
+                </div> 
+                <div id="summaryView" class="col-xs-12" data-bind="visible:resultObject.modifiers.length">
+                    <div class="col-xs-12 ct-chart"></div>
+                    <div class="row">
+                        <span class="col-xs-4 headingLabel text-left bg-info">Modifier</span>
+                        <span class="col-xs-4 headingLabel text-center bg-info">
+                            <a id="colHeaderAmount" data-bind="click:sortResults">Amount
+                                <i data-bind="visible:isSortedByAmountDesc" class="fa fa-sort-amount-desc"></i>
+                                <i data-bind="visible:isSortedByAmountAsc"class="fa fa-sort-amount-asc"></i>
+                        </a>
+                        </span>
+                        <span class="col-xs-4 headingLabel text-center bg-info">
+                            <a id="colHeaderQty" data-bind="click:sortResults">Quantity
+                                <i data-bind="visible:isSortedByQtyDesc" class="fa fa-sort-amount-desc"></i>
+                                <i data-bind="visible:isSortedByQtyAsc"class="fa fa-sort-amount-asc"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="row" id="tableResults" data-role="listview" data-template="tmplmodifierBreakdown" data-bind="source: resultObject.modifiers"></div>
+                </div>
+            </div>
+       </div>
+    </div>
+
+    <script type="text/x-kendo-tmpl" id="tmplmodifierBreakdown">
+        <div class="row">
+            <span class="col-xs-4 resultLabel pull-left">#:description#</span>
+            <span class="col-xs-4 resultValue pull-left">#:kendo.toString(amount,"c")#</span>
+            <span class="col-xs-4 resultValue pull-left">#:kendo.toString(quantity,"n0")#</span>
+        </div>
+    </script>

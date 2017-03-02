@@ -1,0 +1,1 @@
+"_id:string","acl:object","menuItemId:pointer|menuItems","desc:string","qty:number","modifiers:object","orderHeader:pointer|orders|indexed"

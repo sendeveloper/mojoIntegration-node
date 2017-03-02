@@ -1,0 +1,1461 @@
+/* CUSTOM STYLE SHEET
+    ** These styles override everything else and need to be placed at the
+    ** end of the stylesheet includes -
+    **
+---------------------------------------------------------------------------------------------------*/
+
+
+/* IMPORTS
+---------------------------------------------------------------------------------------------------*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300);
+
+
+/* GENERAL 
+---------------------------------------------------------------------------------------------------*/
+html {
+  font-family:'Open Sans', sans-serif;
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    font-family:'Open Sans', sans-serif;
+    margin-bottom: 0px; //default to 0px as mobile-first has no footer
+    font-size:medium;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+
+/* BOOTSTRAP
+---------------------------------------------------------------------------------------------------*/
+.btn {
+    font-size:inherit;
+    /*margin: 0.5em;*/
+}
+/* for all bootstrap elements we need to set sizing to border-box */
+.form-group, .form-control, .btn,.container, .container-fluid, .row, div[class^='col-']
+{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+/* KENDO UI CUSTOMIZATIONS
+---------------------------------------------------------------------------------------------------*/
+
+.k-widget.k-dropdown, .k-widget.k-datetimepicker, .k-numerictextbox{
+
+    display: block;
+    margin-left: 0px;
+}
+
+.k-widget.k-dropdown {
+    width: 100%;
+}
+
+.kendo-form-control {
+    display: block;
+}
+
+.kendo-form-control.inline {
+    display: inline-block;
+}
+
+.k-input-lg {
+    height: 46px;
+    font-size: 18px;
+}
+
+.k-input-sm {
+    height: 30px;
+    font-size: 12px;
+}
+
+.k-input[type="text"],
+input {
+    /*font-size: 14px;*/
+    text-indent:.8em;
+}
+
+/* Notifications */
+.k-notification-error.k-group {
+    background: rgba(100%,0%,0%,.7);
+    color: #ffffff;
+}
+
+.k-notification-success.k-group {
+    background: rgba(0%,60%,0%,.7);
+    color: #fff;
+}
+
+.k-notification-info.k-group {
+    background: rgba(0%,0%,0%,.7);
+    color: #fff;
+}
+
+.notification-error,.notification-success,.notification-info {
+    width: 300px;
+    min-height: 100px;
+}
+.notification-error h4,.notification-success h4,.notification-info h4 {
+    padding: 15px 10px 5px;
+}
+.notification-error i,.notification-success i,.notification-info i {
+    float:left;
+    margin: 15px;
+}
+
+.notification-error p,.notification-success p,.notification-info p {
+    padding: 0px 15px;
+    margin-left:55px;
+    font-size: 90%;
+    word-wrap:break-word;
+}
+
+/* Validation */
+.k-widget.k-tooltip-validation {
+    border-color: transparent;
+    background-color: transparent;
+    color: red;
+    display: block;
+    font-weight: 600;
+    text-align: left;
+}
+
+.k-listview .k-state-selected { 
+    background: Silver; 
+    color: black;
+    border-color:Silver;
+}
+
+
+/* APPLICATION
+---------------------------------------------------------------------------------------------------*/
+/* colors and styles */
+.tab-content{
+    /*padding-left: 1em;*/
+}
+
+.link-page {
+    padding: 2px 5px;
+    text-decoration: underline;
+}
+
+.leftvertline {
+    border-left: 2px solid #eee;
+    padding-left: 1em;
+}
+
+.rightvertline {
+    border-right: 2px solid #eee;
+    padding-left: 1em;
+}
+
+.rightoffset{
+    margin-right:2em;
+}
+
+/* navbar */
+.navbar {
+    padding: 10px;
+    border-radius: 0px!important;
+}
+
+.navbar .navbar-header img{
+
+    width:50px;
+    height: 50px;
+    float: left;
+    margin-right:10px;
+    /* border */
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border: 0px inset #d6cfd2;
+}
+
+/* schedule display */
+.fc-title {
+    display:block;
+    white-space:normal;
+}
+
+/* boxes */
+
+/* Dashboard */
+#facebookPostsHeading {
+    background-color: GainsBoro;
+}
+
+#facebookPosts > div {
+    margin-bottom:15px;
+}
+
+.fb_iframe_widget,
+.fb_iframe_widget span,
+.fb_iframe_widget iframe[style]  {width: 100% !important;}
+
+/* Signin Form */
+.form-signin {
+  max-width: 500px;
+  padding: 15px;
+  margin: 100px auto;
+}
+
+.form-signin-heading {
+    color:grey;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+/* General Styles 
+   -- Not restricted to any one screen.
+*/
+
+#appHelp {
+    position: absolute;
+    width:350px;
+    height: 100%;
+    top:0px;
+    right:0px;
+    background-color: #f5f5f5;
+    padding-right:50px;
+    color:#FFFFFF;
+    z-index: 100;
+    background: rgb(125,126,125); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */    
+
+}
+
+#appHelp #btnDismissHelp {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+
+#appHelp .help-content {
+    padding:10px;
+}
+
+
+#appFooter {
+    display:none;
+    position: fixed;
+    height:75px;
+    width: 100%;
+    bottom: 0px;
+    padding-top:10px;
+    border-top:1px solid rgba(0,0,0,0.2);
+    font-size:80%;
+    background-color:white;
+}
+
+#appFooter img {
+    opacity: .50;
+    -webkit-filter: grayscale(100%);
+    filter: gray; filter: grayscale(100%);
+    filter: url(desaturate.svg#greyscale);
+}
+
+#appContentContainer {
+    position:relative;
+    /*min-height:1000px;*/
+    /*    height:100%;
+        padding-left:0px;
+        padding-right:0px;
+        overflow-x:hidden;*/
+    /*margin: 0px 15px 0px 15px; */
+}
+#cropper-modal{
+    overflow-x: hidden;
+}
+    
+/*.form-toolbar{
+    margin:1em;
+}*/
+
+#frmMenuItemOverrideRecordEdit{
+    /*padding: 20px 10px 60px 10px;*/
+    padding:1em;
+    background-color: #FFF;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 2px solid #dcdcdc;
+    margin: 1em 0em 1em 0em;
+    height:100%;
+    overflow:auto;
+}
+
+#frmRecordEdit,#frmMenuHeaderRecordEdit, #frmMenuItemOptionGroup,
+#frmMenuCategoryRecordEdit,#frmMenuItemRecordEdit, #frmTruckRecordEdit,
+#frmDiscountsRecordEdit{
+    padding:1em;
+    position:relative;
+    background-color: #FFF;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 2px solid #dcdcdc;
+    margin: 1em 0em 1em 0em;
+    z-index: 10;
+}
+
+#appContentContainer > .nav-record-list {
+    padding: 0px 20px;
+    margin-bottom:15px;
+}
+
+.kendo-pager-list {
+    position: absolute;
+    bottom:20px;
+    width:100%;
+    border:none;
+    margin-left:-15px;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+}
+
+.form-toolbar button.btn-danger {
+    margin-right: 15px;
+}
+
+.form-toolbar .rightButtonGroup{
+    float:right;
+}
+
+.form-toolbar .rightButtonGroup .btn-primary{
+    margin-left:10px;
+}
+
+.form-toolbar .rightButtonGroup .btn-default{
+    margin-left:10px;
+}
+
+
+
+/*#appContentWrapper{
+    padding-right:initial;
+    padding-left:initial;
+}*/
+
+.trkListView {
+    border:none;
+    overflow-y:auto;
+}
+
+.entityHeader{
+    height:125px;
+    /*top:75px;*/
+    position:fixed;
+}
+
+.modiferGroupHeader,
+.staffListHeader,
+.menuHeader,
+.calendarHeader,
+.inventoryHeader{
+    height:75px;
+}
+
+.row-header {
+    display:table;
+    width:100%;
+    position:relative;
+    padding:1em 0;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+}
+
+.row-header h4 {
+    font-weight: 700;
+}
+
+/*.row-header div{
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
+}*/
+/*.row-header button , .row-header > .btn-group {
+    margin-top:5px;
+}*/
+
+
+.row-record
+{
+    border-bottom: 1px solid #E2E4E7;
+    min-height:75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display:block;
+}
+
+#kendoLVMenuCategory{
+    overflow-y:auto;
+}
+
+#kendoLVMenuCategory > .trkListRow{
+    margin:15px auto 15px auto;
+}
+
+/*.row-header + .k-listview > .row-record {   */
+.trkListRow{
+    /*margin:15px auto 15px auto;*/
+}
+
+trkListRow button{
+    /* the line below moved the 7.5px up thus centering the button text with the text in the rest of the ROW */
+    margin:-7.5px auto -7.5px auto;
+    float: left;
+}
+
+.row-header + .k-listview > .row-record h4 {
+    font-weight: 600;
+}
+
+#btnRemoveFromCategory {
+    margin-top:2em;
+}
+
+.trckedImagePreview, .row-header + .k-listview > .row-record img
+{
+    float: left;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding: 0 1em 0 0;
+    /*margin-top:10px;*/
+    cursor: pointer;
+}
+
+.row-header + .k-listview > .row-record .row-record-status {
+    font-size:80%;
+    margin:10px 0px;
+    
+}
+
+.row-selectable {
+    cursor:pointer;
+}
+
+.row-selectable:hover {
+    background-color: #eee;
+}
+
+
+/* Popup Window */
+.modal-window .toolbar {
+/*    position: absolute;
+    right:10px;
+    bottom:10px;*/
+    float:right;
+    padding-top:1em;
+
+}
+
+/* drag & drop*/
+.dragged-content {
+    background-color: #C0C0C0;
+    cursor: move;
+    /*margin:15px;*/
+/*    padding:10px;
+    border-width:10px;
+    margin: 0px !important;*/
+
+}
+
+.drop-allowed {
+    background-color: #00FF7F;
+}
+
+.drop-disallowed {
+    cursor:no-drop;
+}
+
+/*.row-header + .k-listview > .row-record.draggable .draggable-icon {*/
+.k-listview > .row-record .draggable-icon {
+    /*color:#E0E0E0;*/
+    color:#777;
+    cursor:move;
+}
+
+/* list images */
+
+.div-item-image img,.div-item-list-image img,
+{
+    width:100px;
+    height:100px;
+    display:block;
+    margin-bottom:5px;
+
+}
+
+.uploadLogoImg {
+    width:100px;
+    height:100px;
+    display:block;
+}
+
+.div-norecords-placeholder {
+    padding-top:150px;
+    text-align: center;
+}
+
+/* Schedule */
+.calendarWrapper{
+    display:block;
+    /*overflow-y:hidden;*/
+    padding-right:0px;
+}
+
+#scheduleCalendar {
+        max-width: 95%;
+        margin: 20px auto;
+}
+
+.fc-past{
+    background-color:#DCDCDC;
+}
+
+/* Staff */
+#kendoLVStaff .row-record.align-middle {
+    line-height: 100px;
+    vertical-align: middle;
+}
+
+#kendoLVStaff .row-record > .btn-group {
+    top: 30%;
+}
+
+/* Maps Window */
+
+#g-windowMapSocial .alert {
+    position: absolute;
+    width: 60%;
+    bottom:0px;
+    left:0px;
+}
+
+#g-mapCanvasSocial {
+    float:left;
+    width:60%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    top:0;
+    left:0;
+}
+
+#g-mapCanvasSocial+div{
+    float:left;
+    width:36%;
+    height:100%;
+    padding: 5px 15px;
+}
+
+#g-mapCanvasSocial+div .k-listview {
+    height: 200px;
+    margin-top:10px;
+    font-size: 80%;
+    width:100%;
+    overflow-y: scroll;
+}
+
+#g-mapCanvasSocial+div .k-listview > div {
+    position:relative;
+    border-bottom: 1px solid #C4C4C4;
+    padding:5px;
+}
+
+#g-mapCanvasSocial+div .div-map-places-navbar {
+    text-align: right;
+    margin-top:10px;
+}
+
+#g-mapCanvasSocial+div .modal-window-toolbar {
+    text-align: right;
+    position:absolute;
+    right:10px;
+    bottom:10px;
+}
+
+#g-mapCanvasSocial+div:first-child {
+    margin-top:20px;
+    text-align: center;
+}
+
+/**/
+
+#mapCanvas,#canvasScheduleMap {
+
+    position: relative;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    
+    top:0;
+    left:0;
+}
+
+#mapCanvas.map-schedule {
+    position: absolute!important;
+    width:750px;
+    left:0;
+    top:0;
+}
+
+.map-controls {
+    position:absolute;
+    z-index:30000;
+    margin-top: 50px;
+    height: 32px;
+
+}
+
+#inputMapSearch,#inputScheduleMapSearch {
+    
+    left:100px;
+    background-color: #fff;
+    padding: 0 11px 0 13px;
+    width: 300px;
+    font-size: 15px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+}
+
+#inputMapSearch:focus,#inputScheduleMapSearch:focus {
+    border-color: #4d90fe;
+    margin-left: -1px;
+    padding-left: 14px;  /* Regular padding-left + 1. */
+    width: 301px;
+}
+
+#btnMapSelect,#btnMapSelectArea {
+    left: 435px;
+    height:32px;
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20000;
+    
+}
+
+.divMapPlaceSearch {
+    height:100%;
+    padding: 5px 15px;
+    
+    
+}
+
+.divMapPlaceSearch .k-listview {
+    height: 200px;
+    margin-top:10px;
+    font-size: 80%;
+    width:100%;
+    overflow-y: scroll;
+}
+
+.divMapPlaceSearch .k-listview > div {
+    position:relative;
+    border-bottom: 1px solid #C4C4C4;
+    padding:5px;
+}
+
+.divMapPlaceSearch .divMapPlaceNavigation {
+    text-align: right;
+    margin-top:10px;
+}
+
+.divMapPlaceSearch .divMapToolbar {
+    text-align: right;
+    position:absolute;
+    right:10px;
+    bottom:10px;
+}
+
+.divMapPlaceSearch .divMapSearchPlaceholder {
+    margin-top:20px;
+    text-align: center;
+}
+
+.dashboardInfoMsg {
+    font-size:medium;
+}
+
+
+/* Xtra Small devices (phones) or greater */
+@media (min-width: @screen-xs-min) {
+    /* Order Details Window */
+    #windowOrderDetails {
+        display: none;
+        position: relative;
+        /*padding-bottom: 60px;*/
+        min-width:30vw;
+        /*max-width:30vw;*/
+        min-height:60hw;
+        max-height:50hw;
+        overflow-x:hidden;
+    }
+
+}
+
+@media only screen and (min-width : 768px) {
+    #appFooter{
+        /*display:block;*/
+    }
+
+    body{
+        margin-bottom:75px;
+    }
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* Order Details Window */
+#windowOrderDetails {
+    display: none;
+    position: relative;
+    /*padding-bottom: 60px;*/
+/*    min-width:30vw;
+    max-width:50vw;
+    min-height:60hw;
+    max-height:80hw;*/
+    overflow-x:hidden;
+}
+
+#windowOrderDetails #anchorToggleSignature{
+    padding-left:1em;
+}
+
+#windowOrderDetails #signatureImg{
+    max-width:30vw;
+    max-height:30hw;
+}
+
+#windowOrderDetails #refundOrderBtn {
+    position:relative;
+    left:10em;
+}
+
+#windowOrderDetails #emailReceiptBtn {
+    position:absolute;
+    left:1.5em;
+}
+
+#windowOrderDetails #closeOrderBtn {
+    position:absolute;
+    right:1.5em;
+}
+
+#windowOrderDetails .bottomToolbar{
+    padding:.5em 0em .5em 0em;
+}
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    /*width: 60%;*/
+    height: 200px;
+    /*padding: 0 5px;*/
+    margin:auto;
+}
+
+.panel {
+    min-height:200px;
+}
+
+#twitterPosts iframe {
+    width:100%!important;
+}
+        
+.btnRow{
+    padding-top: 1em;
+}
+
+#cropper-image-div{
+    max-width:600px;
+    max-height:400px;
+}
+
+#cropper-image-div img{
+    img: 100%;
+}
+
+#panelSocial, #panelOrder, #panelSchedule{
+    overflow-y:hidden;
+}
+
+#panelSocial .panel-body, #panelOrder .panel-body, #panelSchedule .panel-body{
+  height: 400px;
+  overflow-y: auto;
+}
+
+.trkSection {
+    border:initial;
+    border-bottom-style: ridge;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-right-style: hidden;
+    border-bottom-width:1px;
+}
+
+.menuItemNameDescription{
+    padding-left:2em;
+}
+
+/*#wrapperPostDateTIme{
+    min-width:80%;
+}*/
+
+#btnShowMap{
+    height:2.7em;
+}
+#txtFacebookPostURL{
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-left-style: double;
+    border-bottom-style: hidden;
+/*    height:3em;
+    font-size:14px;*/
+}
+
+#kendoDtpPostDate{
+    /*height:3em;*/
+    border-bottom-style: hidden;
+    padding-top:0.6em;
+}
+
+#wrapperPostDateTIme > .k-datetimepicker{
+    width:100%;
+    min-width: 250px;
+    margin-right:0px;
+}
+
+.noRightPadding{
+    padding-right:0px;
+}
+
+.noLeftPadding{
+    padding-left:0px;
+}
+
+.noGutter{
+    padding-left:0;
+    padding-right:0;
+}
+
+#wrapperGeoLocation{
+    float:right;
+}
+
+#wrapperGeoLocation > button{
+    width: 100%
+}
+
+#wrapperUrl{
+    margin-bottom: 0px;
+}
+
+#btnPostOptionsRow{
+    margin-top: 1em;
+}
+
+#bamsApply{
+    min-height: 60%;
+}
+
+#settingsTabPanel{
+    margin-top:1em;
+}
+
+.qboConnectBtn img{
+    margin: 0em 2em 0em 2em;
+    max-width: 7em;
+}
+
+#appContentEditContainer{
+    position: fixed;
+    top:0px;
+    right:0px;
+    max-width:100%;
+    height:100%;
+}
+
+#gMenuItemPopup #searchBoxHeadeWrapper{
+    padding-left:0em;
+}
+
+/*#gMenuItemPopup #searchBoxInputWrapper{
+    width:75%;
+}*/
+
+#searchBoxInputWrapper:before {
+    font-family: 'FontAwesome';
+    position: relative;
+    content: "\f002";
+    left:0.5em;
+    top:1em;
+}
+
+/*#locationInventoryList .trkListRow:first-child {
+    margin-top:60px;
+}*/
+
+#searchBoxWrapper{
+    width:100%;
+    margin-top:0.5em;
+    /*margin-bottom:15px;*/
+}
+
+.unAssignMenuItem{
+    color:#777;
+}
+
+.unAssignMenuItem:hover{
+    color:#777;
+}
+
+#searchBoxInputWrapper{
+    width:100%;
+    padding-left:0px;
+    padding-right:.3px;
+    padding-top:0px;
+    line-height:0em;
+    border-style:none;
+}
+
+#inputSearchMenuItems, 
+#inputOptionsSearchMenuItems,
+#inputSearchInventoryItems,
+#inputSearchMenuOptionGroups{
+    padding:0px;
+    text-indent:15px;
+    border-style:none;
+}
+
+.menuItemsImage{
+    padding-left:4vh;
+}
+
+/*.menuItemsItemInfo{
+    padding-left:7.5vh;
+}*/
+
+#paneAllMenuItems,
+#paneAllMenuItemOptionGroups{
+    padding-left: 0px;
+    padding-right:0px;
+}
+
+/*#kendoLVAllMenuItems .row .row-record{
+    line-height: 100px;
+    vertical-align: middle;
+    border-bottom-style:inset;
+    border-bottom-width: thin;
+}*/
+
+#kendoLVAllMenuItem{
+    overflow:auto;
+    max-height:600px;
+}
+
+#gMenuItemOptionAssignPopup #kendoLVOptionsAllMenuItems{
+    overflow:auto;
+    max-height:75vh;
+    min-width:40vw;
+}
+
+.dropTargetPlaceHolder{
+    background-color: Grey;
+    color:white;
+}
+
+
+#frmCrewRecordEdit,#frmMenuHeaderRecordEdit,
+#frmMenuCategoryRecordEdit,#frmMenuItemRecordEdit, 
+#frmMenuItemOverrideRecordEdit, #frmTruckRecordEdit,
+#frmScheduleRecordEdit, #frmTaxRecordEdit, #frmMenuItemOptionGroup {
+    padding:1em 1em 0em 1em;
+    position:initial;
+    background-color: #FFF;
+    border-radius: .75em .75em .75em .75em;
+    -moz-border-radius: .75em .75em .75em .75em;
+    -webkit-border-radius: .75em .75em .75em .75em;
+    border: 2px solid #dcdcdc;
+}
+
+
+
+.table-wrap{
+    max-height: 80%;
+    width:100%;
+    overflow-y: auto;
+    overflow-x:hidden;
+}
+
+#frmMenuHeaderRecordEdit,
+#frmMenuCategoryRecordEdit,
+#frmMenuItemRecordEdit, 
+#frmTruckRecordEdit,
+#frmCrewRecordEdit,
+#frmScheduleRecordEdit,
+#frmMenuItemOptionGroup,
+#frmTaxRecordEdit{
+    margin-top:0.25em;
+}
+
+/*the padding-bottom allows for room for the toolbar*/
+#frmMenuItemRecordEdit,
+#frmMenuItemOptionGroup,
+#frmTaxRecordEdit
+{
+    padding-bottom: 4.5em;  
+}
+
+/*#frmMenuHeaderRecordEdit,
+#frmMenuCategoryRecordEdit{
+    padding-bottom:3em;
+    position: fixed;
+}*/
+
+#frmMenuItemRecordEdit .form-toolbar,
+#frmScheduleRecordEdit .form-toolbar,
+#frmCrewRecordEdit .form-toolbar,
+#frmTruckRecordEdit .form-toolbar,
+#frmMenuItemOptionGroup .form-toolbar,
+#frmMenuItemOverrideRecordEdit .form-toolbar,
+#frmTruckRecordEdit .form-toolbar,
+#frmMenuHeaderRecordEdit .form-toolbar,
+#frmMenuCategoryRecordEdit .form-toolbar,
+#frmDiscountsRecordEdit .form-toolbar{
+    padding-top:1em;
+    padding-bottom:1em;
+    padding-left:0em;
+    padding-right:0em;
+}
+
+.trkFullWidth{
+    width:100%;
+}
+
+/*#appContent{
+    padding-top:125px;
+}*/
+
+#appContentEditContainer .k-content.k-state-active{
+    overflow-x: hidden!important;
+    overflow-y: visible;
+}
+
+.addMenutemIcon{
+    margin-top:1.25em;
+}
+
+/*#gwindowSocialPosts #delSocialPost{
+    float:right;
+}*/
+
+#selectedSocialPlaces{
+    margin-top:.5em;
+}
+
+#gwindowSocialPosts{
+    max-height:75vh;
+    max-width:75vw;
+    min-width:75vw;
+}
+
+#gMenuItemPopup{
+    max-height: 75vh;
+}
+
+#gMenuItemPopup #kendoLVAllMenuItems{
+    overflow-y:auto;
+    max-height:50vh;
+    min-width:40vw;
+}
+
+
+#kendoLVAllMenuItems .menuItemEditBtn{
+    margin-top: 1.5em;
+}
+
+
+.overridePricingBtnWrap{
+    padding-left:0em;
+    padding-top:1em;
+    padding-bottom:1em;
+}
+
+.headerToolbarWrapper button{
+    margin-left:0.20em;
+    margin-right:0.20em;
+    margin-top:0.20em;
+    float:right;
+}
+
+#paneMenuCategory{
+    overflow: hidden;
+    height:100%;
+}
+
+/*Option tab*/
+#menuItemTabStrip-2 td{
+    padding:0.75em;
+}
+
+#appContentEditContainer th{
+    vertical-align: middle; /* all header text should be centered in the middle*/
+}
+
+#appContentEditContainer .k-numerictextbox,
+#appContentEditContainer .k-textbox {
+    width:100%;  /* This allows the numeric texdt box to expand fully to the encompassing 'td'*/
+}
+
+
+
+.tdGroupName input{
+    max-width:100%;
+}
+
+.tdGroupName,
+.tdPreSelected{
+    width:8em;
+    max-width:8em;
+    text-align:-webkit-center;
+
+}
+
+.tdNoOfOptionsFree,
+.tdNoOfOptionsRequired,
+.tdMaxOptionsRequired{
+    width:7em;
+    max-width:7em;
+    text-align:-webkit-center;
+}
+
+
+.tdDeleteMenuItemOption{
+    width:2em;
+    text-align:-webkit-center;
+}
+
+.noPadding{
+    padding:0px;
+}
+
+.noPaddingRight{
+    padding-right:0px;
+}
+
+
+.noMargin{
+    margin:0px;
+}
+
+.modifierRow:first-of-type{
+    padding-top: 1em;
+    border-top-style:solid;
+    border-top-color:lightgray;
+    border-top-width: .1px;
+    border-bottom-style:solid;
+    border-bottom-color:lightgray;
+    border-bottom-width: .1px;    
+}
+
+.modifierRow{
+    padding-top:1em;
+    border-top-style:none;
+    border-bottom-style:solid;
+    border-bottom-color:lightgray;
+    border-bottom-width: .1px;    
+}
+/*trkFullWidth
+.tdNoOfOptionsFree,
+.tdGroupName,
+.tdNoOfOptionsRequired{
+    width:8em;
+    text-align:-webkit-center;
+}
+
+.tdPreSelected{
+    width: 4em;
+}*/
+
+/*#optionDesc{
+    height:38px;
+}*/
+
+#lstOptionGroups{
+    padding-left:0em;
+    max-width: 5em;
+}
+
+.optionDropDownWrapper{
+    padding-left:0em;
+    padding-top:1em;
+}
+
+.optionButtonAddWrapper{
+    padding-top:1em;
+}
+
+.menuHighlight{
+
+    color:#337ab7!important;
+
+}
+
+/*Delivery*/
+#deliveryChargeType{
+    padding:0px;
+}
+
+#deliveryChargeType .row{
+    padding:0.25em 0em 0.25em 1em;
+}
+
+.displayInline{
+    display:inline-block;
+}
+
+#frmTruckRecordEdit .k-tabstrip .k-content{
+    padding-top: 1em;
+}
+
+/*#frmTruckRecordEdit .form-toolbar,
+#frmMenuHeaderRecordEdit .form-toolbar{
+    padding-top:1em;
+    padding-bottom:1em;
+}
+*/
+#delivCommentsTexatArea{
+    min-height: 6em;
+    min-width: 80%;
+}
+
+#displayCommentsLabel{
+    padding-left:0px;
+}
+
+#payment-info-settings .ccNumGroup input{
+    height:46px;
+}
+#payment-info-settings input.k-textbox{
+    width:100%;
+}
+
+#payment-info-settings .form-group, 
+#payment-info-form .form-group{
+    padding:0px;
+}
+
+#payment-info-form .ccNameGroup{
+    width:auto;
+}
+
+#payment-info-form .ccNumGroup{
+    width:auto;
+}
+
+#payment-info-form span[unselectable=on]{
+    min-height:2.3em;
+    color:darkgray;
+}
+
+
+#general div.row:last-child {
+    /*margin-bottom:3em;*/
+}
+
+/*weird bug in numerictextbox.*/
+.k-picker-wrap:before, .k-numeric-wrap:before {
+    display:none;
+}
+
+.trkTableRow{
+    padding-right:0px;
+    padding-left:0px;
+}
+
+.trkCellFirst{
+    padding-right:0px;
+    padding-left:15px;
+}
+
+.trkCellHeaderFirst{
+    padding-right:0px;
+    padding-left:30px;
+}
+
+.trkCellLast{
+    padding-left:0px;
+}
+
+.trkCellGeneral{
+    padding-right:0px;
+    padding-left:0px;
+}
+
+
+.trkCellGeneral .k-widget{
+    width:100%;
+    min-height: 42px;
+}
+
+.trkCellGeneral input,
+.trkCellGeneral button,
+.trkCellLast button,
+.trkCellFirst button{
+    min-height: 42px;
+
+}
+
+#inventoryStockAdjustment .table-wrap{
+    max-height: 150px;
+}
+
+#inventoryInitialLevel{
+    max-height:50vh;
+    max-width:50em;
+    min-width:50vw;
+}
+
+
+#locationInventoryList button{
+    max-width:40%;
+    min-width:40%;
+    width:40%;
+}
+
+#inventoryAdjustReason{
+    display:block;
+    min-width: 100%;
+}
+
+#sysMessagesRow,
+#dashPanelsRow{
+    margin:auto;
+}
+
+#socialWindowContents,
+#salesSummaryReport,
+#top5MenuItemReport,
+#txHistoryReport,
+#discountUsageReport,
+#top5ModifiersReport {
+    margin-left: 15px;
+    margin-right:15px;
+    height:100vh;
+    overflow-y:auto;
+}
+
+#lstTruckSchedule-list{
+    margin-left:2em;
+}
+
+.tab-content .tab-pane {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#appContentEditContainer:after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(255, 255, 255);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+/*It is better to find and fix in the js code instead css */
+/*.k-animation-container {
+    left: 0!important;
+    padding-left: 0!important;
+}*/
+
+@media only screen and (min-width : 991px){
+    .navbar {
+        padding: 15px;
+    }
+    .navbar .container-fluid {
+        display: flex;
+        padding: 0;
+    }
+    .navbar-header {
+        display: flex;
+    }
+    .navbar-collapse {
+        padding: 0;
+    }
+    .navbar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .navbar-nav > li:last-child {
+        margin-left: auto;
+    }
+    .navbar > .container-fluid .navbar-brand {
+        margin-left: 0;
+        padding: 13px 10px;
+    }
+}

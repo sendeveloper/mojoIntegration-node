@@ -1,0 +1,376 @@
+<div class="container-fluid" id="appContentWrapper">
+	<div role="tabpanel" id="settingsTabPanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-pills nav-justified" role="tablist" id="settingsTabStrip">
+			<li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+			<li role="presentation" id="socialTab"><a id="socialTabAnchor" href="#social" aria-controls="social" role="tab" data-toggle="tab">Social</a></li>
+		    <li role="presentation"><a href="#onlineorders" aria-controls="onlineorders" role="tab" data-toggle="tab">Mobile & Web</a></li>
+		    <li role="presentation"><a href="#payments" id="paymentsTabAnchor" aria-controls="payments" role="tab" data-toggle="tab">Payments</a></li>
+		    <li role="presentation" id="AccountTab"><a href="#accounting" id="accountingTabAnchor" aria-controls="accounting" role="tab" data-toggle="tab">Accounting</a></li>
+		    <li role="presentation" id="scheduleTab"><a href="#schedule" aria-controls="schedule" role="tab" data-toggle="tab">Schedule</a></li>
+		    <li role="presentation" id="inventoryTab"><a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">Inventory</a></li>
+		</ul>
+
+	  	<!-- Tab panes -->
+		<div class="tab-content">
+			
+			<!-- General -->
+			<div role="tabpanel" class="tab-pane active fade in" id="general">
+		    	<div class="page-header">
+					<button type="button" class="btn btn-primary btn-lg pull-right rightoffset" data-loading-text="Saving..." data-bind="click:saveSettings"><i class="fa fa-check rightOffSet"></i>&nbsp;Save</button> 		    		
+  					<h2>About your business</h2> 					
+				</div>
+				<div class="row">
+					<div class="col-xs-12  col-md-6 rightvertline">
+						<h2><small><p>Tell us about your business.</p></small></h2>
+						<div class="form-group col-xs-12">
+							<label for="txtBusinessName">Business name</label>
+							<input class="form-control k-input-lg" name="txtBusinessName" id="txtBusinessName" data-type="text" data-url-msg="Not a valid Business Name" data-bind="value:businessName">
+						</div>
+						<div class="form-group col-xs-12 logoUploadWrapper div-item-image">
+				        	<label>Upload your Logo</label>
+				            <img alt="logo" class="uploadLogoImg" data-bind="attr:{src:getImage}" />
+				            <input style="color:transparent" type="file" data-bind="events:{change:showLogoImage}">
+					        <div class="col-xs-12 div-upload-progress" style="display:none">
+					            <div class="form-group col-xs-12">     
+					                 <label>Uploading Image</label>
+					                 <div class="progress-bar" data-role="progressbar"
+					                         data-min="0"
+					                         data-max="100" style="width:100%">
+					                 </div>
+					                
+					            </div>
+					        </div>
+					    </div>
+
+
+						<div class="form-group col-xs-12">
+							<label for="lstDefaultCurrency">Default Currency</label>
+							<input class="k-input-lg" data-role="dropdownlist" id="lstDefaultCurrency" 
+						        data-text-field="currencyName"
+						        data-value-field="isoId"
+						        data-bind="source: supportedCurrencies, value:defaultCurrencyId" 
+						        data-value-primitive="true">                 
+					        </input>
+				    	</div>
+
+						<div class="col-xs-12">
+							<h2><small><p>The Danger Zone</p></small></h2>
+							   <button type="button" class="btn btn-danger btn-lg" data-bind="click: cancelAccount"><i class="fa fa-ban"></i>  Cancel this account</button>
+						</div>
+	
+					</div>
+	
+					<div class="col-xs-12 col-md-6">
+						<div class="row">
+						 	<div class="col-xs-6">	
+						 		<form method="post" name="payment-info-form" id="payment-info-settings">
+						            <div class="form-group">
+						              	<h2><small><p>Credit Card Information</p></small></h2> 	
+						                <input type="hidden" name="apikey" id="apikey" payeezy-data="apikey" value="7hpf1N6AqvaLL2UebNWoXllCcR5b89ya"/>
+						                <input type="hidden" name="js_security_key" id="js_security_key"  payeezy-data="js_security_key" value="js-0ed061862fe5b902dc94a2e5b567e3bc0ed061862fe5b902"/>
+						                <input type="hidden" name="ta_token" id="ta_token" payeezy-data="ta_token" value="LIKH"/>
+						            </div>
+						            <div class="form-group">
+
+						            	<input type="hidden" name="apikey" id="apikey" payeezy-data="apikey" value="7hpf1N6AqvaLL2UebNWoXllCcR5b89ya"/>
+						                <input type="hidden" name="js_security_key" id="js_security_key"  payeezy-data="js_security_key" value="js-0ed061862fe5b902dc94a2e5b567e3bc0ed061862fe5b902"/>
+						                <input type="hidden" name="ta_token" id="ta_token" payeezy-data="ta_token" value="LIKH"/>
+						            </div>
+
+						            <div class='settings-card-wrapper'></div>
+						            <div class="form-group col-xs-12">
+						                <input payeezy-data="card_type" type="hidden" payeezy-data="card_type" name="settingsLstCardType" id="settingsLstCardType" data-bind="value:selectedCardType">
+						                </input>
+						            </div>
+
+						            <div class="form-group col-xs-12">
+						                <input id="ccCardHolderName" required class="form-control k-textbox k-input-lg" placeholder="John Smith" payeezy-data="cardholder_name" data-bind="value:ccName">
+						            </div>
+						            <div class="form-group col-xs-12 ccNumGroup">
+						                <input type="text" class="form-control k-textbox k-input-lg" id="ccCardNumber" placeholder="4111 1111 1111 1111" 
+						                data-bind="value:ccNumberDisplay"></input>
+						                <input required type="hidden" payeezy-data="cc_number"  data-bind="value:ccNumber">
+						            </div>
+
+						            <div class="form-group col-xs-6">
+						                <input required id="ccardExpiry" class="form-control k-textbox k-input-lg" placeholder="12/16" data-bind="value:ccExpFull">
+						                <input required type="hidden" payeezy-data="exp_month" data-bind="value:ccExpMonth">
+						                <input required type="hidden" payeezy-data="exp_year" data-bind="value:ccExpYear">
+						            </div>
+						            <div class="form-group col-xs-6">
+						                <input required id="ccardCVC" class="form-control k-textbox k-input-lg" placeholder="123" payeezy-data="cvv_code" >
+						            </div>
+			              			<!-- <div class="row"> -->
+										<div class="form-group col-xs-12">
+											<label>Next Bill Date</label>
+											<input readonly class="form-control k-input-lg" data-bind="value:nextBillDate"></input>
+										</div>
+										<div class="form-group col-xs-12">
+											<label>Credit Card On File</label>
+											<input readonly class="form-control k-input-lg" data-bind="value:ccOnFile"></input>
+										</div>
+									<!-- </div> -->
+						  		</form>
+
+							</div>
+						</div>						
+						
+					</div>
+
+				</div>
+			</div>
+
+		    <!-- Social -->
+		    <div role="tabpanel" class="tab-pane fade" id="social">
+		    	<div class="page-header">
+  					<h2>Connect to your social networks</h2>
+  					<h2><small><p>Configure your social network so Trcked can share your story with the world.</p></small></h2>
+				</div>
+				<div class="row">
+					<form role="form" style="margin-top:50px">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="lstFacebookPages">Facebook&nbsp;
+									<span class="badge alert-success" data-bind="visible:facebookConnected">Connected</span>
+									<span class="badge alert-warning" data-bind="invisible:facebookConnected">Not Connected</span>
+								</label>
+
+						        <button type="button" class="btn btn-default btn-block btn-lg" data-bind="click: connectFacebook"><i class="fa fa-facebook"></i> Connect</button>
+
+								<input readonly class="k-input-lg" data-role="dropdownlist" id="lstSettingsFacebookPages" name="lstFacebookPages"
+							        data-text-field="name"
+							        data-value-field="id"
+							        data-bind="source: facebookPages,events:{change:setFacebookPage},enabled: facebookConnected"
+							        data-option-label="Select default Facebook page..."
+							        data-value-primitive="true">
+						                                
+						        </input>
+							</div>
+
+							<hr/>
+							<div class="form-group">
+								<label>Twitter&nbsp;
+									<span class="badge alert-success" data-bind="visible:twitterConnected">Connected to <span data-bind="text:twitterName"></span></span>
+									<span class="badge alert-warning" data-bind="invisible:twitterConnected">Not Connected</span>
+									
+								</label>
+								
+								<button type="button" class="btn btn-default btn-lg btn-block" data-bind="click: connectTwitter"><i class="fa fa-twitter"></i> Connect</button>
+							</div>
+						</div>
+					</form>
+				</div>		    	
+		    </div>
+
+		    <!-- Online Orders -->
+		    <div role="tabpanel" class="tab-pane fade" id="onlineorders">
+		    	<div class="page-header">
+		    		<button type="button" class="btn btn-primary btn-lg pull-right rightoffset" data-loading-text="Saving..." data-bind="click:saveSettings"><i class="fa fa-check rightOffSet"></i>&nbsp;Save</button> 	
+  					<h2>Mobile and web ordering</h2>
+  					<h2><small><p>Control behavior of your app ordering.</p></small></h2>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<fieldset>
+							<div class="form-group">
+								<label>Send notification e-mail when mobile order is received</label>
+								<input class="form-control k-input-lg" name="txtOrderReceivedEmail" id="txtOrderReceivedEmail" data-type="string" 
+									data-bind="value:orderReceivedEmailList"/>
+								<span class="text-muted">Seperate multiple e-mails with comma</span>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+		    </div>
+		    
+		    <!-- Payments -->
+		    <div role="tabpanel" class="tab-pane fade" id="payments">
+		    	<div class="page-header">
+  					<h2>Payment Processing</h2>
+					<h2><small>Currently connected to <span style="font-weight:bold" data-bind="text:connectedAccountName">.</small></h2>			
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">	
+						<fieldset>
+							<h3>STRIPE
+								<p><small>Click below to connected this account to your STRIPE account</small></p>
+							</h3>
+							<a class="stripe-connect" data-bind="click:launchStripeConnect">
+								<img src="images/stripe_blue.png"></img>
+							</a>	
+						</fieldset>
+					</div>
+					
+					<div class="col-xs-6 leftvertline">	
+						<h3><span data-bind="html:connectedAccountName"></span>
+							<p><small>Connected to Gateway: <span style="font-weight:bold" data-bind="text:gatewayId"></span>.</small></p>
+						</h3>
+
+					</div>
+				</div>
+			</div>
+
+		    <!-- Accounting -->
+		    <div role="tabpanel" class="tab-pane fade" id="accounting">
+				<button type="button" class="btn btn-primary btn-lg pull-right rightoffset" data-loading-text="Saving..." data-bind="click:saveSettings"><i class="fa fa-check rightOffSet"></i>&nbsp;Save</button> 
+		    	<div class="page-header">
+  					<h2>Accounting</h2>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">	
+						<!-- <fieldset> -->
+							<h3>QuickBooks Online
+								<p><small>Manage your connection to your QuickBooks Online account</small></p>
+							</h3>
+							<form role="form">
+								<div class="form-group">
+									<a class="qboConnectBtn pull-left" data-bind="click:launchQBOConnect">
+										<img src="images/qboConnect.png"></img>
+									</a>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-danger" data-bind="click:qboDisconnect, enabled:isQBOConnected">
+										<i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp;Disconnect QuickBooks</span>
+									</button> 
+									<h3>
+										<p><small>Connected to: <span style="font-weight:bold" data-bind="text:qboConnectedCompanyName"></span></small></p>
+									</h3>
+								</div>
+			                    <div class="form-group col-xs-4">
+			                        <label for="txtPercentage">QuickBooks Tax Code</label>
+			                        <input  data-role="dropdownlist" 
+			                                name="qboTaxCodes" id="qboTaxCodes"
+			                                class="form-control k-input-lg"
+			                                data-text-field="name"
+			                                data-value-field="objectId"
+			                                data-bind="enabled:isQBOConnected, source:externalCodes, value:extTaxId"/>
+			                                
+			                    </div>
+
+							</form>
+						<!-- </fieldset> -->
+					</div>
+				</div>
+			</div>
+
+		    <!-- Inventory -->
+		    <div role="tabpanel" class="tab-pane fade" id="inventory">
+		    	<div class="page-header">
+		    		<button type="button" class="btn btn-primary btn-lg pull-right rightoffset" data-loading-text="Saving..." data-bind="click:saveSettings"><i class="fa fa-check rightOffSet"></i>&nbsp;Save</button> 	
+  					<h2>Inventory</h2>
+  					<h2><small><p>Control behavior of your Inventory.</p></small></h2>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<fieldset>
+				            <div class="form-group col-xs-12">
+				                <label>Send e-mail Alerts to</label>
+				                <input class="form-control k-input-lg" name="txtLowInventoryEmail" id="txtLowInventoryEmail" data-type="string" 
+				                    data-bind="value:inventoryAlarmEmailList"  placeholder="Seperate multiple e-mails with comma"/>
+				            	<h4><small><p>E-mail alerts are sent daily</p></small></h4>
+				            </div>
+				            <div class="form-group col-xs-12">
+				                <label>Send SMS Alerts to</label>
+				                <input class="form-control k-input-lg" name="txtSMSPhoneNumbers" id="txtSMSPhoneNumbers" data-type="string" 
+				                    data-bind="value:inventoryAlarmPhoneList"  placeholder="Seperate multiple phone numbers with comma"/>
+				            	<h4><small><p>SMS alerts are sent once</p></small></h4>
+				            </div>
+						</fieldset>
+					</div>
+				</div>
+		    </div>
+
+		    <!-- Schedule -->
+		    <div role="tabpanel" class="tab-pane fade" id="schedule">
+		    	<div class="page-header">
+		    		<button type="button" class="btn btn-primary btn-lg pull-right rightoffset" data-loading-text="Saving..." data-bind="click:saveSettings"><i class="fa fa-check rightOffSet"></i>&nbsp;Save</button> 
+  					<h2>Your online schedule</h2>
+				</div>			    	
+				<div class="row trkSection">	
+					<div class="col-md-12">	
+						<h3>Website Schedule
+							<p><small>Publish your schedule on your website</small></p>
+						</h3>
+						<div class="alert alert-info" role="alert">
+							<strong>Embed Schedule:</strong> To add your schedule into a third-party website, please add the following code in the location where you would like the schedule to appear.
+							<br/><br/>
+							<code>
+								&lt;iframe src=&quot;https://app.getyomojo.com/schedule?vendorid=<span data-bind="text:vendorID"></span>&quot;&gt;&lt;/iframe&gt;
+							</code>
+							<br/>
+							<small>you can add additional attributes to the <em>iframe</em> element. <a href="https://developer.mozilla.org/en/docs/Web/HTML/Element/iframe" target="_blank">Click here </a>for more information</small>
+						</div>
+					</div>
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<h3>Auto publish your schedule
+							<p><small>Trcked can publish your schedule daily to your social media. </small></p>
+						</h3>
+						<fieldset>
+							<div class="row">
+								<div class="btn-group btn-toggle col-xs-4"> 
+									<!-- <div><label>Publish daily schedule to social media </label></div> -->
+									<button type="button" id="publishScheduleToSocialOn" class="btn btn-primary btn-default active" data-bind="click: toggleScheduleToSocial">ON</button>
+								    <button type="button" id="publishScheduleToSocialOff" class="btn btn-default" data-bind="click: toggleScheduleToSocial">OFF</button>
+								</div>
+								<div class="form-group col-xs-4">
+									<input readonly class="k-input-lg" data-role="dropdownlist" id="lstSchedulePostTime" 
+								        data-text-field="displayTime"
+								        data-value-field="ID"
+								        data-bind="source: allDayHalfHour,enabled: publishScheduleToSocial, value:publishScheduleToSocialTime" 
+								        data-option-label="Select time of day to post to social network..."
+								        data-value-primitive="true">                 
+							        </input>
+								</div>
+							</div>							
+							<p class="help-block">Trcked will send you an email once we have posted to your social media accounts.</p>
+						</fieldset>
+					</div>
+					<div class="col-md-6 leftvertline">
+						<h3>Facebook Schedule
+							<p><small>Publish your schedule on Facebook with a single click.</small></p>
+						</h3>
+						<fieldset class="">
+								<div class="form-group">
+									<button type="button" class="btn btn-default" style="margin-right:5px" data-bind="click: installScheduleToFacebookPage">
+										<i class="fa fa-facebook"></i>  Publish schedule to Facebook
+									</button>
+								</div> 
+								<div class="btn-group btn-toggle"> 
+									<div><label>Show private events</label></div>
+									<button id="publishPrivateOn" class="btn btn-primary btn-default active" data-bind="click: togglePublishPrivateEvents">ON</button>
+								    <button id="publishPrivateOff" class="btn btn-default" data-bind="click: togglePublishPrivateEvents">OFF</button>
+								</div>									
+								<p class="help-block">Private events will be shown on your Facebook schedule but details will not be visible</p>
+						</fieldset>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-6">	
+						<fieldset class="">
+							<h3>Auto Post Schedule Events
+								<p><small>Trcked can publish individual schedule event to Social Media</small></p>
+							</h3>
+							<!-- <div class="row"> -->
+								<div class="form-group">
+
+									<input readonly class="k-input-lg" data-role="dropdownlist" id="lstScheduleEventPostOffset" 
+										data-text-field="display"
+							        	data-value-field="id"
+								        data-bind="source: autoPostEventInterval,enabled: publishScheduleToSocial, value:eventPublishTosocialOffset" 
+								        data-option-label="Select how many minutes prior to event to post..."
+								        data-value-primitive="true">                 
+							        </input>
+								</div>
+
+
+						</fieldset>
+					<div>							
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>	

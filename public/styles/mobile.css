@@ -1,0 +1,41 @@
+.navbar-toggle , .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+     background-color: #E9AC21;
+     border-color: #E9AC21;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	    background-color: #FCFCFC;
+}
+	#appContentEditContainer {
+	z-index: 10001;
+    background-color: #fff;
+}
+
+@media(max-width: 1199px) {
+	.nav > li > a { padding: 15px 13px }
+}
+@media(max-width: 991px){
+	.navbar-header { float: none; clear: both; }
+	.navbar-toggle { display: block; }
+	.navbar .navbar-nav > li { float: none;  }
+	.navbar-collapse { border-top: 1px solid #e7e7e7  } 
+	.navbar-collapse.collapse {
+		display: none !important;
+	}
+	.navbar-collapse.collapse.in {
+		display: block !important;
+	}
+
+	.ct-bar{
+		stroke-width:50px;
+	}
+
+	/*tiwtter feeds dashboard*/
+	.twitter-tweet  { max-width: 48% !important; }
+}
+@media(max-width: 767px){
+	.twitter-tweet { width: 100% !important }
+}
+@media(max-width: 600px){
+	.twitter-tweet  { max-width: 100% !important; }
+}
+

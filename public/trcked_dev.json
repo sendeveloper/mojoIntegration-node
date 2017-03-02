@@ -1,0 +1,96 @@
+{
+        
+        "logErrors": false,       
+        "parse":{
+            "applicationID":"mojoDev",
+            "JSKey":"hEffWPBDX8keHt8ibgdtJsMHMPy6VxZHSJsNXm1J"
+        },
+        
+        "routeNames": {
+            "home":"/",
+            "trucks":"/trucks",
+            "menu": "/menu",
+            "signin": "/signin",
+            "social":"/social",
+            "schedule":"/schedule",
+            "settings":"/settings"
+        },
+
+        "noImageFile":"./images/no_image.gif",
+
+        "filters": {
+            "truckStatus": [
+                {"text": "All Status", "value": 0},
+                {"text": "OPEN", "value": 1},
+                {"text": "CLOSED", "value": 2}
+            ]
+        },
+
+        "saleMode": {
+            "pos":1,
+            "online":2
+        },
+
+        "notificationMessages": {
+            
+            "siginError": {
+                "title": "Cannot sign in",
+                "message" : "Email address and/or password is incorrect"
+            },
+
+            "saveSuccess": {
+                "title": "Data Saved",
+                "message": "Record has been saved successfully"
+
+            },
+
+            "deleteSuccess": {
+                "title": "Deleted",
+                "message": "Record deleted successfully"                
+            },
+
+            "deleteError": {
+                "title": "Error",
+                "message": "An error occured while deleting"                
+            },
+
+            "saveError": {
+                "title": "Error",
+                "message": "An error occured while saving"
+            },
+
+            "saveNothing" : {
+                "title": "Wer'e Done",
+                "message": "Nothing to save"
+            },
+
+            "socialPostSuccess": {
+                "title": "Success",
+                "message": "Posted to Social Media"
+            },
+
+            "socialTwitterPlacesError": {
+                "title": "Error",
+                "message": "Failed to get twitter places!"
+            },
+
+            "socialFacebookPlacesError": {
+                "title": "Error",
+                "message": "Failed to get facebook places!"
+            },
+
+            "zeroItemPrice": {
+                "title": "No price set",
+                "message": "Item price is set to $0.00"
+            }
+        },
+
+        "facebookAppID":"860628990614452",
+        "fbScheduleAppId": "860628990614452",
+        "appStoreURL": "http://www.trcked.com",
+        "stripeClientId":"ca_3cJKld8z32rBPlE75OH0C2MvKV2ftxkL",
+        "pusherAPIKey":"333ab1d87ccfb694f568",
+        "pusherEventName": "trckedPOSEvent",
+        "paymentPagesEndPoint": "https://demo.globalgatewaye4.firstdata.com/payment"
+
+    }

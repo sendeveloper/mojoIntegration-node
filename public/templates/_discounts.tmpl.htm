@@ -1,0 +1,121 @@
+<!-- Vendor Discount TEMPLATE -->
+<div class="container-fluid">
+
+    <div class="row">
+        <!-- MAIN CONTENT -->
+
+        <!-- <div class="row k-pane k-scrollable" style="overflow-x:hidden;"> -->
+        <div class="row-header">
+            <div class="col-xs-9">
+                <h4>
+                    Discounts&nbsp;
+                </h4>
+            </div>
+            <div class="col-xs-3">
+                <button type="button" class="btn btn-primary" data-bind="click:addDiscountRecord">
+                    <span class="hidden-xs">Add New Discount</span>
+                    <span class="visible-xs">Add</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 trkListView"
+             data-role="listview"
+             data-template="tmplDiscounts"
+             data-bind="source: discountList, events:{dataBound:onDiscountListViewDataBound}" ,
+             data-selectable="false"
+             id="kendoLVDiscounts">
+        </div>
+
+        <!-- EDITOR -->
+        <div class="record-edit-view col-xs-12 col-md-6" id="appContentEditContainer" style="display:none">
+            <form role="form" id="frmDiscountsRecordEdit" class="form-record-edit" style="display:none">
+                
+                <div data-role="tabstrip" id="discountsTabStrip">
+                    <ul>
+                        <li class="k-state-active">
+                            General
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="form-group">
+                            <label for="txtDiscountName">Discount Name</label>
+                            <input class="form-control k-input-lg" name="txtDiscountName" id="txtDiscountName" placeholder="Enter Discount name" 
+                                    data-bind="value:editorModel.name" required data-required-msg="Name is required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectDiscountApplyTo">Apply To</label>
+                            <select name="selectDiscountApplyTo" id="selectDiscountApplyTo" data-role="dropdownlist"
+                                            class="form-control k-input-lg" 
+                                            data-text-field="description" data-auto-bind="false"
+                                            data-value-field="applyToId" 
+                                            data-value-primitive="true" required
+                                            data-bind="source: applyToTypes, value:editorModel.applied">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectDiscountType">Discount Type</label>
+                            <select name="selectDiscountType" id="selectDiscountType" data-role="dropdownlist"
+                                            class="form-control k-input-lg" 
+                                            data-text-field="description"
+                                            data-value-field="id"
+                                            data-value-primitive="true"
+                                            data-cascade-from="selectDiscountApplyTo"
+                                            data-bind="source: discountTypes, value:editorModel.type">
+                            </select>
+                        </div>
+                        <div class="form-group" id="valueDollarGroup">
+                            <label for="txtDiscountValueDollar">Dollar Discount</label>
+                            <input id="txtDiscountValueDollar" name="txtDiscountValueDollar" data-role="numerictextbox" 
+                                data-min="0"
+                                data-bind="value:editorModel.value"
+                                data-format = "c" placeholder="Enter $ amount"
+                                required
+                                validationMessage="Please enter discount amount ($)"/>
+                            <div class="text-muted">Enter zero to enter discount at point of sale</div>
+                        </div>
+                        <div class="form-group" id="valuePercentGroup">
+                            <label for="txtDiscountValuePercent">Percent Discount</label>
+                            <input id="txtDiscountValuePercent" name="txtDiscountValuePercent" data-role="numerictextbox" 
+                                data-min="0"
+                                data-max ="100"
+                                data-bind="value:editorModel.value"
+                                data-format = "n2" placeholder="Enter %" 
+                                required 
+                                validationMessage="Please enter discount amount (%)"/>
+                                <div class="text-muted">Enter zero to enter discount at point of sale</div>
+                        </div>
+                   	</div>
+                </div>
+                <div class="form-toolbar col-xs-12 ">
+                    
+                    <button type="button" class="col-xs-3 btn btn-danger pull-left" data-bind="click:deleteDiscountRecord, visible:editorModel.objectId"><i class="fa fa-trash-o"></i><span class="">&nbsp;Delete</span></button> 
+                    
+                    <div class="col-xs-8 rightButtonGroup"> 
+
+                        <button type="button" class="btn btn-primary pull-right" data-loading-text="Saving..." data-bind="click:saveDiscountRecord"><i class="fa fa-floppy-o"></i><span class="">&nbsp;Save</span></button>
+
+                        <button type="button" class="btn btn-default pull-right" data-bind="click:cancelDiscountRecord"><i class="fa fa-times"></i><span class="">&nbsp;Cancel</span></button>
+                        
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </form>
+        </div>
+    </div>
+
+
+
+ <!-- Discount Row -->
+<script type="text/x-kendo-tmpl" id="tmplDiscounts">
+   <div class="row row-record trkListRow">
+        <div class="col-xs-4 col-sm-4 ">#:name#</div>
+        <div class="col-xs-4 col-sm-3" data-bind="html:getDiscountDescription"></div>
+        <div class="col-xs-3">
+            <button type="button" class="btn btn-default btn-lg pull-right" data-bind="click:editDiscountRecord" >Edit</button>
+        </div>
+        
+   </div>
+
+</script>

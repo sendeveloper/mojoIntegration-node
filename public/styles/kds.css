@@ -1,0 +1,229 @@
+#kdsMenuItemSummary{
+	border-style:hidden;
+/*	max-height:80vh;
+	overflow-y:scroll;*/
+}
+
+#kdsMenuItemSummary:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.modal-body:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.modal-content {
+	overflow: hidden;
+}
+
+#kdsOverview.modal .modal-body {
+	overflow-y: scroll;
+	max-height: 80vh;
+}
+
+
+#appContentWrapper .row{
+	/*margin:0px;*/
+}
+
+#kdsOverview.modal .modal-body{
+	border-style:hidden;
+	font-size:1.5em;
+    /*min-height: 80%;*/
+}
+
+.fa{
+	margin:.25em;
+}
+
+span.k-panelbar-expand.fa.fa-cogs{
+	font-size:1.5em;
+	top:0em;
+}
+
+.fa.fa-globe{
+	font-size:2.5em;
+	color:white;
+	top:0em;
+	position:absolute;
+/*	top:0em;
+	left:2em;*/
+}
+
+.
+.k-panelbar .k-content{
+	border:none;
+}
+
+#settingsBar > .k-header {
+    height: 60px;
+ }
+
+#kdsLVOrderList{
+	border:none;
+	max-height: calc(100vh - 60px);
+	overflow-y:auto;
+}
+
+
+.kdsOrderHeader{
+	/*padding: .5em;*/
+	font-size:1.25em;
+	color:#c8cfd6;
+}
+
+
+.k-popup .k-list .k-item{
+	padding-top:.5em;
+	padding-bottom:0.5em;
+}
+/*#selectAllCatsBtn{
+    top: 2.7em;
+    border-bottom: none;
+    position: absolute;
+    right: 1.2em;
+    margin-top:1em;
+}*/
+
+.itemNotes{
+	color:white;
+	font-style: italic;
+	padding-left: 3em;
+    padding-top: .25em;
+}
+.kdsOrderCurrentStatus{
+	color:white;
+	height:1.25em;
+}
+
+.kdsCompleteBtn{
+	background-image:linear-gradient( to bottom, #929fad, #8493a3 );
+	border-color: #778899;
+/*	padding:0em;*/
+}
+
+.kdsTimeAgo{
+	padding :0em;
+}
+
+.kdsCompleteBtn:hover,
+.kdsCompleteBtn:focus{
+	background-color:slategray;
+	background-image:none;
+}
+
+.kdsCompleteBtn:active{
+	background-image:linear-gradient( to bottom, #929fad, #8493a3 );
+	background-color: #778899;
+}
+
+.kdsOrderItemModifier{
+/*	padding:.5em;*/
+	font-size:1.25em;
+	color:ivory;
+	font-style:italic;
+	padding-left:2em;
+}
+
+.kdsOrderItem{
+	padding:.5em;
+	font-size:1.25em;
+	color:white;
+}
+
+.kdsOrderItemList
+.k-widget{
+	border:none;
+}
+
+#kdsLVOrderItemsList .row-record{
+	min-height: initial;
+}
+
+.kdsOrderItemList{
+	/*max-height: 15em;*/
+	overflow:auto;
+	width:100%;
+}
+
+.row.col-md-3.k-content{
+	border:none;
+}
+
+.k-panelbar > li > .k-link.k-state-selected{
+	background-color: #42566A;
+}
+
+.kdsOrder{
+	/*min-height:12em;*/
+	min-height:initial;
+	padding:.5em;
+	background-color: SlateGray;
+	border-color:lightgray;
+	border-style:groove;
+	margin:0em;
+	border-radius:.5em;
+	width: 33.332%;
+	box-sizing: border-box;
+	/*height:15em;*/
+}
+
+#settingsBar > .k-header{
+	height:2.5em;
+	font-size:x-large;
+	    text-align: -webkit-center;
+}
+#kdsLVMenuItemList{
+	max-height: 100px;
+	overflow:auto;
+}
+
+.kdsMenuItemName{
+	min-height: 2em;
+	font-size: large;
+	text-align: -webkit-center;
+	padding-top: .5em;
+	padding-bottom: .5em;
+
+}
+
+#kdsOrderItemList{
+	border-style:hidden;
+}
+
+.form-group{
+	padding:1em;
+}
+
+#kdsGoBtn{
+	width:100%;
+	/*margin: 0.5em 1em;*/
+	font-size:1.5em;
+}
+
+.k-widget .row-record {
+    box-sizing: content-box;
+    -webkit-box-sizing: border-box;
+}
+
+@media(max-width: 991px){ 
+ .kdsOrder { height: auto; }
+ .kdsOrderItemList {
+     max-height: 100%;
+     overflow-y: auto;
+     width: 100%;
+     overflow-x: hidden;
+ }
+ .kdsOrderItemList .k-widget { 
+ 	background-color: transparent; 
+ }
+
+}
+
+div#kdsLVOrderList {
+	width: 100%;
+}

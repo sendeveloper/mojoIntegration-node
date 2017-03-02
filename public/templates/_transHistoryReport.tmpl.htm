@@ -1,0 +1,101 @@
+    
+    <div class="container-fluid" id="appContentWrapper">
+       <!-- <div class="row row-record col-md-12 rptOrderHistory"> -->
+        <div class="row">
+        <div id="txHistoryReport" class="panel panel-primary">
+            <div class="panel-heading">Transaction History Report</div>
+            <div class="panel-body">
+                <div id="reportParams" class="row row-record col-xs-12 reportParams">
+                    <div class='row'>
+                        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                            <label for="lstTrucks">Select truck or location</label>
+                            <input  class="" data-role="dropdownlist" id="lstTrucks" name="lstTrucks"
+                                    data-text-field="name"
+                                    data-value-field="objectId"
+                                    data-bind="source: truckList, value:selectedTruck"
+                                    data-option-label="All trucks/locations"
+                                    data-value-primitive="true">
+                            </input>
+                            <span class="k-invalid-msg" data-for="Status"></span>
+                        </div>        		
+                        <div class="form-group col-xs-12 col-sm-6 col-md-2">
+                            <label for="kendoDPFrom">Duration</label>
+                            <input class="kendo-form-control" name="srptDuration" id="srptDuration" data-role="dropdownlist" 
+                            data-text-field="text" data-value-field="id" data-bind="source: durationSelection, events:{change:onDurationChange}" />
+                        </div>   
+                        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                            <label for="kendoDPFrom">Start</label>
+                            <input class="kendo-form-control" name="srptFromDate" id="srptFromDate" data-role="datetimepicker" 
+                                required data-required-msg="Enter Start Date/Time" data-type="date" data-date-msg="Not a valid date"
+                                data-bind="value: startDateTime,events:{change:onFromDateChange" />
+                        </div>              
+                        <div class="form-group col-xs-12 col-sm-6 col-md-2">
+                            <label for="kendoDPFrom">End</label>
+                            <input class="kendo-form-control" name="srptToDate" id="srptToDate" data-role="datetimepicker"
+                                required data-required-msg="Enter End Date/Time" data-type="date" data-date-msg="Not a valid date"
+                                data-bind="value: endDateTime, events:{change:onToDateChange" />
+                        </div>    
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-6">
+                            <label for="">Credit Card Last 4</label>
+                            <input class="kendo-form-control" id="cclast4" name="cclast4" data-role="maskedtextbox" data-mask="####" data-bind="value:last4"/></input>
+                        </div> 
+                        <div class="submitButtonWrapper col-xs-4">
+                            <button id="posOrderReportGoBtn" type="button" class="btn btn-primary pull-right" data-bind="click: executeTransHistoryReport, enabled:runReportEnabled">
+                                <i class="fa fa-check"> Run </i>
+                            </button>
+                        </div>         
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div id="pleaseWait" class="row col-xs-12 text-center text-muted"><i class="fa fa-refresh fa-spin"></i> Please Wait </div>
+                <div class="row reportHint k-selectable">
+                    <div class="userPrompt col-md-12 k-selectable"><i class="text-muted fa fa-history fa-2x"></i>
+                        <div class="text-primary fa-2x">Transaction History View</div>
+                        <p class="text-muted">Click 'Run' to view transactions</p>
+                    </div>
+                </div> 
+                <div id="transHistoryView" class="col-xs-12">
+                    <div class="col-md-12 row shortRow">
+                        <a class="col-xs-6 text-left pull-left nextPreviousDataSetLink" data-bind="click:getTransactionRecordsBack, visible: isPreviousBtnVisible">Previous</a>
+                        <a class="col-xs-6 text-right pull-right nextPreviousDataSetLink" data-bind="click:getTransactionRecordsForward, visible: isNextBtnVisible">Next</a>
+                    </div>
+                    <div class="row">
+                        <span class="col-md-2 hidden-xs headingLabel text-center bg-info">Transaction Date</span>
+                        <span class="col-xs-4 hidden-md hidden-lg headingLabel text-center bg-info">Tx Date</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Order #</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Amount</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Delivery</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Tax</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Tip</span>
+                        <span class="col-md-1 col-xs-4 headingLabel text-center bg-info">Total</span>
+                        <span class="col-md-1 col-xs-4 headingLabel text-center bg-info">Type</span>
+                        <span class="col-md-1 hidden-xs headingLabel text-center bg-info">Sales Mode</span>
+                        <span class="col-md-2 hidden-xs headingLabel text-center bg-info">Status</span>
+                    </div>
+                    <div class="row" id="tableResults" data-template="tmplorderIdListItem" data-bind="source: resultObject"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script type="text/x-kendo-tmpl" id="tmplorderIdListItem">
+        <div class="row" data-bind="click:showOrderDetails, 
+                                        attr:{class: getCSSForOrderRow}">
+            <span class="col-md-2 hidden-xs resultValue">#:aTransHistoryReportModel.getTransactionDateTime(txDate)#</span>
+            <span class="col-xs-4 hidden-md hidden-lg resultValue">#:aTransHistoryReportModel.getTransactionDateTime(txDate, true)#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:orderId#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:kendo.toString(amount,"c2")#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:kendo.toString(aTransHistoryReportModel.getDeliveryAmount(data),"c2")#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:kendo.toString(aTransHistoryReportModel.getTotalTax(data),"c2")#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:kendo.toString(tipAmount,"c2")#</span>
+            <span class="col-md-1 col-xs-4 resultValue">#:kendo.toString(aTransHistoryReportModel.getGrandTotal(data), "c2")#</span>
+            <span class="col-md-1 col-xs-4 resultValue">#:aTransHistoryReportModel.getPaymentTypeDesc(provider)#</span>
+            <span class="col-md-1 hidden-xs resultValue">#:aTransHistoryReportModel.getSalesModeDesc(saleMode)#</span>
+            <span class="col-md-2 hidden-xs resultValue">#:aTransHistoryReportModel.getOrderStateDescription(state)#</span>
+        </div>
+    </script>

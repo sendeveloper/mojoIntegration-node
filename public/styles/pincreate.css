@@ -1,0 +1,16 @@
+#submitCrewPin {
+	margin-left:1em;
+}
+
+input[name=txtPIN]{
+	padding:.5em;
+	border-radius:.5em;
+}
+form {
+	border:gray;
+	border-style:solid;
+	padding: 1em 2em 1em 2em;
+	border-width: thin;
+	margin-top:2em;
+	border-radius:2em;
+}

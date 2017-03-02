@@ -1,0 +1,17 @@
+.trckedCalendarBody {
+	/*min-height:91em;*/
+	background-color: transparent!important;
+	overflow-y: hidden;
+}
+
+.fc-event{
+	/*background-color:#D12720!important;*/
+}
+
+#eventDetail .modal-title{
+	/*color: #D12720!important;*/
+}
+
+#eventDetail .modal-body{
+	/*color:black!important;*/
+}

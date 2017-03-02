@@ -1,0 +1,43 @@
+
+    <div class="container-fluid" id="appContentWrapper">
+       <!-- <div class="row row-record col-md-12 rptOrderHistory"> -->
+        <div id="salesBreakdownReport" class="panel panel-primary">
+            <div class="panel-heading">Sales Breakdown</div>
+            <div class="panel-body">
+                <div id="reportParams" class="row row-record col-xs-12 reportParams">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="lstTrucks">Select truck or location</label>
+                        <input  class="" data-role="dropdownlist" id="lstTrucks" name="lstTrucks"
+                                data-text-field="name"
+                                data-value-field="objectId"
+                                data-bind="source: truckList, value:selectedTruck"
+                                data-option-label="All trucks/locations"
+                                data-value-primitive="true" required data-required-msg="Please select a Truck/location">
+                        </input>
+                        <span class="k-invalid-msg" data-for="Status"></span>
+                    </div>        		
+ 
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <label for="kendoDPFrom">Date</label>
+                        <input class="kendo-form-control" name="srptTargetDate" id="srptTargetDate" data-role="datepicker" 
+                            required data-required-msg="Enter Date/Time" data-type="date" data-date-msg="Not a valid date"
+                            data-bind="value: targetDate" />
+                    </div>              
+    
+                    <div class="submitButtonWrapper form-group col-xs-12 col-md-1">
+                        <button id="posOrderReportGoBtn" type="button" class="btn btn-primary pull-left" data-bind="click: executeSalesBreakdownReport, enabled:runReportEnabled">
+                            <i class="fa fa-check"> Run </i>
+                        </button>
+                    </div>
+                </div>
+                <div id="pleaseWait" class="row col-xs-12 text-center text-muted"><i class="fa fa-refresh fa-spin"></i> Please Wait </div>
+                <div class="row reportHint k-selectable">
+                    <div class="userPrompt col-xs-12 k-selectable"><i class="text-muted fa fa-table fa-2x"></i>
+                        <div class="text-primary fa-2x">Sales Breakdown</div>
+                        <p class="text-muted">Click 'Run Report' to view your Sales Breakdown. <br>To view individual truck/location activity, select a truck/location.</p>
+                    </div>
+                </div>
+                <div id="salesBreakdownChart" class="col-xs-12 ct-chart"></div>
+            </div>
+       </div>
+    </div>

@@ -1,0 +1,161 @@
+<div class="" id="appContentWrapper">
+	<div class="row" id="socialWindowContents">
+		<div style="margin-top:50px;">
+		<a href="#" class="pull-left" data-bind="click: reset"><i class="fa fa-refresh"></i> Reset</a>
+		<a href="#" class="pull-right" data-bind="click: showSavedSocialPosts" ><i class="fa fa-external-link"></i> Show Saved Posts</a>
+		</div>
+		<div class="clearfix"></div>
+
+
+		<form role="form" id="frmSocial">
+
+			<input type="hidden" data-bind="value:socialPostID">
+
+			<!-- connection status -->
+			<div class="form-group" style="margin-bottom:-1px">
+				
+				<div class="well well-sm" style="margin-bottom:-1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;">
+					<span class="badge alert-success" data-bind="visible:facebookConnected">Facebook Connected</span>
+					<input  class="k-input-lg kendo-form-control inline bg-info" data-role="dropdownlist" id="lstFacebookPages" 
+					name="lstFacebookPages" style="width:200px"
+					        data-text-field="name"
+					        data-value-field="id"
+					        data-bind="source: facebookPages,events:{change:setFacebookPage},visible: facebookConnected"
+					        data-option-label="Select Facebook page..."
+					        data-value-primitive="true">
+
+					<span class="badge alert-success" data-bind="visible:twitterConnected">Twitter Connected to <span data-bind="text:twitterName"></span></span>
+
+					<label class="checkbox-inline" data-bind="visible: twitterConnected">
+		  				<input type="checkbox" data-bind="click: setTwitterTextAreaVisibility,checked: showTwitterTextArea"> Show Twitter Post
+					</label>
+
+					<button type="button" class="btn btn-default btn-xs pull-right" style="margin-right:5px" data-bind="click: connectFacebook"><i class="fa fa-facebook"></i> Connect</button>
+
+					<button type="button" class="btn btn-default btn-xs pull-right" style="margin-right:5px" data-bind="click: connectTwitter"><i class="fa fa-twitter"></i> Connect</button>
+
+					
+			        </input><div class="clearfix"></div>
+
+		    	</div>
+
+			</div>
+			<!-- /connection status -->
+
+			<!-- Facebook & Twitter posts -->
+			<div class="row">
+				<div class="col-xs-4 noRightPadding" id="wrapperPostDateTIme">
+					<!--  -->
+					<input name="kendoDtpPostDate" id="kendoDtpPostDate" class="form-control kendo-form-control k-input-lg"
+					placeholder="specify a future date &amp; time" data-role="datetimepicker" data-bind="value:postDateTime,invisible:isEvent"/>
+				</div>
+				<div class="form-group col-xs-4 noLeftPadding noRightPadding" id="wrapperUrl">
+					<input class="form-control kendo-form-control k-input-lg" placeholder="enter URL to associate with post" name="txtFacebookPostURL" id="txtFacebookPostURL" data-bind="value:socialPostURL"  />
+				</div>
+				<div class="col-xs-4 noLeftPadding" id="wrapperGeoLocation">
+					<button type="button" class="btn btn-default btn-sm pull-right noPaddingRight" id="btnShowMap" data-bind="click: showMap"><i class="fa fa-map-marker"></i>Attach Location</button>
+				</div>
+				<div class="col-xs-12" id="facebookPostArea">
+
+					<div class="form-group" style="margin-bottom:-1px">
+						<textarea rows="10" autofocus class="form-control input-lg" name="txtSocialPost" id="txtSocialPost" placeholder="Enter the social network update here" style="margin-bottom:-1px;border-radius: 0;resize:none"
+						data-bind="value:socialPost,events:{change:copyFacebookTextToTwitter}" data-value-update="keyup"/>
+					</div>
+				</div>
+
+				<div class="col-md-4" id="twitterPostArea" style="padding-left:0px;display:none">
+					<div class="form-group" style="margin-bottom:-1px">
+						<textarea rows="10"  style="margin-bottom:-1px;border-radius: 0;resize:none;background-color: Beige;" maxlength="140" class="form-control input-lg" name="txtTwitterMessage" id="txtTwitterMessage" placeholder="Enter Twitter status update here..."
+						data-bind="value:twitterPost" data-value-update="keyup" />
+						
+					</div>
+				</div>
+			</div>
+			<div class="row" id="selectedSocialPlaces">
+				<div class="form-group col-sm-12">
+					<span class="badge alert-info" data-bind="visible:mapInfo.selectedFacebookPlace.id">
+						Facebook Place: 
+						<span data-bind="html:mapInfo.selectedFacebookPlace.name"></span>&nbsp;
+						<a href="#" data-bind="click: clearFacebookPlace"><i class="fa fa-trash-o"></i></a>
+					</span>
+
+					<span class="badge alert-info" data-bind="visible:mapInfo.selectedTwitterPlace.id">
+						Twitter Place: 
+						<span data-bind="html:mapInfo.selectedTwitterPlace.name"></span>&nbsp;
+						<a href="#" data-bind="click: clearTwitterPlace"><i class="fa fa-trash-o"></i></a>
+					</span>
+				</div>
+			</div>
+			<div class="row" id="btnPostOptionsRow">
+				<div class="btn-group btn-toggle col-xs-2">
+				</div> 
+				<div class="btn-group btn-toggle col-xs-3" id="btnGroupPostToFB"> 
+					<div><label>Post to Facebook?</label></div>
+					<button type="button" id="publishToFBOn" class="btn btn-primary btn-default active" data-bind="click: togglePublishToFBOn">Yes</button>
+				    <button type="button" id="publishToFBOff" class="btn btn-default" data-bind="click: togglePublishToFBOff">No</button>
+				</div>
+				<div class="btn-group btn-toggle col-xs-3" id="btnGroupPostToTwitter"> 
+					<div><label>Post to Twitter?</label></div>
+					<button type="button" id="publishToTwitterOn" class="btn btn-primary btn-default active" data-bind="click: togglePublishToTwitterOn">Yes</button>
+				    <button type="button" id="publishToTwitterOff" class="btn btn-default" data-bind="click: togglePublishToTwitterOff">No</button>
+				</div>
+				<div class="btn-group btn-toggle col-xs-3" id="btnGroupPostToApp"> 
+					<div><label>Post to App?</label></div>
+					<button type="button" id="publishToAppOn" class="btn btn-default" data-bind="click: togglePublishToAppOn">Yes</button>
+				    <button type="button" id="publishToAppOff" class="btn btn-primary btn-default active" 
+				    data-bind="click: togglePublishToAppOff">No</button>
+				</div>
+				<div class="btn-group btn-toggle col-xs-1">
+				</div> 
+			</div>
+			<!-- / geo location -->
+
+			<!-- post master info -->
+			<div class="panel panel-default" style="font-size:90%;margin-top:20px"  data-bind="visible:parentColl">
+			  <div class="panel-heading">
+			    <h4 class="panel-title">Additional details</h4>
+			  </div>
+			  <div class="panel-body">
+			    <img data-bind="attr:{src:imgURL},visible:imgURL" style="width:50px;height:50px;vertical-align:top"/>
+				<span data-bind="text:parentColl.description"></span>
+				<span data-bind="visible:isEvent"> on <span data-bind="text:eventDate"></span></span>
+				<input class="k-input-sm kendo-form-control" style="width:250px" placeholder="select lead time of post" data-role="dropdownlist"
+			       data-text-field="text"
+			       data-value-field="value"
+			       data-bind="source: postOffsetList,value:postOffset,visible:isEvent"
+			       data-value-primitive="true"
+			       data-option-label="Select Post Lead Time...">
+		        </input>
+			  </div>
+			</div>
+			<!-- /post master info -->
+
+		</form>
+
+		<hr/>
+
+		<div class="pull-right">
+		<button type="button" id="btnSaveSocialPost" class="btn btn-default btn-lg" data-loading-text="Saving..." data-bind="click: saveSocialPost,enabled:allowPost">Save</i></button>&nbsp;&nbsp;
+
+		<button type="button" class="btn btn-primary btn-lg" data-loading-text="Posting..." data-bind="click: postSocial,enabled:allowPost"><i class="fa fa-send-o"></i>&nbsp;Share</button>
+	</div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="tmplSavedSocialPosts">
+   <div class="row row-record">
+        <div class="col-md-12">
+            <div>
+                <h4>#:post#</h4>
+                <p>#:description#</p>               
+            </div>
+        </div>
+
+        <div class="btn-group">
+            // <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.stockListItem.editRecord" ><i class="fa fa-pencil"></i></button>
+            // <button type="button" class="btn btn-default btn-sm" data-bind="click:editorModel.stockListItem.deleteRecord"><i class="fa fa-trash-o"></i></button>
+    	</div>
+    </div>
+    
+   </div>
+
+</script>
